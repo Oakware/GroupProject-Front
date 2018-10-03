@@ -1,0 +1,15 @@
+# Builds
+build/
+dist/
+
+# Node, other
+node_modules/
+bower_components/
+.npm/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
