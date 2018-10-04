@@ -1,9 +1,12 @@
-import React    from "react";
-import { hot }  from 'react-hot-loader';
+import React from 'react';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
-
-function App(props) {
-    return <div> Hello, world! </div>
+export default class App extends React.Component {
+    render() {
+        return (
+            <Router>
+                <div> Hello, world! </div>
+            </Router>
+        );
+    }
 }
-
-export default hot(module)(App);
