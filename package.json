@@ -30,7 +30,6 @@
         "install": "^0.12.1",
         "mini-css-extract-plugin": "^0.4.3",
         "node-sass": "^4.9.3",
-        "npm": "^6.4.1",
         "react-hot-loader": "^4.3.11",
         "sass-loader": "^7.1.0",
         "style-loader": "^0.23.0",
