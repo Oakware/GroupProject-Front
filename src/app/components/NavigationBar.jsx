@@ -12,12 +12,14 @@ export default class NavigationBar extends React.Component {
                 </div>
                 <div className="navbar-menu">
                     <div className="navbar-start">
-                        <NavLink className="navbar-item" activeClassName="active-link" to="/"> Home </NavLink>
+                        <NavLink className="navbar-item" activeClassName="active-link" exact to="/"> Home </NavLink>
                         <NavLink className="navbar-item" activeClassName="active-link"  to="/search"> Search </NavLink>
                     </div>
                     <div className="navbar-end">
                         <NavLink className="navbar-item" activeClassName="active-link" to="/account/login"> Login </NavLink>
                         <NavLink className="navbar-item" activeClassName="active-link" to="/account/register"> Register </NavLink>
+
+                        <NavLink className="navbar-item" activeClassName="active-link" to="/profile"> Profile </NavLink>
                     </div>
                 </div>
             </header>
