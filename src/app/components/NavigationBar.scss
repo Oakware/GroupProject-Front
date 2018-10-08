@@ -1,0 +1,12 @@
+@import '../../variables';
+
+.NavigationBar {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+
+    .active-link {
+        border-top: 2px solid transparent;
+        border-bottom: 2px solid $primary;
+        color: $primary;
+        font-weight: bold;
+    }
+}
