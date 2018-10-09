@@ -10,18 +10,20 @@ export default class Profile extends React.Component {
     renderServiceTiles(services) {
         let result = []
         services.map((s) =>
-            result.push(<ServiceTile service={s} key={s.id}/>)
+            result.push(<div className="column is-2-tablet is-3-desktop">
+                <ServiceTile service={s} key={s.id}/>
+            </div>)
         )
         return result
     }
 
     renderMyServices() {
-        let myServices = [{id : 1, name : "Wow"}, {id: 2, name : "How"}]
+        let myServices = [{id: 1, name: "Wow"}, {id: 2, name: "How"}]
         return this.renderServiceTiles(myServices)
     }
 
     renderOrderedByMeServices() {
-        let orderedByMeServices = [{id : 3, name : "Omg"}, {id: 4, name : "Lol"}]
+        let orderedByMeServices = [{id: 3, name: "Omg"}, {id: 4, name: "Lol"}]
         return this.renderServiceTiles(orderedByMeServices)
     }
 
