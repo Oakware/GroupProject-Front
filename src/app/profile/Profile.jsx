@@ -10,7 +10,7 @@ export default class Profile extends React.Component {
     renderServiceTiles(services) {
         let result = []
         services.map((s) =>
-            result.push(<div className="column is-2-tablet is-3-desktop">
+            result.push(<div className="column is-5-desktop">
                 <ServiceTile service={s} key={s.id}/>
             </div>)
         )
@@ -18,12 +18,16 @@ export default class Profile extends React.Component {
     }
 
     renderMyServices() {
-        let myServices = [{id: 1, name: "Wow"}, {id: 2, name: "How"}]
+        //TODO: get data from back
+        let myServices = [{id: 1, name: "Title 1"}, {id: 2, name: "Title 2"},
+            {id: 3, name: "Title 3"}, {id: 4, name: "Title 4"}]
         return this.renderServiceTiles(myServices)
     }
 
     renderOrderedByMeServices() {
-        let orderedByMeServices = [{id: 3, name: "Omg"}, {id: 4, name: "Lol"}]
+        //TODO: get data from back
+        let orderedByMeServices = [{id: 5, name: "Title 5"}, {id: 7, name: "Title 7"},
+            {id: 8, name: "Title 8"}, {id: 9, name: "Title 9"}]
         return this.renderServiceTiles(orderedByMeServices)
     }
 
@@ -33,19 +37,28 @@ export default class Profile extends React.Component {
                 <NavigationBar/>
 
                 <section className="section">
-                    <div className="container">
-                        <p>My Services:</p>
-                        <div className="columns is-centered">
-                            {
-                                this.renderMyServices()
-                            }
+                    <div className="container box has-background-white">
+
+                        {/*<figure className="image is-128x128">*/}
+                            {/*<img className="is-rounded"*/}
+                                 {/*src="https://bulma.io/images/placeholders/128x128.png"></img>*/}
+                        {/*</figure>*/}
+
+                        <div className="column is-9 is-offset-3">
+                            <p className="title is-4">Services</p>
+                            <div className="columns is-multiline">
+                                {
+                                    this.renderMyServices()
+                                }
+                            </div>
+                            <p className="title is-4">Orders</p>
+                            <div className="columns is-multiline">
+                                {
+                                    this.renderOrderedByMeServices()
+                                }
+                            </div>
                         </div>
-                        <p>Ordered by me:</p>
-                        <div className="columns is-centered">
-                            {
-                                this.renderOrderedByMeServices()
-                            }
-                        </div>
+
                     </div>
                 </section>
             </main>
