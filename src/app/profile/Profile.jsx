@@ -7,6 +7,31 @@ import ServiceTile from "../components/ServiceTile";
 
 export default class Profile extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {userId: 0};
+    }
+
+    componentDidMount() {
+        this.setState({userId: this.props.match.params.userId})
+    }
+
+    getUser(id) {
+        //TODO: get data from back
+
+        let user = {
+            login: "iduchan0",
+            firstName: "Ivor",
+            lastName: "Duchan",
+            email: "iduchan0@dmoz.org",
+            description:"Cool guy.",
+            city: "Lviv",
+            mark: 3.6
+        }
+
+        return user
+    }
+
     renderServiceTiles(services) {
         let result = []
         services.map((s) =>
@@ -38,27 +63,20 @@ export default class Profile extends React.Component {
 
                 <section className="section">
                     <div className="container box has-background-white">
+                        <figure className="image is-128x128">
+                        <img
+                        src="https://bulma.io/images/placeholders/128x128.png"></img>
+                        </figure>
+                        <p>@{(this.getUser(this.props.match.params.userId)).login}</p>
+                        <p>{(this.getUser(this.props.match.params.userId)).firstName} {(this.getUser(this.props.match.params.userId)).lastName}</p>
+                        <p>{(this.getUser(this.props.match.params.userId)).email}</p>
+                        <p>{(this.getUser(this.props.match.params.userId)).city}</p>
+                        <p>{(this.getUser(this.props.match.params.userId)).description}</p>
+                        <p>{(this.getUser(this.props.match.params.userId)).mark}</p>
 
-                        {/*<figure className="image is-128x128">*/}
-                            {/*<img className="is-rounded"*/}
-                                 {/*src="https://bulma.io/images/placeholders/128x128.png"></img>*/}
-                        {/*</figure>*/}
-
-                        <div className="column is-9 is-offset-3">
-                            <p className="title is-4">Services</p>
-                            <div className="columns is-multiline">
-                                {
-                                    this.renderMyServices()
-                                }
-                            </div>
-                            <p className="title is-4">Orders</p>
-                            <div className="columns is-multiline">
-                                {
-                                    this.renderOrderedByMeServices()
-                                }
-                            </div>
-                        </div>
-
+                        <a href={"profile/"  + this.props.match.params.userId + "/create"}>
+                            New Service
+                        </a>
                     </div>
                 </section>
             </main>
