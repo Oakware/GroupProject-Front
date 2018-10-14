@@ -4,6 +4,15 @@ import {NavigationBar} from "../components/all";
 
 export default class ServiceCreator extends React.Component {
 
+
+    getCategories() {
+        return ["Category 1", "Category 2"]
+    }
+
+    getSubCategories(category) {
+        return ["Subcategory 1", "Subcategory 2"]
+    }
+
     render() {
         return (
             <main className="ServiceCreator">
@@ -21,7 +30,7 @@ export default class ServiceCreator extends React.Component {
                             </div>
                             <div className="field-body">
                                 <div className="field">
-                                    <p className="control is-normal has-icons-left">
+                                    <p className="control is-normal">
                                         <input className="input" type="text" placeholder="e.g Appartment Cleaning"/>
                                     </p>
                                 </div>
@@ -34,7 +43,7 @@ export default class ServiceCreator extends React.Component {
                             </div>
                             <div className="field-body">
                                 <div className="field">
-                                    <p className="control is-expanded has-icons-left">
+                                    <p className="control is-expanded">
                                         <input className="input" type="text" placeholder="Tell us some details."/>
                                     </p>
                                 </div>
@@ -47,8 +56,8 @@ export default class ServiceCreator extends React.Component {
                             </div>
                             <div className="field-body">
                                 <div className="field">
-                                    <p className="control is-expanded has-icons-left">
-                                        <div className="select">
+                                    <p className="control is-expanded">
+                                        <div className="select is-rounded">
                                             <select>
                                                 {/*TODO: real categories and subcategories*/}
                                                 <option>Category #1</option>
@@ -66,8 +75,8 @@ export default class ServiceCreator extends React.Component {
                             </div>
                             <div className="field-body">
                                 <div className="field">
-                                    <p className="control is-expanded has-icons-left">
-                                        <div className="select">
+                                    <p className="control is-expanded">
+                                        <div className="select is-rounded">
                                             <select>
                                                 <option>Subcategory #1</option>
                                                 <option>Subcategory #2</option>
@@ -85,10 +94,10 @@ export default class ServiceCreator extends React.Component {
                             <div className="field-body">
                                 <div className="field has-addons">
                                     <p className="control">
-                                        <input className="input" type="number" min="1" max="5"/>
+                                        <input className="input is-rounded" type="number" min="1" max="5"/>
                                     </p>
                                     <p className="control">
-                                        <a className="button is-static">
+                                        <a className="button is-static is-rounded">
                                             Milo
                                         </a>
                                     </p>
@@ -114,7 +123,7 @@ export default class ServiceCreator extends React.Component {
                     </div>
                 </section>
             </main>
-    );
+        );
     }
 
-    }
+}

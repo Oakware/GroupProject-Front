@@ -19,7 +19,7 @@ export default class NavigationBar extends React.Component {
                         <NavLink className="navbar-item" activeClassName="active-link" to="/account/login"> Login </NavLink>
                         <NavLink className="navbar-item" activeClassName="active-link" to="/account/register"> Register </NavLink>
 
-                        <NavLink className="navbar-item" activeClassName="active-link" to={"/profile/" + 7}> Profile </NavLink>
+                        <NavLink className="navbar-item" activeClassName="active-link" exact to={"/profile/" + 7}> Profile </NavLink>
                     </div>
                 </div>
             </header>
