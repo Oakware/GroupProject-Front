@@ -45,8 +45,26 @@ export default class Profile extends React.Component {
 
     renderMyServices() {
         //TODO: get data from back
-        let myServices = [{id: 1, name: "Title 1"}, {id: 2, name: "Title 2"},
-            {id: 3, name: "Title 3"}, {id: 4, name: "Title 4"}]
+        let myServices = [
+            {id: 1, name: "Walk Your Dog", description: "Some description.", owner: "@iduchan0", mark: 4.3, price: 3},
+            {
+                id: 2,
+                name: "Feed Your Cat",
+                description: "Some other description.",
+                owner: "@iduchan0",
+                mark: 4.2,
+                price: 3
+            },
+            {id: 3, name: "Debug Your Code", description: "Some description.", owner: "@iduchan0", mark: 3.4, price: 4},
+            {
+                id: 4,
+                name: "Merge Your Branches",
+                description: "Some other description.",
+                owner: "@iduchan0",
+                mark: 5,
+                price: 5
+            }
+        ]
         return this.renderServiceTiles(myServices)
     }
 
@@ -105,6 +123,21 @@ export default class Profile extends React.Component {
                                     New Service
                                 </a></button>
                             </div>
+                            <div className="column is-1">
+                                <span className="icon">
+                                        <ion-icon name="settings"></ion-icon>
+                                    </span>
+                            </div>
+                        </div>
+
+                        <p className="title is-5">My Services:</p>
+                        <div className="columns is-multiline is-centered">
+                            {this.renderMyServices()}
+                        </div>
+
+                        <p className="title is-5">Ordered By Me:</p>
+                        <div className="columns is-multiline is-centered">
+                            {this.renderOrderedByMeServices()}
                         </div>
 
                     </div>
