@@ -105,15 +105,20 @@ export default class ServiceCreator extends React.Component {
                             </div>
                         </div>
 
-
                         <div className="field is-horizontal">
                             <div className="field-label">
+                                <button className="button is-danger"><a
+                                    className="has-text-white"
+                                    href={"profile/" + this.props.match.params.userId}>
+                                    Cancel
+                                </a></button>
                             </div>
+
                             <div className="field-body">
                                 <div className="field">
                                     <div className="control">
                                         {/*TODO: on submit create a new service on server*/}
-                                        <button className="button is-primary">
+                                        <button className="button is-success">
                                             Post
                                         </button>
                                     </div>
