@@ -1,6 +1,6 @@
 import React from 'react';
 import '../components/NavigationBar';
-import {NavigationBar} from "../components/all";
+import NavigationBar from "../components/NavigationBar";
 
 export default class ServiceCreator extends React.Component {
 

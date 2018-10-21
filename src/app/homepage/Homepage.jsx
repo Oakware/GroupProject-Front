@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import './Homepage.scss';
 import '../components/NavigationBar';
-import { NavigationBar } from "../components/all";
+import NavigationBar from "../components/NavigationBar";
 
 export default class Homepage extends React.Component {
     render() {

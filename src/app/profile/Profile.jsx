@@ -2,7 +2,7 @@ import React from 'react';
 
 import './Profile.scss';
 import '../components/NavigationBar';
-import {NavigationBar} from "../components/all";
+import NavigationBar from "../components/NavigationBar";
 import Tabs from "../tabs/Tabs";
 
 export default class Profile extends React.Component {
