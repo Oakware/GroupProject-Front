@@ -8,5 +8,13 @@
         border-bottom: 2px solid $primary;
         color: $primary;
         font-weight: bold;
+
+        &:hover {
+            color: $primary;
+        }
+    }
+
+    a.navbar-item:hover {
+        color: $primary;
     }
 }
