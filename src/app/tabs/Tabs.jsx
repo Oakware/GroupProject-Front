@@ -38,7 +38,7 @@ export default class Tabs extends React.Component {
                 name: "Walk Your Dog",
                 description: "Some description.",
                 owner: "@iduchan0",
-                mark: 4.3,
+                mark: 3,
                 price: 3
             },
             {
@@ -47,10 +47,10 @@ export default class Tabs extends React.Component {
                 name: "Feed Your Cat",
                 description: "Some other description.",
                 owner: "@iduchan0",
-                mark: 4.2,
+                mark: 4,
                 price: 3
             },
-            {key: 3, id: 3, name: "Debug Your Code", description: "Some description.", owner: "@iduchan0", mark: 3.4, price: 4},
+            {key: 3, id: 3, name: "Debug Your Code", description: "Some description.", owner: "@iduchan0", mark: 3.5, price: 4},
             {
                 key: 4,
                 id: 4,

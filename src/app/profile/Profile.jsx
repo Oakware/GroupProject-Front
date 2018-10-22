@@ -5,6 +5,7 @@ import '../components/NavigationBar';
 import NavigationBar from "../components/NavigationBar";
 import Tabs from "../tabs/Tabs";
 import Link from "react-router-dom/es/Link";
+import StarRatings from "react-star-ratings";
 
 export default class Profile extends React.Component {
 
@@ -56,6 +57,15 @@ export default class Profile extends React.Component {
                                     (this.getUser(this.props.match.params.userId)).lastName}
                                 </p>
                                 <p>@{(this.getUser(this.props.match.params.userId)).login}</p>
+                                <p>
+                                    <StarRatings
+                                        rating={(this.getUser(this.props.match.params.userId)).mark}
+                                        starDimension="20px"
+                                        starSpacing="10px"
+                                        starEmptyColor='rgb(236, 236, 236)'
+                                        starRatedColor='rgb(119, 171, 89)'
+                                    />
+                                </p>
                                 <br/>
                                 <p>
                                     <span className="icon">
@@ -72,11 +82,6 @@ export default class Profile extends React.Component {
                                         <ion-icon name="navigate"></ion-icon>
                                     </span>
                                     {(this.getUser(this.props.match.params.userId)).city}</p>
-                                <p>
-                                    <span className="icon">
-                                        <ion-icon name="star"></ion-icon>
-                                    </span>
-                                    {(this.getUser(this.props.match.params.userId)).mark}</p>
 
                                 <button className="button is-success"><Link
                                     className="has-text-white"
