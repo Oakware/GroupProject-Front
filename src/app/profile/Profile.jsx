@@ -4,7 +4,7 @@ import './Profile.scss';
 import '../components/NavigationBar';
 import NavigationBar from "../components/NavigationBar";
 import Tabs from "../tabs/Tabs";
-import Link from "react-router-dom/es/Link";
+import { Link } from 'react-router-dom';
 import StarRatings from "react-star-ratings";
 
 export default class Profile extends React.Component {
@@ -83,11 +83,10 @@ export default class Profile extends React.Component {
                                     </span>
                                     {(this.getUser(this.props.match.params.userId)).city}</p>
 
-                                <button className="button is-success"><Link
-                                    className="has-text-white"
-                                    to={"/profile/" + this.props.match.params.userId + "/create"}>
+                                <Link className="button is-success has-text-white"
+                                      to={"/profile/" + this.props.match.params.userId + "/create"}>
                                     New Service
-                                </Link></button>
+                                </Link>
                             </div>
                             <div className="column is-1">
                                 <span className="icon">
