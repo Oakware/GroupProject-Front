@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 import './NavigationBar.scss';
 
@@ -20,7 +20,9 @@ export default class NavigationBar extends React.Component {
         return (
             <header className="NavigationBar navbar">
                 <div className="navbar-brand">
-                    <span className="navbar-item has-text-weight-bold"> Shilo Na Milo </span>
+                    <Link className="navbar-item has-text-weight-bold" to="/">
+                        <img src="/resources/logo.png" alt="Logo"/>
+                    </Link>
 
                     <a className="navbar-burger burger" onClick={this.onMenuClick}>
                         <span/> <span/> <span/>
