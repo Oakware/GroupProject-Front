@@ -63,21 +63,21 @@ export default class Profile extends React.Component {
                                         starDimension="20px"
                                         starSpacing="10px"
                                         starEmptyColor='rgb(236, 236, 236)'
-                                        starRatedColor='rgb(119, 171, 89)'
+                                        starRatedColor='hsl(141, 71%, 48%)'
                                     />
                                 </p>
                                 <br/>
-                                <p>
+                                <p className="text has-text-justified">
                                     <span className="icon">
                                         <ion-icon name="information-circle"></ion-icon>
                                     </span>
                                     {(this.getUser(this.props.match.params.userId)).description}</p>
-                                <p>
+                                <p className="text has-text-justified">
                                     <span className="icon">
                                         <ion-icon name="mail"></ion-icon>
                                     </span>
                                     {(this.getUser(this.props.match.params.userId)).email}</p>
-                                <p>
+                                <p className="text has-text-justified">
                                     <span className="icon">
                                         <ion-icon name="navigate"></ion-icon>
                                     </span>
