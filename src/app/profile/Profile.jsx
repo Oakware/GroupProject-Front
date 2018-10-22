@@ -4,6 +4,7 @@ import './Profile.scss';
 import '../components/NavigationBar';
 import NavigationBar from "../components/NavigationBar";
 import Tabs from "../tabs/Tabs";
+import Link from "react-router-dom/es/Link";
 
 export default class Profile extends React.Component {
 
@@ -77,11 +78,11 @@ export default class Profile extends React.Component {
                                     </span>
                                     {(this.getUser(this.props.match.params.userId)).mark}</p>
 
-                                <button className="button is-success"><a
+                                <button className="button is-success"><Link
                                     className="has-text-white"
-                                    href={"profile/" + this.props.match.params.userId + "/create"}>
+                                    to={"/profile/" + this.props.match.params.userId + "/create"}>
                                     New Service
-                                </a></button>
+                                </Link></button>
                             </div>
                             <div className="column is-1">
                                 <span className="icon">

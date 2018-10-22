@@ -1,6 +1,7 @@
 import React from 'react';
 import '../components/NavigationBar';
 import NavigationBar from "../components/NavigationBar";
+import Link from "react-router-dom/es/Link";
 
 export default class ServiceCreator extends React.Component {
 
@@ -107,11 +108,11 @@ export default class ServiceCreator extends React.Component {
 
                         <div className="field is-horizontal">
                             <div className="field-label">
-                                <button className="button is-danger"><a
+                                <button className="button is-danger"><Link
                                     className="has-text-white"
-                                    href={"profile/" + this.props.match.params.userId}>
+                                    to={"/profile/" + this.props.match.params.userId}>
                                     Cancel
-                                </a></button>
+                                </Link></button>
                             </div>
 
                             <div className="field-body">
