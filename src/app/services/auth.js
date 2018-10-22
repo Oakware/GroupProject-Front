@@ -1,5 +1,5 @@
 
-export class Auth {
+export class AuthService {
 
     async login() {
         //
