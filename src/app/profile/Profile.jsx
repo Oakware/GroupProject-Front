@@ -4,7 +4,8 @@ import './Profile.scss';
 import '../components/NavigationBar';
 import NavigationBar from "../components/NavigationBar";
 import Tabs from "../tabs/Tabs";
-import Link from "react-router-dom/es/Link";
+import { Link } from 'react-router-dom';
+import StarRatings from "react-star-ratings";
 
 export default class Profile extends React.Component {
 
@@ -56,33 +57,36 @@ export default class Profile extends React.Component {
                                     (this.getUser(this.props.match.params.userId)).lastName}
                                 </p>
                                 <p>@{(this.getUser(this.props.match.params.userId)).login}</p>
-                                <br/>
                                 <p>
+                                    <StarRatings
+                                        rating={(this.getUser(this.props.match.params.userId)).mark}
+                                        starDimension="20px"
+                                        starSpacing="10px"
+                                        starEmptyColor='rgb(236, 236, 236)'
+                                        starRatedColor='hsl(141, 71%, 48%)'
+                                    />
+                                </p>
+                                <br/>
+                                <p className="text has-text-justified">
                                     <span className="icon">
                                         <ion-icon name="information-circle"></ion-icon>
                                     </span>
                                     {(this.getUser(this.props.match.params.userId)).description}</p>
-                                <p>
+                                <p className="text has-text-justified">
                                     <span className="icon">
                                         <ion-icon name="mail"></ion-icon>
                                     </span>
                                     {(this.getUser(this.props.match.params.userId)).email}</p>
-                                <p>
+                                <p className="text has-text-justified">
                                     <span className="icon">
                                         <ion-icon name="navigate"></ion-icon>
                                     </span>
                                     {(this.getUser(this.props.match.params.userId)).city}</p>
-                                <p>
-                                    <span className="icon">
-                                        <ion-icon name="star"></ion-icon>
-                                    </span>
-                                    {(this.getUser(this.props.match.params.userId)).mark}</p>
 
-                                <button className="button is-success"><Link
-                                    className="has-text-white"
-                                    to={"/profile/" + this.props.match.params.userId + "/create"}>
+                                <Link className="button is-success has-text-white"
+                                      to={"/profile/" + this.props.match.params.userId + "/create"}>
                                     New Service
-                                </Link></button>
+                                </Link>
                             </div>
                             <div className="column is-1">
                                 <span className="icon">
