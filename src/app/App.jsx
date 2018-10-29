@@ -6,6 +6,7 @@ import Error404 from './homepage/Error404';
 import Register from './auth/Register';
 import Login from './auth/Login';
 import Profile from './profile/Profile';
+import ProfileSettings from './profile-settings/ProfileSettings';
 import ServiceCreator from "./service-creator/ServiceCreator";
 
 export default class App extends React.Component {
@@ -17,6 +18,7 @@ export default class App extends React.Component {
                     <Route exact path="/auth/login" component={Login}/>
                     <Route exact path="/auth/register" component={Register}/>
                     <Route exact path="/profile/:userId" component={Profile}/>
+                    <Route exact path="/profile/:userId/settings" component={ProfileSettings}/>
                     <Route exact path="/profile/:userId/create" component={ServiceCreator}/>
                     <Route component={Error404}/>
                 </Switch>

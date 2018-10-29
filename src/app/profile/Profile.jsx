@@ -4,7 +4,7 @@ import './Profile.scss';
 import '../components/NavigationBar';
 import NavigationBar from "../components/NavigationBar";
 import Tabs from "../tabs/Tabs";
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import StarRatings from "react-star-ratings";
 
 export default class Profile extends React.Component {
@@ -33,6 +33,27 @@ export default class Profile extends React.Component {
         }
 
         return user
+    }
+
+    renderNewServiceButton() {
+        //TODO: ID of actually logged in user
+        var currentUserId = 7
+        if (this.state.userId == currentUserId) {
+            return <Link className="button is-success has-text-white"
+                         to={"/profile/" + this.props.match.params.userId + "/create"}>
+                New Service
+            </Link>
+        }
+    }
+
+    renderSettingsButton() {
+        //TODO: ID of actually logged in user
+        var currentUserId = 7
+        if (this.state.userId == currentUserId) {
+            return <Link to={"/profile/" + this.props.match.params.userId + "/settings"}>
+                <span className="icon"><ion-icon name="settings"></ion-icon></span>
+            </Link>
+        }
     }
 
     render() {
@@ -83,19 +104,19 @@ export default class Profile extends React.Component {
                                     </span>
                                     {(this.getUser(this.props.match.params.userId)).city}</p>
 
-                                <Link className="button is-success has-text-white"
-                                      to={"/profile/" + this.props.match.params.userId + "/create"}>
-                                    New Service
-                                </Link>
+                                {
+                                    this.renderNewServiceButton()
+                                }
+
                             </div>
                             <div className="column is-1">
-                                <span className="icon">
-                                        <ion-icon name="settings"></ion-icon>
-                                    </span>
+                                {
+                                    this.renderSettingsButton()
+                                }
                             </div>
                         </div>
 
-                        <Tabs/>
+                        <Tabs userId={this.state.userId}/>
                     </div>
                 </section>
             </main>
