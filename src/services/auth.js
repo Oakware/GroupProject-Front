@@ -1,7 +1,7 @@
 
 export class AuthService {
 
-    async login() {
-        //
+    static async login() {
+        return { id: 1 };
     }
 }
