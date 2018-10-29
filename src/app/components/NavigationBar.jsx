@@ -21,7 +21,7 @@ export default class NavigationBar extends React.Component {
             <header className="NavigationBar navbar">
                 <div className="navbar-brand">
                     <Link className="navbar-item has-text-weight-bold" to="/">
-                        <img src="/resources/logo.png" alt="Logo"/>
+                        <img src="resources/logo.png" alt="Logo"/>
                     </Link>
 
                     <a className="navbar-burger burger" onClick={this.onMenuClick}>
