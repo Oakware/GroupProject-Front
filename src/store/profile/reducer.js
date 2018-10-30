@@ -1,15 +1,15 @@
 import * as types from './action-types';
 
 const initialState = {
-    token: localStorage['auth:token']
+    profile: {}
 };
 
 export default function reduce(state = initialState, action = {}) {
     switch (action.type) {
-        case types.TOKEN_FETCHED:
+        case types.PROFILE_FETCHED:
             return {
                 ...state,
-                token: action.token
+                profile: action.profile
             };
         default:
             return state;
