@@ -1,7 +1,16 @@
 import * as types from './action-types';
 
+function getToken() {
+    try {
+        let token = JSON.parse(localStorage['auth:token']);
+        return token;
+    } catch (e) {
+        return null;
+    }
+}
+
 const initialState = {
-    token: localStorage['auth:token']
+    token: getToken()
 };
 
 export default function reduce(state = initialState, action = {}) {

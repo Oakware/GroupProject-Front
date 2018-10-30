@@ -6,7 +6,7 @@ import Error404 from './homepage/Error404';
 import Register from './auth/Register';
 import Login from './auth/Login';
 import Profile from './profile/Profile';
-import ServiceCreator from "./service-creator/ServiceCreator";
+import ServiceCreator from './service-creator/ServiceCreator';
 
 export default function router() {
     return (
