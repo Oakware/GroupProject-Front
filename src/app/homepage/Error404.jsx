@@ -5,7 +5,7 @@ import './Error404.scss';
 
 export default class Homepage extends React.Component {
     render() {
-        let history = this.props.history;
+        let { history } = this.props;
 
         return (
             <main className="Error404 has-background-danger">

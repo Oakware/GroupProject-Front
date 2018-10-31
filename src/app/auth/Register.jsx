@@ -29,7 +29,7 @@ export default class Register extends React.Component {
     }
 
     render() {
-        let history = this.props.history;
+        let { history } = this.props;
 
         return (
             <main className="Register">

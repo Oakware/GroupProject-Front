@@ -9,16 +9,12 @@ class Login extends React.Component {
         super(props);
 
         this.state = {
-            email: Login.getTokenId(props),
+            email: '',
             password: '',
         };
 
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-    }
-
-    componentWillReceiveProps(nextProps, nextContext) {
-        this.setState({ email: Login.getTokenId(nextProps) })
     }
 
     static getTokenId(props) {
@@ -37,7 +33,7 @@ class Login extends React.Component {
     }
 
     renderForm() {
-        let history = this.props.history;
+        let { history } = this.props;
 
         return (
             <form onSubmit={this.onSubmit}>
@@ -45,7 +41,7 @@ class Login extends React.Component {
                     <label className="label"> Email </label>
                     <p className="control">
                         <input className="input" type="email" name="email" placeholder="Email"
-                               value={this.state.email}
+                               value={Login.getTokenId(this.props)}
                                onChange={this.onChange}/>
                     </p>
                 </div>
@@ -77,7 +73,7 @@ class Login extends React.Component {
 
     render() {
         return (
-            <main className="Register">
+            <main className="Login">
                 <NavigationBar/>
 
                 <section className="section">
