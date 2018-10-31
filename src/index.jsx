@@ -6,7 +6,7 @@ import './index.scss';
 import App from './app/App';
 
 let HotApp = App;
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV !== 'production' && module.hot) {
     HotApp = hot(module)(App);
 }
 

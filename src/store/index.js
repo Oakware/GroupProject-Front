@@ -10,3 +10,7 @@ export const reducer = combineReducers({
 });
 
 export const store = createStore(reducer, applyMiddleware(thunk));
+
+if (process.env.NODE_ENV !== 'production' && module.hot) {
+    module.hot.accept('./', () => store.replaceReducer(reducer))
+}

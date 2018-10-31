@@ -2,8 +2,7 @@ import * as types from './action-types';
 
 function getToken() {
     try {
-        let token = JSON.parse(localStorage['auth:token']);
-        return token;
+        return JSON.parse(localStorage['auth:token']);
     } catch (e) {
         return null;
     }

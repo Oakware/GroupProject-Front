@@ -1,7 +1,5 @@
-
-export class ProfileService {
-
-    static async getProfile(id) {
-        return {}
+export async function getProfile(id) {
+    return {
+        name: '123'
     }
 }
