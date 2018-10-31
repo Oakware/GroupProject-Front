@@ -1,8 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-import NavigationBar from '../components/NavigationBar'
+import * as authActions from '../../store/auth/actions';
+import NavigationBar from '../components/NavigationBar';
 
-export default class Login extends React.Component {
+class Login extends React.Component {
     constructor(props) {
         super(props);
 
@@ -15,6 +17,11 @@ export default class Login extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
+    static getTokenId(props) {
+        let token = props.auth.token;
+        return token ? token.id : '';
+    }
+
     onChange(e) {
         this.setState({
             [e.target.name]: e.target.value
@@ -22,11 +29,11 @@ export default class Login extends React.Component {
     }
 
     onSubmit() {
-        //
+        this.props.dispatch(authActions.fetchToken());
     }
 
     renderForm() {
-        let history = this.props.history;
+        let { history } = this.props;
 
         return (
             <form onSubmit={this.onSubmit}>
@@ -34,7 +41,7 @@ export default class Login extends React.Component {
                     <label className="label"> Email </label>
                     <p className="control">
                         <input className="input" type="email" name="email" placeholder="Email"
-                               value={this.state.email}
+                               value={Login.getTokenId(this.props)}
                                onChange={this.onChange}/>
                     </p>
                 </div>
@@ -42,7 +49,7 @@ export default class Login extends React.Component {
                 <div className="field">
                     <label className="label"> Password </label>
                     <p className="control">
-                        <input className="input" type="text" name="password" placeholder="Password"
+                        <input className="input" type="password" name="password" placeholder="Password"
                                value={this.state.password}
                                onChange={this.onChange}/>
                     </p>
@@ -50,7 +57,7 @@ export default class Login extends React.Component {
 
                 <div className="field is-grouped">
                     <p className="control">
-                        <a className="button is-success">
+                        <a className="button is-success" onClick={this.onSubmit}>
                             Login
                         </a>
                     </p>
@@ -66,7 +73,7 @@ export default class Login extends React.Component {
 
     render() {
         return (
-            <main className="Register">
+            <main className="Login">
                 <NavigationBar/>
 
                 <section className="section">
@@ -85,3 +92,11 @@ export default class Login extends React.Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        auth: state.auth
+    };
+}
+
+export default connect(mapStateToProps)(Login);

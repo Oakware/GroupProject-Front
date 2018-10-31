@@ -1,5 +1,4 @@
 import React from 'react';
-import '../components/NavigationBar';
 import NavigationBar from "../components/NavigationBar";
 import { Link } from 'react-router-dom';
 

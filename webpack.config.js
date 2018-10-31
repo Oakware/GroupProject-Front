@@ -100,7 +100,7 @@ function getWebpackConfig(mode = devMode) {
     }
 
     config.plugins.push(new CopyWebpackPlugin([
-        { from: 'src/resources', to: 'resources' }
+        { from: 'src/resources', to: 'resources', test: /\.png$/ }
     ]));
 
     return config;

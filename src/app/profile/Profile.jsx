@@ -1,7 +1,6 @@
 import React from 'react';
 
 import './Profile.scss';
-import '../components/NavigationBar';
 import NavigationBar from "../components/NavigationBar";
 import Tabs from "../tabs/Tabs";
 import {Link} from 'react-router-dom';

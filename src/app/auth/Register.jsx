@@ -29,7 +29,7 @@ export default class Register extends React.Component {
     }
 
     render() {
-        let history = this.props.history;
+        let { history } = this.props;
 
         return (
             <main className="Register">
@@ -84,7 +84,7 @@ export default class Register extends React.Component {
                                 <div className="field-body">
                                     <div className="field">
                                         <p className="control">
-                                            <input className="input" type="text" name="password1" placeholder="Password"
+                                            <input className="input" type="password" name="password1" placeholder="Password"
                                                    value={this.state.password1}
                                                    onChange={this.onChange}/>
                                         </p>
@@ -97,7 +97,7 @@ export default class Register extends React.Component {
                                 <div className="field-body">
                                     <div className="field">
                                         <p className="control">
-                                            <input className="input" type="text" name="password2" placeholder="Confirm password"
+                                            <input className="input" type="password" name="password2" placeholder="Confirm password"
                                                    value={this.state.password2}
                                                    onChange={this.onChange}/>
                                         </p>
