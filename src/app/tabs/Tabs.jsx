@@ -4,6 +4,7 @@ import ServiceTile from "../components/ServiceTile";
 
 
 export default class Tabs extends React.Component {
+
     openTab(evt, tabName, nowActive) {
         var i, x, tablinks, nowActiveTab;
         x = document.getElementsByClassName("content-tab");
@@ -79,16 +80,30 @@ export default class Tabs extends React.Component {
         return this.renderServiceTiles(orderedByMeServices)
     }
 
+    renderTabsNames(){
+        //TODO: ID of actually logged in user
+        var currentUserId = 7
+        if (this.props.userId == currentUserId) {
+            var result = []
+            result.push(<li id="MyServ" className="tab is-active"
+                            onClick={() => this.openTab(event, 'MyServContent', 'MyServ')}><a>My Services</a></li>)
+            result.push(<li id="MyOrd" className="tab" onClick={() => this.openTab(event, 'MyOrdContent', 'MyOrd')}>
+                <a>My Orders</a></li>)
+            return result
+        }
+        return <li id="MyServ" className="tab is-active"
+                   onClick={() => this.openTab(event, 'MyServContent', 'MyServ')}><a>Services</a></li>
+    }
+
     render() {
         return (
             <main className="Tabs">
                 <nav className="tabs is-centered">
                     <div className="container">
                         <ul>
-                            <li id="MyServ" className="tab is-active"
-                                onClick={() => this.openTab(event, 'MyServContent', 'MyServ')}><a>My Services</a></li>
-                            <li id="MyOrd" className="tab" onClick={() => this.openTab(event, 'MyOrdContent', 'MyOrd')}>
-                                <a>My Orders</a></li>
+                            {
+                                this.renderTabsNames()
+                            }
                         </ul>
                     </div>
                 </nav>

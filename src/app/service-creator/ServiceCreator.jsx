@@ -44,7 +44,7 @@ export default class ServiceCreator extends React.Component {
                             <div className="field-body">
                                 <div className="field">
                                     <p className="control is-expanded">
-                                        <input className="input" type="text" placeholder="Tell us some details."/>
+                                        <input className="input textarea" type="text" placeholder="Tell us some details."/>
                                     </p>
                                 </div>
                             </div>
