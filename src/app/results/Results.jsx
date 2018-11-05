@@ -2,6 +2,7 @@ import React from 'react';
 import NavigationBar from "../components/NavigationBar";
 import {Link} from 'react-router-dom';
 import ServiceTile from "../components/ServiceTile";
+import ProfileTile from "../profile-tile/ProfileTile";
 
 
 export default class Results extends React.Component {
@@ -15,13 +16,15 @@ export default class Results extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({for: this.props.location.state.for})
-        this.setState({query: this.props.location.state.query})
+        this.setState({for: this.props.for})
+        this.setState({query: this.props.query})
     }
 
     renderResults() {
+        console.log(this.state.for)
+        console.log(this.state.query)
         if (this.state.for == 'service') {
-            //get services by query from microsrvice
+            //TODO: get services by query from microsrvice
             let services = [
                 {
                     key: 1,
@@ -60,12 +63,13 @@ export default class Results extends React.Component {
                     price: 5
                 }
             ]
-            this.renderServices(services);
+            return this.renderServices(services);
         }
         else {
-            //get profiles by query from microsrvice
+            //TODO: get profiles by query from microsrvice
             let profiles = [
                 {
+                    id: 1,
                     login: "iduchan0",
                     firstName: "Ivor",
                     lastName: "Duchan",
@@ -73,18 +77,21 @@ export default class Results extends React.Component {
                     description: "Hi! I am a cool guy, who is an expert Software Engineer." +
                     "\n I can help you with any of your projects for a low price.",
                     city: "Lviv",
-                    mark: 3.6
+                    mark: 3.6,
+                    photo: "https://media.giphy.com/media/3M9zf3NSuNgBWM3RWC/giphy.gif"
                 },
                 {
+                    id: 2,
                     login: "ellegal",
                     firstName: "Elena",
                     lastName: "Galitska",
                     email: "elgal0@dmoz.org",
                     description: "Hi! I am cool.",
                     city: "Kyiv",
-                    mark: 5
+                    mark: 5,
+                    photo: "https://media.giphy.com/media/7ieOyZw7sogO4/source.gif"
                 }]
-            this.renderProfiles(profiles);
+            return this.renderProfiles(profiles);
         }
     }
 
@@ -95,26 +102,31 @@ export default class Results extends React.Component {
                 <ServiceTile service={s} key={s.id}/>
             </div>)
         )
+        console.log(result)
         return result
     }
 
     renderProfiles(profiles) {
-        return "why"
+        let result = []
+        profiles.map((p) =>
+            result.push(<div className="column is-6-desktop is-10-tablet" key={p.id}>
+                    <Link to={"/profile/" + p.id}>
+                        <article className="box">
+                            <ProfileTile profile={p} cabinet={false}/>
+                        </article>
+                    </Link>
+                </div>
+            )
+        )
+        return result
     }
 
     render() {
         return (
-            <main className="ProfileSettings">
-                <NavigationBar/>
-
-                <section className="section">
-                    <div className="container box has-background-white">
-                        Results for {this.state.for} : {this.state.query}
-                        <div className="columns is-multiline is-centered">
-                            {this.renderResults()}
-                        </div>
-                    </div>
-                </section>
+            <main className="Results">
+                <div id="results" className="columns is-multiline is-centered">
+                    {this.renderResults()}
+                </div>
             </main>
         )
     }

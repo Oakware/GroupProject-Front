@@ -10,6 +10,7 @@ import ProfileSettings from './profile-settings/ProfileSettings';
 import ServiceCreator from './service-creator/ServiceCreator';
 import Service from './service/Service';
 import Results from './results/Results'
+import ProfileSearch from './profile-search/ProfileSearch'
 
 export default function router() {
     return (
@@ -18,11 +19,13 @@ export default function router() {
                 <Route exact path="/" component={Homepage}/>
                 <Route exact path="/auth/login" component={Login}/>
                 <Route exact path="/auth/register" component={Register}/>
-                <Route exact path="/profile/:userId" component={Profile}/>
+                {/*TODO: change to /profile/:userId*/}
+                <Route exact path="/profile/1" component={Profile}/>
                 <Route exact path="/profile/:userId/settings" component={ProfileSettings}/>
                 <Route exact path="/profile/:userId/create" component={ServiceCreator}/>
                 <Route exact path="/service/:serviceId" component={Service}/>
                 <Route exact path="/results" component={Results} />
+                <Route exact path="/search/people" component={ProfileSearch} />
                 <Route component={Error404}/>
             </Switch>
         </Router>

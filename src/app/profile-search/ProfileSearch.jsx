@@ -1,19 +1,18 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import './Homepage.scss';
 import NavigationBar from "../components/NavigationBar";
 import SearchArea from "../search-area/SearchArea";
 
-export default class Homepage extends React.Component {
+export default class ProfileSearch extends React.Component {
     render() {
         return (
-            <main className="Homepage">
+            <main className="ProfileSearch">
                 <NavigationBar/>
 
                 <section className="section">
                     <div className="container">
-                        <SearchArea for="service"/>
+                        <SearchArea for="profile"/>
                     </div>
                 </section>
             </main>
