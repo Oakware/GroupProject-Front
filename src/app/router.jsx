@@ -9,6 +9,7 @@ import Profile from './profile/Profile';
 import ProfileSettings from './profile-settings/ProfileSettings';
 import ServiceCreator from './service-creator/ServiceCreator';
 import Service from './service/Service';
+import Results from './results/Results'
 
 export default function router() {
     return (
@@ -21,6 +22,7 @@ export default function router() {
                 <Route exact path="/profile/:userId/settings" component={ProfileSettings}/>
                 <Route exact path="/profile/:userId/create" component={ServiceCreator}/>
                 <Route exact path="/service/:serviceId" component={Service}/>
+                <Route exact path="/results" component={Results} />
                 <Route component={Error404}/>
             </Switch>
         </Router>
