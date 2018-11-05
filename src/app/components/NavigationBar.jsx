@@ -31,13 +31,14 @@ export default class NavigationBar extends React.Component {
                 <div className="navbar-menu" ref={this.menuRef}>
                     <div className="navbar-start">
                         <NavLink className="navbar-item" activeClassName="active-link" exact to="/"> Home </NavLink>
-                        <NavLink className="navbar-item" activeClassName="active-link"  to="/search"> Search </NavLink>
+                        <NavLink className="navbar-item" activeClassName="active-link"  exact to="/search"> Service Search </NavLink>
+                        <NavLink className="navbar-item" activeClassName="active-link"  exact to="/search/people"> People Search </NavLink>
                     </div>
                     <div className="navbar-end">
                         <NavLink className="navbar-item" activeClassName="active-link" to="/auth/login"> Login </NavLink>
                         <NavLink className="navbar-item" activeClassName="active-link" to="/auth/register"> Register </NavLink>
 
-                        <NavLink className="navbar-item" activeClassName="active-link" exact to={"/profile/" + 7}> Profile </NavLink>
+                        <NavLink className="navbar-item" activeClassName="active-link" exact to={"/profile/" + 1}> Profile </NavLink>
                     </div>
                 </div>
             </header>

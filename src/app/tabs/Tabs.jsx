@@ -23,8 +23,8 @@ export default class Tabs extends React.Component {
     renderServiceTiles(services) {
         let result = []
         services.map((s) =>
-            result.push(<div className="column is-6-desktop is-10-tablet">
-                <ServiceTile service={s} key={s.id}/>
+            result.push(<div className="column is-6-desktop is-10-tablet" key={s.id}>
+                <ServiceTile service={s}/>
             </div>)
         )
         return result
@@ -82,7 +82,7 @@ export default class Tabs extends React.Component {
 
     renderTabsNames(){
         //TODO: ID of actually logged in user
-        var currentUserId = 7
+        var currentUserId = 2
         if (this.props.userId == currentUserId) {
             var result = []
             result.push(<li id="MyServ" className="tab is-active"
