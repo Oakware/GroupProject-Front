@@ -82,7 +82,7 @@ export default class Tabs extends React.Component {
 
     renderTabsNames(){
         //TODO: ID of actually logged in user
-        var currentUserId = 2
+        var currentUserId = 1
         if (this.props.userId == currentUserId) {
             var result = []
             result.push(<li id="MyServ" className="tab is-active"
