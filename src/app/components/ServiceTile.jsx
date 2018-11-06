@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 
 
 export default class ServiceTile extends React.Component {
+    //TODO: add categories
 
     constructor(props) {
         super(props);
