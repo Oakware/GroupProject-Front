@@ -2,7 +2,7 @@ import React from 'react';
 import NavigationBar from "../components/NavigationBar";
 import {Link} from 'react-router-dom';
 import ServiceTile from "../components/ServiceTile";
-import ProfileTile from "../profile-tile/ProfileTile";
+import ProfileTile from "../components/ProfileTile";
 
 
 export default class Results extends React.Component {
@@ -91,13 +91,13 @@ export default class Results extends React.Component {
                     city: "Kyiv",
                     mark: 5,
                     photo: "https://media.giphy.com/media/7ieOyZw7sogO4/source.gif"
-                }]
+                }];
             return this.renderProfiles(profiles, orderBy);
         }
     }
 
     renderSortOptions() {
-        if (this.state.for == 'service') {
+        if (this.state.for === 'service') {
             let result = []
             result.push(<option selected value="n-a">Name (asceding)</option>)
             result.push(<option value="n-d">Name (desceding)</option>)

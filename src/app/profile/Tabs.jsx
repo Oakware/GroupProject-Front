@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ServiceTile from "../components/ServiceTile";
-
+import './Tabs.scss';
 
 export default class Tabs extends React.Component {
 
@@ -21,13 +21,11 @@ export default class Tabs extends React.Component {
     }
 
     renderServiceTiles(services) {
-        let result = []
-        services.map((s) =>
-            result.push(<div className="column is-6-desktop is-10-tablet" key={s.id}>
-                <ServiceTile service={s}/>
-            </div>)
-        )
-        return result
+        return services.map((s) =>
+            <div className="column is-6-desktop is-10-tablet" key={s.id}>
+                <ServiceTile className="service-tile" service={s}/>
+            </div>
+        );
     }
 
     renderMyServices() {

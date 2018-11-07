@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import Results from "../results/Results";
+import Results from "./Results";
 
 export default class SearchArea extends React.Component {
     constructor(props) {

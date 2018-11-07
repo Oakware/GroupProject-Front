@@ -58,9 +58,9 @@ class Homepage extends React.Component {
                                     </div>
                                 </div>
 
-                                <div>
+                                <div className="search-results">
                                     { servicesFound.map(service =>
-                                        <ServiceTile service={service}/>) }
+                                        <ServiceTile key={service.id} service={service}/>) }
                                 </div>
                             </div>
                         </div>

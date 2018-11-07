@@ -8,6 +8,7 @@ export default class ProfileSettings extends React.Component {
     getCurrentUserData(){
         //TODO: get real data
         return {
+            id: 1,
             login: "iduchan0",
             firstName: "Ivor",
             lastName: "Duchan",

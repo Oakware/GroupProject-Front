@@ -2,10 +2,10 @@ import React from 'react';
 
 import './Profile.scss';
 import NavigationBar from "../components/NavigationBar";
-import Tabs from "../tabs/Tabs";
+import Tabs from "./Tabs";
 import {Link} from 'react-router-dom';
 import StarRatings from "react-star-ratings";
-import ProfileTile from "../profile-tile/ProfileTile";
+import ProfileTile from "../components/ProfileTile";
 
 export default class Profile extends React.Component {
 
@@ -21,7 +21,7 @@ export default class Profile extends React.Component {
     getUser(id) {
         //TODO: get data from back
 
-        let user = {
+        let user1 = {
             id: 1,
             login: "iduchan0",
             firstName: "Ivor",
@@ -32,9 +32,22 @@ export default class Profile extends React.Component {
             city: "Lviv",
             mark: 3.6,
             photo: "https://media.giphy.com/media/3M9zf3NSuNgBWM3RWC/giphy.gif"
-        }
+        };
 
-        return user
+        let user2 = {
+            id: 2,
+            login: "ellegal",
+            firstName: "Elena",
+            lastName: "Galitska",
+            email: "elgal0@dmoz.org",
+            description: "Hi! I am cool.",
+            city: "Kyiv",
+            mark: 5,
+            photo: "https://media.giphy.com/media/7ieOyZw7sogO4/source.gif"
+        };
+
+        if (id === 1) return user1;
+        return user2
     }
 
     render() {

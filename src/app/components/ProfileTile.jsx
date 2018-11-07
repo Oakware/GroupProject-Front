@@ -14,7 +14,7 @@ export default class ProfileTile extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.cabinet == false) {
+        if (this.props.cabinet === false) {
             this.setState({
                 userId: this.props.profile.id,
                 cabinet: false})
@@ -28,7 +28,7 @@ export default class ProfileTile extends React.Component {
     renderNewServiceButton() {
         //TODO: ID of actually logged in user
         var currentUserId = 1
-        if (this.state.userId == currentUserId && this.state.cabinet) {
+        if (this.state.userId === currentUserId && this.state.cabinet) {
         return <Link className="button is-success has-text-white"
                      to={"/profile/" + this.props.profile.id + "/create"}>
             New Service
@@ -38,8 +38,8 @@ export default class ProfileTile extends React.Component {
 
     renderSettingsButton() {
         //TODO: ID of actually logged in user
-        var currentUserId = 1
-        if (this.state.userId == currentUserId && this.state.cabinet) {
+        var currentUserId = 1;
+        if (this.state.userId === currentUserId && this.state.cabinet) {
         return <Link to={"/profile/" + this.props.profile.id + "/settings"}>
             <span className="icon"><ion-icon name="settings"></ion-icon></span>
         </Link>
@@ -69,7 +69,7 @@ export default class ProfileTile extends React.Component {
                         <StarRatings
                             rating={this.props.profile.mark}
                             starDimension="20px"
-                            starSpacing="10px"
+                            starSpacing="2px"
                             starEmptyColor='rgb(236, 236, 236)'
                             starRatedColor='hsl(141, 71%, 48%)'
                         />

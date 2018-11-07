@@ -6,11 +6,11 @@ import Error404 from './homepage/Error404';
 import Register from './auth/Register';
 import Login from './auth/Login';
 import Profile from './profile/Profile';
-import ProfileSettings from './profile-settings/ProfileSettings';
-import ServiceCreator from './service-creator/ServiceCreator';
+import ProfileSettings from './profile/ProfileSettings';
+import ServiceCreator from './service/ServiceCreator';
 import Service from './service/Service';
-import Results from './results/Results'
-import ProfileSearch from './profile-search/ProfileSearch'
+import Results from './search/Results'
+import ProfileSearch from './search/ProfileSearch'
 
 export default function router() {
     return (

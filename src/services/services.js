@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export async function serviceSearch(query) {
-    // let res = await axios.get('localhost:8234/services/intext', query);
+    // let res = await axios.get('localhost:8762/api/services/intext', query);
 
     return [
         {
