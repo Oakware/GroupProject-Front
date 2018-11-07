@@ -1,22 +1,80 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import './Homepage.scss';
-import NavigationBar from "../components/NavigationBar";
-import SearchArea from "../search-area/SearchArea";
+import * as serviceSearchActions from '../../store/service-search/actions';
+import NavigationBar from '../components/NavigationBar';
+import ServiceTile from '../components/ServiceTile';
 
-export default class Homepage extends React.Component {
+class Homepage extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            query: ''
+        };
+
+        this.onQueryChange = this.onQueryChange.bind(this);
+        this.onSearchService = this.onSearchService.bind(this);
+    }
+
+    onQueryChange(e) {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
+
+    onSearchService() {
+        let { query } = this.state;
+        if (query.length > 0)
+            this.props.dispatch(serviceSearchActions.searchService(query));
+    }
+
     render() {
+        let servicesFound = this.props.serviceSearch.servicesFound;
+
         return (
             <main className="Homepage">
                 <NavigationBar/>
 
                 <section className="section">
                     <div className="container">
-                        <SearchArea for="service"/>
+                        <div className="columns is-centered">
+                            <div className="column is-9-tablet is-7-desktop">
+                                <div className="field has-addons">
+                                    <div className="control is-expanded">
+                                        <input
+                                            name="query"
+                                            value={this.state.queryValue}
+                                            onChange={this.onQueryChange}
+                                            className="input is-rounded" type="text"/>
+                                    </div>
+                                    <div className="control">
+                                        <button className="button is-rounded is-info"
+                                                onClick={this.onSearchService}>
+                                            Search
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    { servicesFound.map(service =>
+                                        <ServiceTile service={service}/>) }
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </main>
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        serviceSearch: state.serviceSearch
+    };
+}
+
+export default connect(mapStateToProps)(Homepage);
