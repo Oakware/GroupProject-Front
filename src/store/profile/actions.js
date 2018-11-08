@@ -1,5 +1,5 @@
 import * as types from './action-types';
-import * as ProfileService from '../../services/profile';
+import * as ProfileService from '../../microservices/profile';
 
 export function fetchProfile(id) {
     return async (dispatch, getState) => {

@@ -17,11 +17,6 @@ class Login extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    static getTokenId(props) {
-        let token = props.auth.token;
-        return token ? token.id : '';
-    }
-
     onChange(e) {
         this.setState({
             [e.target.name]: e.target.value
@@ -41,7 +36,7 @@ class Login extends React.Component {
                     <label className="label"> Email </label>
                     <p className="control">
                         <input className="input" type="email" name="email" placeholder="Email"
-                               value={Login.getTokenId(this.props)}
+                               value={this.state.email}
                                onChange={this.onChange}/>
                     </p>
                 </div>
@@ -94,9 +89,7 @@ class Login extends React.Component {
 }
 
 function mapStateToProps(state) {
-    return {
-        auth: state.auth
-    };
+    return {};
 }
 
 export default connect(mapStateToProps)(Login);

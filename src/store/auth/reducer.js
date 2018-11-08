@@ -8,16 +8,21 @@ function getToken() {
     }
 }
 
+function setToken(token) {
+    localStorage['auth:token'] = JSON.stringify(token);
+}
+
 const initialState = {
-    token: getToken()
+    authToken: getToken()
 };
 
 export default function reduce(state = initialState, action = {}) {
     switch (action.type) {
         case types.TOKEN_FETCHED:
+            setToken(action.authToken);
             return {
                 ...state,
-                token: action.token
+                authToken: action.authToken
             };
         default:
             return state;

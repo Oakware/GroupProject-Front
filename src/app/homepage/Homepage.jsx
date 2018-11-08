@@ -1,9 +1,10 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import './Homepage.scss';
-import * as serviceSearchActions from '../../store/service-search/actions';
+import * as servicesActions from '../../store/services/actions';
+import * as servicesSelectors from '../../store/services/reducer';
 import NavigationBar from '../components/NavigationBar';
 import ServiceTile from '../components/ServiceTile';
 
@@ -28,11 +29,11 @@ class Homepage extends React.Component {
     onSearchService() {
         let { query } = this.state;
         if (query.length > 0)
-            this.props.dispatch(serviceSearchActions.searchService(query));
+            this.props.dispatch(servicesActions.searchService(query));
     }
 
     render() {
-        let servicesFound = this.props.serviceSearch.servicesFound;
+        let { servicesFound } = this.props;
 
         return (
             <main className="Homepage">
@@ -73,7 +74,7 @@ class Homepage extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        serviceSearch: state.serviceSearch
+        servicesFound: servicesSelectors.getFoundServices(state)
     };
 }
 

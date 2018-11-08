@@ -3,16 +3,20 @@ import thunk from 'redux-thunk';
 
 import auth from './auth/reducer';
 import profile from './profile/reducer';
-import serviceSearch from './service-search/reducer';
+import services from './services/reducer';
 
 export const reducer = combineReducers({
     auth,
     profile,
-    serviceSearch
+    services,
 });
 
-export const store = createStore(reducer, applyMiddleware(thunk));
+export function configureStore() {
+    const store = createStore(reducer, applyMiddleware(thunk));
 
-if (process.env.NODE_ENV !== 'production' && module.hot) {
-    module.hot.accept('./', () => store.replaceReducer(reducer))
+    if (process.env.NODE_ENV !== 'production' && module.hot) {
+        module.hot.accept('./', () => store.replaceReducer(reducer))
+    }
+
+    return store;
 }
