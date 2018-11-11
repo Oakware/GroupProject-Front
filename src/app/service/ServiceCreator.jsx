@@ -1,5 +1,4 @@
 import React from 'react';
-import NavigationBar from "../components/NavigationBar";
 import { Link } from 'react-router-dom';
 
 export default class ServiceCreator extends React.Component {
@@ -16,8 +15,6 @@ export default class ServiceCreator extends React.Component {
     render() {
         return (
             <main className="ServiceCreator">
-                <NavigationBar/>
-
                 <section className="section">
                     <div className="container box has-background-white">
 

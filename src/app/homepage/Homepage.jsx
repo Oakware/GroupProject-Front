@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import './Homepage.scss';
 import * as servicesActions from '../../store/services/actions';
 import * as servicesSelectors from '../../store/services/reducer';
-import NavigationBar from '../components/NavigationBar';
 import ServiceTile from '../components/ServiceTile';
 
 class Homepage extends React.Component {
@@ -37,8 +36,6 @@ class Homepage extends React.Component {
 
         return (
             <main className="Homepage">
-                <NavigationBar/>
-
                 <section className="section">
                     <div className="container">
                         <div className="columns is-centered">

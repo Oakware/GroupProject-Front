@@ -1,5 +1,4 @@
 import React from 'react';
-import NavigationBar from "../components/NavigationBar";
 import {Link} from 'react-router-dom';
 import ServiceTile from "../components/ServiceTile";
 import ProfileTile from "../components/ProfileTile";

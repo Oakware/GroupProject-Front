@@ -1,7 +1,6 @@
 import React from 'react';
 
 import './Profile.scss';
-import NavigationBar from "../components/NavigationBar";
 import Tabs from "./Tabs";
 import {Link} from 'react-router-dom';
 import StarRatings from "react-star-ratings";
@@ -53,8 +52,6 @@ export default class Profile extends React.Component {
     render() {
         return (
             <main className="Profile">
-                <NavigationBar/>
-
                 <section className="section">
                     <div className="container box has-background-white">
 

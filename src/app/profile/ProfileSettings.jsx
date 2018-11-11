@@ -1,5 +1,4 @@
 import React from 'react';
-import NavigationBar from "../components/NavigationBar";
 import {Link} from 'react-router-dom';
 
 
@@ -23,8 +22,6 @@ export default class ProfileSettings extends React.Component {
     render(){
         return (
             <main className="ProfileSettings">
-                <NavigationBar/>
-
                 <section className="section">
                     <div className="container box has-background-white">
                         <p className="title is-4 has-text-centered">Settings</p>

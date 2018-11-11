@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import * as authActions from '../../store/auth/actions';
-import NavigationBar from '../components/NavigationBar';
 
 class Login extends React.Component {
     constructor(props) {
@@ -69,8 +68,6 @@ class Login extends React.Component {
     render() {
         return (
             <main className="Login">
-                <NavigationBar/>
-
                 <section className="section">
                     <div className="container">
                         <div className="columns is-centered">

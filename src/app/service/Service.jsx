@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import * as servicesActions from '../../store/services/actions';
 import * as servicesSelectors from '../../store/services/reducer';
-import NavigationBar from '../components/NavigationBar';
 import StarRatings from "react-star-ratings";
 
 class Service extends React.Component {
@@ -54,8 +53,6 @@ class Service extends React.Component {
 
         return (
             <main className="Service">
-                <NavigationBar/>
-
                 <section className="section">
                     <div className="container">
                         {renderedService}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import NavigationBar from './components/NavigationBar';
 import Homepage from './homepage/Homepage';
 import Error404 from './homepage/Error404';
 import Register from './auth/Register';
@@ -9,24 +10,54 @@ import Profile from './profile/Profile';
 import ProfileSettings from './profile/ProfileSettings';
 import ServiceCreator from './service/ServiceCreator';
 import Service from './service/Service';
-import Results from './search/Results'
-import ProfileSearch from './search/ProfileSearch'
+import Results from './search/Results';
+import ProfileSearch from './search/ProfileSearch';
+
+function MainRouting() {
+    return (
+        <>
+            <NavigationBar/>
+
+            <Switch>
+                <Route exact path="/" component={Homepage}/>
+                <Route path="/auth">
+                    <Switch>
+                        <Route exact path="/auth/login" component={Login}/>
+                        <Route exact path="/auth/register" component={Register}/>
+                        <Route component={Error404}/>
+                    </Switch>
+                </Route>
+                <Route path="/profile">
+                    <Switch>
+                        <Route exact path="/profile/:userId" component={Profile}/>
+                        <Route exact path="/profile/:userId/settings" component={ProfileSettings}/>
+                        <Route exact path="/profile/:userId/create" component={ServiceCreator}/>
+                        <Route component={Error404}/>
+                    </Switch>
+                </Route>
+                <Route path="/service">
+                    <Switch>
+                        <Route exact path="/service/:serviceId" component={Service}/>
+                        <Route component={Error404}/>
+                    </Switch>
+                </Route>
+                <Route path="/search">
+                    <Switch>
+                        <Route exact path="/search/people" component={ProfileSearch}/>
+                        <Route component={Error404}/>
+                    </Switch>
+                </Route>
+                <Route exact path="/results" component={Results}/>
+                <Route component={Error404}/>
+            </Switch>
+        </>
+    );
+}
 
 export default function router() {
     return (
         <Router>
-            <Switch>
-                <Route exact path="/" component={Homepage}/>
-                <Route exact path="/auth/login" component={Login}/>
-                <Route exact path="/auth/register" component={Register}/>
-                <Route exact path="/profile/:userId" component={Profile}/>
-                <Route exact path="/profile/:userId/settings" component={ProfileSettings}/>
-                <Route exact path="/profile/:userId/create" component={ServiceCreator}/>
-                <Route exact path="/service/:serviceId" component={Service}/>
-                <Route exact path="/results" component={Results} />
-                <Route exact path="/search/people" component={ProfileSearch} />
-                <Route component={Error404}/>
-            </Switch>
+            <MainRouting/>
         </Router>
     );
 }
