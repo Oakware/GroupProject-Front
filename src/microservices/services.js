@@ -42,7 +42,7 @@ export async function getService(serviceId) {
 }
 
 export async function serviceSearch(query) {
-    // let res = await axios.get(gateway.get('/microservices/intext'), query);
+    // let res = await axios.get(gateway.paths.services.intext, query);
 
     return services;
 }

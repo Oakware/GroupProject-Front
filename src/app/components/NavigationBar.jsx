@@ -3,6 +3,14 @@ import { NavLink, Link } from 'react-router-dom';
 
 import './NavigationBar.scss';
 
+function renderLink(path, text) {
+    return (
+        <NavLink className="navbar-item" activeClassName="active-link" exact to={path}>
+            {text}
+        </NavLink>
+    );
+}
+
 export default class NavigationBar extends React.Component {
     constructor(props) {
         super(props);
@@ -17,6 +25,8 @@ export default class NavigationBar extends React.Component {
     }
 
     render() {
+        let userLoggedIn = true;
+
         return (
             <header className="NavigationBar navbar">
                 <div className="navbar-brand">
@@ -30,15 +40,13 @@ export default class NavigationBar extends React.Component {
                 </div>
                 <div className="navbar-menu" ref={this.menuRef}>
                     <div className="navbar-start">
-                        <NavLink className="navbar-item" activeClassName="active-link" exact to="/"> Home </NavLink>
-                        <NavLink className="navbar-item" activeClassName="active-link"  exact to="/search"> Service Search </NavLink>
-                        <NavLink className="navbar-item" activeClassName="active-link"  exact to="/search/people"> People Search </NavLink>
+                        {renderLink('/', 'Home')}
+                        {renderLink('/search/people', 'Search')}
                     </div>
                     <div className="navbar-end">
-                        <NavLink className="navbar-item" activeClassName="active-link" to="/auth/login"> Login </NavLink>
-                        <NavLink className="navbar-item" activeClassName="active-link" to="/auth/register"> Register </NavLink>
-
-                        <NavLink className="navbar-item" activeClassName="active-link" exact to={"/profile/" + 1}> Profile </NavLink>
+                        {userLoggedIn ? renderLink('/auth/login', 'Login') : false}
+                        {userLoggedIn ? renderLink('/auth/register', 'Register') : false}
+                        {userLoggedIn ? renderLink('/profile/' + 1, 'Profile') : false}
                     </div>
                 </div>
             </header>

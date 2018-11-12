@@ -25,8 +25,5 @@ const profiles = {
 };
 
 export async function getProfile(id) {
-    if (profiles.hasOwnProperty(id))
-        return profiles[id];
-
-    return null;
+    return profiles[id];
 }
