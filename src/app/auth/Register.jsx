@@ -7,6 +7,7 @@ export default class Register extends React.Component {
         this.state = {
             firstName: '',
             lastName: '',
+            username: '',
             email: '',
             password1: '',
             password2: '',
@@ -60,6 +61,21 @@ export default class Register extends React.Component {
 
                             <div className="field is-horizontal">
                                 <div className="field-label is-normal">
+                                    <label className="label"> Username </label>
+                                </div>
+                                <div className="field-body">
+                                    <div className="field">
+                                        <p className="control">
+                                            <input className="input" type="text" name="username" placeholder="Username"
+                                                   value={this.state.username}
+                                                   onChange={this.onChange}/>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="field is-horizontal">
+                                <div className="field-label is-normal">
                                     <label className="label"> Email </label>
                                 </div>
                                 <div className="field-body">
@@ -85,12 +101,6 @@ export default class Register extends React.Component {
                                                    onChange={this.onChange}/>
                                         </p>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div className="field is-horizontal">
-                                <div className="field-label"/>
-                                <div className="field-body">
                                     <div className="field">
                                         <p className="control">
                                             <input className="input" type="password" name="password2" placeholder="Confirm password"

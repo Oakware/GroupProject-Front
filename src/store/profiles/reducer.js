@@ -2,7 +2,8 @@ import * as types from './action-types';
 
 const initialState = {
     profileExist: true,
-    profile: undefined
+    profile: undefined,
+    profilesFound: []
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -25,4 +26,8 @@ export function isProfileExist(state) {
 
 export function getProfile(state) {
     return state.profiles.profile;
+}
+
+export function getFoundProfiles(state) {
+    return state.profiles.profilesFound;
 }
