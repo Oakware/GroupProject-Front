@@ -45,9 +45,14 @@ export async function getService(serviceId) {
 }
 
 export async function serviceSearch(query) {
-    // let res = await axios.get(gateway.paths.services.intext, query);
-    await sleep();
+    // console.log('request');
+    // let res = await axios.get('http://localhost:8080/services/intext', {
+    //     params: query
+    // });
+    // console.log(res);
+    // return res.result.result;
 
+    await sleep();
     if (query.text === 'service')
         return [];
     return services;

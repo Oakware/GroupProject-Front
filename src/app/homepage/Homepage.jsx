@@ -49,8 +49,8 @@ class Homepage extends React.Component {
             return (
                 <div className="columns is-multiline">
                     {servicesFound.map(service =>
-                        <div className="column is-12-mobile is-6-tablet">
-                            <ServiceTile className="search-result" key={service.id} service={service}/>
+                        <div className="column is-12-mobile is-6-tablet" key={service.id}>
+                            <ServiceTile className="search-result" service={service}/>
                         </div>)
                     }
                 </div>
