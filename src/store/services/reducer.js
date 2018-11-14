@@ -3,7 +3,7 @@ import * as types from './action-types';
 const initialState = {
     serviceExist: true,
     service: undefined,
-    servicesFound: []
+    servicesFound: undefined,
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -15,7 +15,7 @@ export default function reduce(state = initialState, action = {}) {
                 serviceExist: service != null,
                 service: service
             };
-        case types.SERVICE_CLOSE:
+        case types.SERVICE_RESET:
             return {
                 ...state,
                 serviceExist: true,
@@ -25,6 +25,11 @@ export default function reduce(state = initialState, action = {}) {
             return {
                 ...state,
                 servicesFound: action.services
+            };
+        case types.SEARCH_RESET:
+            return {
+                ...state,
+                servicesFound: undefined
             };
         default:
             return state;

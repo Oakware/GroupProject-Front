@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import './Service.scss';
 import * as servicesActions from '../../store/services/actions';
 import * as servicesSelectors from '../../store/services/reducer';
 import StarRatings from "react-star-ratings";
@@ -13,11 +14,21 @@ class Service extends React.Component {
     }
 
     componentWillUnmount() {
-        this.props.dispatch(servicesActions.closeService());
+        this.props.dispatch(servicesActions.resetService());
     }
 
     renderService() {
         let { service } = this.props;
+
+        if (!this.props.serviceExist) {
+            return (
+                <h1 className="title has-text-centered has-text-danger not-found-text">
+                    service not found
+                </h1>
+            );
+        } else if (!service) {
+            return false;
+        }
 
         return (
             <div className="box">
@@ -45,17 +56,11 @@ class Service extends React.Component {
     }
 
     render() {
-        let renderedService = this.props.service
-            ? this.renderService() : false;
-        if (!this.props.serviceExist) {
-            //
-        }
-
         return (
             <main className="Service">
                 <section className="section">
                     <div className="container">
-                        {renderedService}
+                        {this.renderService()}
                     </div>
                 </section>
             </main>

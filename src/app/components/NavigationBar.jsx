@@ -40,13 +40,29 @@ export default class NavigationBar extends React.Component {
                 </div>
                 <div className="navbar-menu" ref={this.menuRef}>
                     <div className="navbar-start">
-                        {renderLink('/', 'Home')}
-                        {renderLink('/search/people', 'Search')}
+                        <NavLink className="navbar-item" activeClassName="active-link" exact to="/">
+                            <i className="icon">
+                                <ion-icon name="home"/>
+                            </i>
+                            <span> Home </span>
+                        </NavLink>
+                        <NavLink className="navbar-item" activeClassName="active-link" exact to="/search/people">
+                            <i className="icon">
+                                <ion-icon name="search"/>
+                            </i>
+                            <span> Search </span>
+                        </NavLink>
                     </div>
                     <div className="navbar-end">
                         {userLoggedIn ? renderLink('/auth/login', 'Login') : false}
                         {userLoggedIn ? renderLink('/auth/register', 'Register') : false}
-                        {userLoggedIn ? renderLink('/profile/' + 1, 'Profile') : false}
+
+                        <NavLink className="navbar-item" activeClassName="active-link" exact to="/profile/1">
+                            <i className="icon">
+                                <ion-icon name="person"/>
+                            </i>
+                            <span> Profile </span>
+                        </NavLink>
                     </div>
                 </div>
             </header>

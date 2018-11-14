@@ -37,12 +37,18 @@ const services = [
     }
 ];
 
+let sleep = (t = 500) => new Promise(resolve => setTimeout(resolve, t));
+
 export async function getService(serviceId) {
+    await sleep();
     return services.find(s => s.id.toString() === serviceId);
 }
 
 export async function serviceSearch(query) {
     // let res = await axios.get(gateway.paths.services.intext, query);
+    await sleep();
 
+    if (query.text === 'service')
+        return [];
     return services;
 }

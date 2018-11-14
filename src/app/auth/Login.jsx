@@ -71,7 +71,7 @@ class Login extends React.Component {
                 <section className="section">
                     <div className="container">
                         <div className="columns is-centered">
-                            <div className="column is-6-desktop">
+                            <div className="column is-8-tablet is-6-desktop">
                                 <div className="box">
                                     <h1 className="title is-4 has-text-centered"> Login </h1>
                                     { this.renderForm() }

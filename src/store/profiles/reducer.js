@@ -3,7 +3,7 @@ import * as types from './action-types';
 const initialState = {
     profileExist: true,
     profile: undefined,
-    profilesFound: []
+    profilesFound: undefined,
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -14,6 +14,22 @@ export default function reduce(state = initialState, action = {}) {
                 ...state,
                 profileExist: profile != null,
                 profile: profile
+            };
+        case types.PROFILE_RESET:
+            return {
+                ...state,
+                profileExist: true,
+                profile: undefined,
+            };
+        case types.SEARCH_FETCHED:
+            return {
+                ...state,
+                profilesFound: action.profiles
+            };
+        case types.SEARCH_RESET:
+            return {
+                ...state,
+                profilesFound: undefined
             };
         default:
             return state;

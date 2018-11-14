@@ -16,6 +16,7 @@ class Homepage extends React.Component {
         };
 
         this.onQueryChange = this.onQueryChange.bind(this);
+        this.onQueryEnter = this.onQueryEnter.bind(this);
         this.onSearchService = this.onSearchService.bind(this);
     }
 
@@ -25,10 +26,42 @@ class Homepage extends React.Component {
         });
     }
 
+    onQueryEnter(e) {
+        if (e.key === 'Enter')
+            this.onSearchService();
+    }
+
     onSearchService() {
         let { query } = this.state;
-        if (query.length > 0)
-            this.props.dispatch(servicesActions.searchService(query));
+        if (query.length > 0) {
+            this.props.dispatch(servicesActions.searchService({
+                text: query
+            }));
+        }
+    }
+
+    renderSearchResults() {
+        let { servicesFound } = this.props;
+        if (!servicesFound)
+            return false;
+
+        if (servicesFound.length) {
+            return (
+                <div className="columns is-multiline">
+                    {servicesFound.map(service =>
+                        <div className="column is-12-mobile is-6-tablet">
+                            <ServiceTile className="search-result" key={service.id} service={service}/>
+                        </div>)
+                    }
+                </div>
+            );
+        } else {
+            return (
+                <h1 className="title has-text-centered not-found-text">
+                    nothing found
+                </h1>
+            );
+        }
     }
 
     render() {
@@ -46,6 +79,7 @@ class Homepage extends React.Component {
                                             name="query"
                                             value={this.state.queryValue}
                                             onChange={this.onQueryChange}
+                                            onKeyUp={this.onQueryEnter}
                                             className="input is-rounded" type="text"/>
                                     </div>
                                     <div className="control">
@@ -55,13 +89,10 @@ class Homepage extends React.Component {
                                         </button>
                                     </div>
                                 </div>
-
-                                <div className="search-results">
-                                    { servicesFound.map(service =>
-                                        <ServiceTile key={service.id} service={service}/>) }
-                                </div>
                             </div>
                         </div>
+
+                        {this.renderSearchResults()}
                     </div>
                 </section>
             </main>

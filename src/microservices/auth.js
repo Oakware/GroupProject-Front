@@ -1,19 +1,26 @@
+import * as gateway from './gateway';
+
 function generateToken() {
     return {
-        id: Math.trunc(Math.random() * 1000)
+        userId: 1,
+        key: Math.trunc(Math.random() * 1000)
     };
 }
 
-export async function registerUser(params) {
+export async function registerUser(query) {
     return {
-        authToken: generateToken(),
+        token: generateToken(),
         errors: {}
     }
 }
 
-export async function login() {
+export async function login(query) {
+    // let res = await axios.get(gateway.get('/auth'), {
+    //     headers: { authorization: localStorage.getItem('token') }
+    // });
+
     return {
-        authToken: generateToken(),
+        token: generateToken(),
         errors: {}
     }
 }

@@ -4,10 +4,10 @@ import * as AuthService from '../../microservices/auth';
 export function fetchToken() {
     return async (dispatch, getState) => {
         try {
-            let token = await AuthService.login();
+            let res = await AuthService.login();
             dispatch({
                 type: types.TOKEN_FETCHED,
-                authToken: token.authToken
+                token: res.token
             });
         } catch (error) {
             console.error(error);

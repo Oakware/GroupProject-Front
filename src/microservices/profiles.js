@@ -24,6 +24,14 @@ const profiles = {
     }
 };
 
+let sleep = (t = 500) => new Promise(resolve => setTimeout(resolve, t));
+
 export async function getProfile(id) {
+    await sleep();
     return profiles[id];
+}
+
+export async function profileSearch(query) {
+    await sleep();
+    return profiles;
 }

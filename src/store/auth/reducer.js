@@ -13,16 +13,18 @@ function saveToken(token) {
 }
 
 const initialState = {
-    authToken: loadToken()
+    token: loadToken(),
+    authFailed: false,
+    authErrors: [],
 };
 
 export default function reduce(state = initialState, action = {}) {
     switch (action.type) {
         case types.TOKEN_FETCHED:
-            saveToken(action.authToken);
+            saveToken(action.token);
             return {
                 ...state,
-                authToken: action.authToken
+                token: action.token
             };
         default:
             return state;
@@ -30,13 +32,13 @@ export default function reduce(state = initialState, action = {}) {
 }
 
 export function isUserAuthenticated(state) {
-    return state.auth.authToken != null;
+    return state.auth.token != null;
 }
 
 export function getToken(state) {
-    return state.auth.authToken;
+    return state.auth.token;
 }
 
 export function getUserId(state) {
-    return 1;
+    return state.auth.token.userId;
 }
