@@ -15,7 +15,8 @@ export default class ProfileSettings extends React.Component {
             description: "Hi! I am a cool guy, who is an expert Software Engineer." +
             "\n I can help you with any of your projects for a low price.",
             city: "Lviv",
-            mark: 3.6
+            mark: 3.6,
+            payAddress: '0x554e1F37Bb03903Dd1eA7eFe9DC1dD9a160C6Ba5'
         }
     }
 
@@ -66,6 +67,20 @@ export default class ProfileSettings extends React.Component {
                                 </div>
                             </div>
                         </div>
+
+                        <div className="field is-horizontal">
+                            <div className="field-label is-normal">
+                                <label className="label">Payment Address</label>
+                            </div>
+                            <div className="field-body">
+                                <div className="field">
+                                    <p className="control is-normal">
+                                        <input className="input" type="text" placeholder={this.getCurrentUserData().payAddress}/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
                         <hr/>
 
                         <div className="field is-horizontal">
