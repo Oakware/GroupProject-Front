@@ -8,27 +8,14 @@ export default class ProfileTile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userId: 0,
-            cabinet: true
+            userId: this.props.profile.id,
         };
-    }
-
-    componentDidMount() {
-        if (this.props.cabinet === false) {
-            this.setState({
-                userId: this.props.profile.id,
-                cabinet: false})
-        }
-        else {
-            this.setState({
-                userId: this.props.profile.id})
-        }
     }
 
     renderNewServiceButton() {
         //TODO: ID of actually logged in user
         var currentUserId = 1
-        if (this.state.userId === currentUserId && this.state.cabinet) {
+        if (this.state.userId === currentUserId) {
         return <Link className="button is-success has-text-white"
                      to={"/profile/" + this.props.profile.id + "/create"}>
             New Service
@@ -39,7 +26,7 @@ export default class ProfileTile extends React.Component {
     renderSettingsButton() {
         //TODO: ID of actually logged in user
         var currentUserId = 1;
-        if (this.state.userId === currentUserId && this.state.cabinet) {
+        if (this.state.userId === currentUserId) {
         return <Link to={"/profile/" + this.props.profile.id + "/settings"}>
             <span className="icon"><ion-icon name="settings"></ion-icon></span>
         </Link>

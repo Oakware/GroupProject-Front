@@ -4,7 +4,7 @@ import './Profile.scss';
 import Tabs from "./Tabs";
 import {Link} from 'react-router-dom';
 import StarRatings from "react-star-ratings";
-import ProfileTile from "../components/ProfileTile";
+import ProfileTile from "./ProfileTile";
 
 export default class Profile extends React.Component {
 
@@ -45,8 +45,8 @@ export default class Profile extends React.Component {
             photo: "https://media.giphy.com/media/7ieOyZw7sogO4/source.gif"
         };
 
-        if (id === 1) return user1;
-        return user2
+        if (id == 1) return user1;
+        else return user2
     }
 
     render() {
@@ -57,7 +57,7 @@ export default class Profile extends React.Component {
 
                         <ProfileTile profile={this.getUser(this.props.match.params.userId)}/>
 
-                        <Tabs userId={this.state.userId} cabinet={true}/>
+                        <Tabs userId={this.state.userId}/>
                     </div>
                 </section>
             </main>

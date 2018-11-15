@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ServiceTile from "../components/ServiceTile";
+import ServiceTile from "../service/ServiceTile";
 import './Tabs.scss';
 
 export default class Tabs extends React.Component {

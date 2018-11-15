@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import ServiceTile from "../components/ServiceTile";
-import ProfileTile from "../components/ProfileTile";
+import ServiceTile from "../service/ServiceTile";
+import ProfileTile from "../profile/ProfileTile";
 
 
 export default class Results extends React.Component {
