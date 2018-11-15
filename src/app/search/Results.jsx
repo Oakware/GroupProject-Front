@@ -201,7 +201,6 @@ export default class Results extends React.Component {
                         {this.renderSortOptions()}
                     </select>
                 </div>
-
                 <div id="results" className="columns is-multiline is-centered">
                     {this.renderResults(this.state.sortValue)}
                 </div>

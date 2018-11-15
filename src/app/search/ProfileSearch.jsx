@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 import SearchArea from "./SearchArea";
+import GlobalSearch from "./GlobalSearch";
 
 export default class ProfileSearch extends React.Component {
     render() {

@@ -49,7 +49,7 @@ export default class SearchArea extends React.Component {
                 </div>
 
 
-                {this.state.showResults ? <Results query={this.state.queryValue} for={this.props.for}/> : null}
+                {/*{this.state.showResults ? <Results query={this.state.queryValue} for={this.props.for}/> : null}*/}
             </main>
         );
     }
