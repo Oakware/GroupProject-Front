@@ -1,7 +1,7 @@
 import * as types from './action-types';
 import * as Services from '../../microservices/services';
 
-export function getService(serviceId) {
+export function getServiceComments(serviceId) {
     return async (dispatch, getState) => {
         let service = await Services.getService(serviceId);
         dispatch({ type: types.SERVICE_FETCHED, service });

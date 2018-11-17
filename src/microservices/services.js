@@ -53,7 +53,14 @@ export async function serviceSearch(query) {
     // return res.result.result;
 
     await sleep();
-    if (query.text === 'service')
-        return [];
-    return services;
+    if (query.text === 'service') {
+        return {
+            errors: {
+                message: "nothing found"
+            },
+            services: []
+        };
+    }
+
+    return {services};
 }
