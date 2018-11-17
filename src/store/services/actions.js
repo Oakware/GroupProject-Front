@@ -3,8 +3,12 @@ import * as Services from '../../microservices/services';
 
 export function getService(serviceId) {
     return async (dispatch, getState) => {
-        let service = await Services.getService(serviceId);
-        dispatch({ type: types.SERVICE_FETCHED, service });
+        let res = await Services.getService(serviceId);
+        dispatch({
+            type: types.SERVICE_FETCHED,
+            errors: res.errors,
+            service: res.service
+        });
     };
 }
 

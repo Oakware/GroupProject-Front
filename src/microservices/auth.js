@@ -7,10 +7,22 @@ function generateToken() {
     };
 }
 
-export async function registerUser(query) {
+export function loadToken() {
+    try {
+        return JSON.parse(localStorage['auth:token']);
+    } catch (e) {
+        return null;
+    }
+}
+
+export function saveToken(token) {
+    localStorage['auth:token'] = JSON.stringify(token);
+}
+
+export async function register(query) {
     return {
-        token: generateToken(),
-        errors: {}
+        errors: {},
+        token: generateToken()
     }
 }
 
@@ -19,8 +31,11 @@ export async function login(query) {
     //     headers: { authorization: localStorage.getItem('token') }
     // });
 
+    let token = generateToken();
+    saveToken(token);
+
     return {
-        token: generateToken(),
-        errors: {}
+        errors: {},
+        token
     }
 }

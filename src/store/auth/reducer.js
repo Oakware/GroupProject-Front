@@ -1,19 +1,8 @@
 import * as types from './action-types';
-
-function loadToken() {
-    try {
-        return JSON.parse(localStorage['auth:token']);
-    } catch (e) {
-        return null;
-    }
-}
-
-function saveToken(token) {
-    localStorage['auth:token'] = JSON.stringify(token);
-}
+import * as Auth from '../../microservices/auth';
 
 const initialState = {
-    token: loadToken(),
+    token: Auth.loadToken(),
     authFailed: false,
     authErrors: [],
 };
@@ -21,7 +10,6 @@ const initialState = {
 export default function reduce(state = initialState, action = {}) {
     switch (action.type) {
         case types.TOKEN_FETCHED:
-            saveToken(action.token);
             return {
                 ...state,
                 token: action.token
@@ -40,5 +28,7 @@ export function getToken(state) {
 }
 
 export function getUserId(state) {
-    return state.auth.token.userId;
+    if (state.auth.token)
+        return state.auth.token.userId;
+    return undefined;
 }

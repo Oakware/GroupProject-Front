@@ -4,11 +4,13 @@ import thunk from 'redux-thunk';
 import auth from './auth/reducer';
 import profiles from './profiles/reducer';
 import services from './services/reducer';
+import chat from './chat/reducer';
 
 export const reducer = combineReducers({
     auth,
     profiles,
     services,
+    chat,
 });
 
 export function configureStore() {

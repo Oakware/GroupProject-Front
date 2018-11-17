@@ -41,7 +41,19 @@ let sleep = (t = 500) => new Promise(resolve => setTimeout(resolve, t));
 
 export async function getService(serviceId) {
     await sleep();
-    return services.find(s => s.id.toString() === serviceId);
+
+    let service = services.find(s => s.id.toString() === serviceId);
+
+    if (!service) {
+        return {
+            errors: {
+                code: 404,
+                message: 'service not found'
+            }
+        };
+    }
+
+    return {service};
 }
 
 export async function serviceSearch(query) {
@@ -53,10 +65,11 @@ export async function serviceSearch(query) {
     // return res.result.result;
 
     await sleep();
+
     if (query.text === 'service') {
         return {
             errors: {
-                message: "nothing found"
+                message: 'nothing found'
             },
             services: []
         };

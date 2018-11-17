@@ -4,22 +4,26 @@ export function get(path) {
     return GATEWAY_ENDPOINT + path;
 }
 
-function genServicePath(rootPath, paths) {
+function servicePath(rootPath, pathsGen) {
     let entry = (path = '') => rootPath + path;
+    let paths = pathsGen(entry)[0];
     Object.assign(entry, paths);
     return entry;
 }
 
 export const paths = {
-    profiles: genServicePath(get('/user_profile'), {
-        profile: (id) => get('/user_profile/profiles/' + id),
-        update: get('/user_profile/profiles/update'),
-    }),
-    services: genServicePath(get('/services'), {
-        all: get('/sevices/sevices/all'),
-        intext: get('/sevices/sevices/intext'),
-    }),
-    chat: genServicePath(get('/chat_comment'), {
+    profiles: servicePath(get('/user_profile/profiles'), get => [{
+        profile: (id) => get('/' + id),
+        update: get('/update'),
+        search: get('/search'),
+    }]),
+    services: servicePath(get('/services/sevices'), get => [{
+        all: get('/all'),
+        service: get('/id'),
+        user: get('/user'),
+        search: get('/intext'),
+    }]),
+    chat: servicePath(get('/chat_comment'), get => [{
         //
-    }),
+    }]),
 };
