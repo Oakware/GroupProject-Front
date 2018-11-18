@@ -16,6 +16,8 @@ export default class GlobalSearch extends React.Component {
             },
             'rating': 1
         }
+
+        this.showResults = this.showResults.bind(this);
     }
 
     selectCategory(e) {
@@ -52,6 +54,9 @@ export default class GlobalSearch extends React.Component {
 
     showResults() {
         console.log(this.state)
+        this.setState({
+            showResults: true
+        });
     }
 
     updateInputValue(evt) {
@@ -74,7 +79,7 @@ export default class GlobalSearch extends React.Component {
                                         onChange={evt => this.updateInputValue(evt, 0)}
                                         className="input is-rounded" type="text"
                                         placeholder="Search..."/>
-                                    
+
                                 </div>
                                 <br/>
                                 <p className="title is-4">Category</p>
@@ -213,7 +218,7 @@ export default class GlobalSearch extends React.Component {
                             </div>
                             <div className="column is-8">
                                 <p className="title is-4">Results</p>
-                                <Results query={this.state.queryValue} for='service'/>
+                                {this.state.showResults ? <Results query={this.state.queryValue} for='service'/> : null}
                             </div>
                         </div>
                     </div>
