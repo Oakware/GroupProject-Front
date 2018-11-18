@@ -5,11 +5,59 @@ import StarRatings from "react-star-ratings";
 import Results from "./Results";
 
 export default class GlobalSearch extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state={
-            'queryValue': "hello"
+        this.state = {
+            'queryValue': "",
+            'categories': [],
+            'priceRange': {
+                'min': 0,
+                'max': 100
+            },
+            'rating': 1
         }
+    }
+
+    selectCategory(e) {
+        let newCategory = e.target.textContent
+        let classes = e.target.classList
+        if (this.state.categories.includes(newCategory)) {
+            this.state.categories.splice(this.state.categories.indexOf(newCategory), 1)
+            console.log(this.state.categories)
+            classes.remove('is-success')
+        }
+        else {
+            this.setState({
+                'categories': this.state.categories.concat(newCategory)
+            }, () => {
+                classes.add('is-success')
+                console.log(this.state.categories)
+            })
+        }
+
+    }
+
+    pickPrice(e) {
+        console.log(e.target)
+        if (e.target.placeholder == 'Min : 0')
+            this.state.priceRange.min = e.target.value
+        else
+            this.state.priceRange.max = e.target.value
+        console.log(this.state.priceRange)
+    }
+
+    selectRating(e) {
+        this.state.rating = e.target.value
+    }
+
+    showResults() {
+        console.log(this.state)
+    }
+
+    updateInputValue(evt) {
+        this.setState({
+            queryValue: evt.target.value,
+        });
     }
 
     render() {
@@ -17,49 +65,56 @@ export default class GlobalSearch extends React.Component {
             <main className="GlobalSearch">
                 <section className="section">
                     <div className="container">
-                        <SearchArea for="service"/>
-                        <br/>
-                        <br/>
                         <div className="columns">
                             <div className="column is-3">
+
+                                <div className="control is-expanded">
+                                    <input
+                                        value={this.state.queryValue}
+                                        onChange={evt => this.updateInputValue(evt, 0)}
+                                        className="input is-rounded" type="text"
+                                        placeholder="Search..."/>
+                                    
+                                </div>
+                                <br/>
                                 <p className="title is-4">Category</p>
                                 <div className="field is-grouped is-grouped-multiline">
-                                    <p className="control">
+                                    <p className="control" onClick={(e) => this.selectCategory(e)}>
                                         <a className="button">
                                             Home
                                         </a>
                                     </p>
-                                    <p className="control">
+                                    <p className="control" onClick={(e) => this.selectCategory(e)}>
                                         <a className="button">
                                             IT & Technology
                                         </a>
                                     </p>
-                                    <p className="control">
+                                    <p className="control" onClick={(e) => this.selectCategory(e)}>
                                         <a className="button">
                                             Graphics & Design
                                         </a>
                                     </p>
-                                    <p className="control">
+                                    <p className="control" onClick={(e) => this.selectCategory(e)}>
                                         <a className="button">
                                             Writing & Translation
                                         </a>
                                     </p>
-                                    <p className="control">
+                                    <p className="control" onClick={(e) => this.selectCategory(e)}>
                                         <a className="button">
                                             Video & Animation
                                         </a>
                                     </p>
-                                    <p className="control">
+                                    <p className="control" onClick={(e) => this.selectCategory(e)}>
                                         <a className="button">
                                             Music & Audio
                                         </a>
                                     </p>
-                                    <p className="control">
+                                    <p className="control" onClick={(e) => this.selectCategory(e)}>
                                         <a className="button">
                                             Business
                                         </a>
                                     </p>
-                                    <p className="control">
+                                    <p className="control" onClick={(e) => this.selectCategory(e)}>
                                         <a className="button">
                                             Fun & Lifestyle
                                         </a>
@@ -69,7 +124,8 @@ export default class GlobalSearch extends React.Component {
                                 <p className="title is-4">Price Range</p>
                                 <div className="field has-addons">
                                     <p className="control">
-                                        <input className="input" type="text" placeholder="Min"/>
+                                        <input className="input" type="number" placeholder="Min : 0"
+                                               onChange={(e) => this.pickPrice(e)}/>
                                     </p>
                                     <p className="control">
                                         <a className="button is-static">
@@ -79,7 +135,8 @@ export default class GlobalSearch extends React.Component {
                                 </div>
                                 <div className="field has-addons">
                                     <p className="control">
-                                        <input className="input" type="text" placeholder="Max"/>
+                                        <input className="input" type="number" placeholder="Max : 100"
+                                               onChange={(e) => this.pickPrice(e)}/>
                                     </p>
                                     <p className="control">
                                         <a className="button is-static">
@@ -89,7 +146,7 @@ export default class GlobalSearch extends React.Component {
                                 </div>
                                 <hr/>
                                 <p className="title is-4">Rating</p>
-                                <div className="control">
+                                <div className="control" onChange={(e) => this.selectRating(e)}>
                                     <label className="radio">
                                         <input type="radio" name="rating" value="1"/>
                                         <StarRatings
@@ -146,7 +203,9 @@ export default class GlobalSearch extends React.Component {
                                     </label>
                                 </div>
                                 <div className="control">
-                                    <button className="button is-rounded is-info">Show Results</button>
+                                    <button className="button is-rounded is-info"
+                                            onClick={(e) => this.showResults(e)}>Show Results
+                                    </button>
                                 </div>
 
                             </div>
@@ -159,7 +218,8 @@ export default class GlobalSearch extends React.Component {
                         </div>
                     </div>
                 </section>
-            </main>
-        );
-    }
-}
+                <
+                /main>
+                );
+                }
+                }
