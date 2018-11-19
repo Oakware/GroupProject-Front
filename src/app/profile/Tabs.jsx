@@ -6,7 +6,7 @@ import './Tabs.scss';
 export default class Tabs extends React.Component {
 
     openTab(evt, tabName, nowActive) {
-        var i, x, tablinks, nowActiveTab;
+        let i, x, tablinks, nowActiveTab;
         x = document.getElementsByClassName("content-tab");
         for (i = 0; i < x.length; i++) {
             x[i].style.display = "none";
@@ -16,7 +16,7 @@ export default class Tabs extends React.Component {
             tablinks[i].className = tablinks[i].className.replace(" is-active", "");
         }
         nowActiveTab = document.getElementById(nowActive);
-        nowActiveTab.className = ("tab is-active")
+        nowActiveTab.className = ("tab is-active");
         document.getElementById(tabName).style.display = "block";
     }
 
@@ -30,13 +30,13 @@ export default class Tabs extends React.Component {
 
     renderTabsNames(){
         //TODO: ID of actually logged in user
-        var currentUserId = 1
+        let currentUserId = 1;
         if (this.props.userId == currentUserId) {
-            var result = []
+            let result = [];
             result.push(<li id="MyServ" className="tab is-active"
-                            onClick={() => this.openTab(event, 'MyServContent', 'MyServ')}><a>My Services</a></li>)
+                            onClick={() => this.openTab(event, 'MyServContent', 'MyServ')}><a>My Services</a></li>);
             result.push(<li id="MyOrd" className="tab" onClick={() => this.openTab(event, 'MyOrdContent', 'MyOrd')}>
-                <a>My Orders</a></li>)
+                <a>My Orders</a></li>);
             return result
         }
         return <li id="MyServ" className="tab is-active"

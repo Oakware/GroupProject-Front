@@ -2,8 +2,6 @@ import React from 'react';
 
 import './Profile.scss';
 import Tabs from "./Tabs";
-import {Link} from 'react-router-dom';
-import StarRatings from "react-star-ratings";
 import ProfileTile from "./ProfileTile";
 
 export default class Profile extends React.Component {

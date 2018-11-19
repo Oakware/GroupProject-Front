@@ -14,7 +14,7 @@ export default class ProfileTile extends React.Component {
 
     renderNewServiceButton() {
         //TODO: ID of actually logged in user
-        var currentUserId = 1
+        let currentUserId = 1;
         if (this.state.userId === currentUserId) {
         return <Link className="button is-success has-text-white"
                      to={"/profile/" + this.props.profile.id + "/create"}>
@@ -25,7 +25,7 @@ export default class ProfileTile extends React.Component {
 
     renderSettingsButton() {
         //TODO: ID of actually logged in user
-        var currentUserId = 1;
+        let currentUserId = 1;
         if (this.state.userId === currentUserId) {
         return <Link to={"/profile/" + this.props.profile.id + "/settings"}>
             <span className="icon"><ion-icon name="settings"></ion-icon></span>

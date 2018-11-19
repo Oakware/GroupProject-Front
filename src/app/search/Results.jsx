@@ -18,7 +18,7 @@ export default class Results extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({for: this.props.for})
+        this.setState({for: this.props.for});
         this.setState({query: this.props.query})
     }
 
@@ -62,7 +62,7 @@ export default class Results extends React.Component {
                     mark: 5,
                     price: 5
                 }
-            ]
+            ];
             return this.renderServices(services, orderBy);
         }
         else {
@@ -96,26 +96,26 @@ export default class Results extends React.Component {
     }
 
     renderSortOptions() {
-        if (this.state.for === 'service') {
-            let result = []
-            result.push(<option selected value="n-a">Name (asceding)</option>)
-            result.push(<option value="n-d">Name (desceding)</option>)
-            result.push(<option value="p-a">Price (asceding)</option>)
-            result.push(<option value="p-d">Price (desceding)</option>)
-            result.push(<option value="r-a">Rating (asceding)</option>)
-            result.push(<option value="r-d">Rating (desceding)</option>)
+        if (this.state.for == 'service') {
+            let result = [];
+            result.push(<option selected value="n-a">Name (asceding)</option>);
+            result.push(<option value="n-d">Name (desceding)</option>);
+            result.push(<option value="p-a">Price (asceding)</option>);
+            result.push(<option value="p-d">Price (desceding)</option>);
+            result.push(<option value="r-a">Rating (asceding)</option>);
+            result.push(<option value="r-d">Rating (desceding)</option>);
             return result
         }
         else {
-            let result = []
-            result.push(<option selected value="un-a">Username (asceding)</option>)
-            result.push(<option value="un-d">Username (desceding)</option>)
-            result.push(<option value="fn-a">First Name (asceding)</option>)
-            result.push(<option value="fn-d">First Name (desceding)</option>)
-            result.push(<option value="ln-a">Last Name (asceding)</option>)
-            result.push(<option value="ln-d">Last Name (desceding)</option>)
-            result.push(<option value="r-a">Rating (asceding)</option>)
-            result.push(<option value="r-d">Rating (desceding)</option>)
+            let result = [];
+            result.push(<option selected value="un-a">Username (asceding)</option>);
+            result.push(<option value="un-d">Username (desceding)</option>);
+            result.push(<option value="fn-a">First Name (asceding)</option>);
+            result.push(<option value="fn-d">First Name (desceding)</option>);
+            result.push(<option value="ln-a">Last Name (asceding)</option>);
+            result.push(<option value="ln-d">Last Name (desceding)</option>);
+            result.push(<option value="r-a">Rating (asceding)</option>);
+            result.push(<option value="r-d">Rating (desceding)</option>);
             return result
         }
     }
@@ -139,12 +139,12 @@ export default class Results extends React.Component {
                 services.sort((a,b) => (a.mark < b.mark) ? 1 : ((b.mark < a.mark) ? -1 : 0));
                 break;
         }
-        let result = []
+        let result = [];
         services.map((s) =>
             result.push(<div className="column is-6-desktop is-10-tablet">
                 <ServiceTile service={s} key={s.id}/>
             </div>)
-        )
+        );
         return result
     }
 
@@ -174,7 +174,7 @@ export default class Results extends React.Component {
                 break;
         }
 
-        let result = []
+        let result = [];
         profiles.map((p) =>
             result.push(<div className="column is-6-desktop is-10-tablet" key={p.id}>
                     <Link to={"/profile/" + p.id}>
@@ -184,7 +184,7 @@ export default class Results extends React.Component {
                     </Link>
                 </div>
             )
-        )
+        );
         return result
     }
 

@@ -1,12 +1,10 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import SearchArea from "./SearchArea";
 import StarRatings from "react-star-ratings";
 import Results from "./Results";
 
 export default class GlobalSearch extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             'queryValue': "",
             'categories': [],
@@ -15,24 +13,24 @@ export default class GlobalSearch extends React.Component {
                 'max': 100
             },
             'rating': 1
-        }
+        };
 
         this.showResults = this.showResults.bind(this);
     }
 
     selectCategory(e) {
-        let newCategory = e.target.textContent
-        let classes = e.target.classList
+        let newCategory = e.target.textContent;
+        let classes = e.target.classList;
         if (this.state.categories.includes(newCategory)) {
-            this.state.categories.splice(this.state.categories.indexOf(newCategory), 1)
-            console.log(this.state.categories)
-            classes.remove('is-success')
+            this.state.categories.splice(this.state.categories.indexOf(newCategory), 1);
+            console.log(this.state.categories);
+            classes.remove('is-success');
         }
         else {
             this.setState({
                 'categories': this.state.categories.concat(newCategory)
             }, () => {
-                classes.add('is-success')
+                classes.add('is-success');
                 console.log(this.state.categories)
             })
         }
@@ -40,11 +38,11 @@ export default class GlobalSearch extends React.Component {
     }
 
     pickPrice(e) {
-        console.log(e.target)
+        console.log(e.target);
         if (e.target.placeholder == 'Min : 0')
-            this.state.priceRange.min = e.target.value
+            this.state.priceRange.min = e.target.value;
         else
-            this.state.priceRange.max = e.target.value
+            this.state.priceRange.max = e.target.value;
         console.log(this.state.priceRange)
     }
 
@@ -53,7 +51,7 @@ export default class GlobalSearch extends React.Component {
     }
 
     showResults() {
-        console.log(this.state)
+        console.log(this.state);
         this.setState({
             showResults: true
         });
@@ -223,8 +221,7 @@ export default class GlobalSearch extends React.Component {
                         </div>
                     </div>
                 </section>
-                <
-                /main>
+                </main>
                 );
                 }
                 }
