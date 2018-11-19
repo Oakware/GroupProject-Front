@@ -49,12 +49,12 @@ export default class ProfileTile extends React.Component {
                     <div className="column">
                         <p className="is-uppercase has-text-weight-bold">
                             {this.props.profile.firstName + " " +
-                            this.props.profile.lastName}
+                            this.props.profile.secondName}
                         </p>
-                        <p>@{this.props.profile.login}</p>
+                        <p>@{this.props.profile.username}</p>
 
                         <StarRatings
-                            rating={this.props.profile.mark}
+                            rating={this.props.profile.rating}
                             starDimension="20px"
                             starSpacing="2px"
                             starEmptyColor='rgb(236, 236, 236)'
@@ -71,12 +71,12 @@ export default class ProfileTile extends React.Component {
                                     <span className="icon">
                                         <ion-icon name="mail"></ion-icon>
                                     </span>
-                            {this.props.profile.email}</p>
+                            {this.props.profile.emailAddress}</p>
                         <p className="text has-text-justified">
                                     <span className="icon">
                                         <ion-icon name="navigate"></ion-icon>
                                     </span>
-                            {this.props.profile.city}</p>
+                            {this.props.profile.location}</p>
 
                         {
                             this.renderNewServiceButton()
