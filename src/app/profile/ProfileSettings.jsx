@@ -8,14 +8,15 @@ export default class ProfileSettings extends React.Component {
         //TODO: get real data
         return {
             id: 1,
-            login: "iduchan0",
+            username: "iduchan0",
             firstName: "Ivor",
-            lastName: "Duchan",
-            email: "iduchan0@dmoz.org",
+            secondName: "Duchan",
+            emailAddress: "iduchan0@dmoz.org",
             description: "Hi! I am a cool guy, who is an expert Software Engineer." +
             "\n I can help you with any of your projects for a low price.",
-            city: "Lviv",
-            mark: 3.6
+            location: "Lviv",
+            rating: 3.6,
+            walletAddress: '0x554e1F37Bb03903Dd1eA7eFe9DC1dD9a160C6Ba5'
         }
     }
 
@@ -48,7 +49,7 @@ export default class ProfileSettings extends React.Component {
                             <div className="field-body">
                                 <div className="field">
                                     <p className="control is-normal">
-                                        <input className="input" type="text" placeholder={this.getCurrentUserData().lastName}/>
+                                        <input className="input" type="text" placeholder={this.getCurrentUserData().secondName}/>
                                     </p>
                                 </div>
                             </div>
@@ -61,11 +62,25 @@ export default class ProfileSettings extends React.Component {
                             <div className="field-body">
                                 <div className="field">
                                     <p className="control is-normal">
-                                        <input className="input" type="text" placeholder={this.getCurrentUserData().login}/>
+                                        <input className="input" type="text" placeholder={this.getCurrentUserData().username}/>
                                     </p>
                                 </div>
                             </div>
                         </div>
+
+                        <div className="field is-horizontal">
+                            <div className="field-label is-normal">
+                                <label className="label">Payment Address</label>
+                            </div>
+                            <div className="field-body">
+                                <div className="field">
+                                    <p className="control is-normal">
+                                        <input className="input" type="text" placeholder={this.getCurrentUserData().walletAddress}/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
                         <hr/>
 
                         <div className="field is-horizontal">
@@ -115,7 +130,7 @@ export default class ProfileSettings extends React.Component {
                             <div className="field-body">
                                 <div className="field">
                                     <p className="control is-normal">
-                                        <input className="input" type="text" placeholder={this.getCurrentUserData().city}/>
+                                        <input className="input" type="text" placeholder={this.getCurrentUserData().location}/>
                                     </p>
                                 </div>
                             </div>

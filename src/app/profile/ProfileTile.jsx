@@ -8,27 +8,14 @@ export default class ProfileTile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userId: 0,
-            cabinet: true
+            userId: this.props.profile.id,
         };
-    }
-
-    componentDidMount() {
-        if (this.props.cabinet === false) {
-            this.setState({
-                userId: this.props.profile.id,
-                cabinet: false})
-        }
-        else {
-            this.setState({
-                userId: this.props.profile.id})
-        }
     }
 
     renderNewServiceButton() {
         //TODO: ID of actually logged in user
-        var currentUserId = 1
-        if (this.state.userId === currentUserId && this.state.cabinet) {
+        let currentUserId = 1;
+        if (this.state.userId === currentUserId) {
         return <Link className="button is-success has-text-white"
                      to={"/profile/" + this.props.profile.id + "/create"}>
             New Service
@@ -38,8 +25,8 @@ export default class ProfileTile extends React.Component {
 
     renderSettingsButton() {
         //TODO: ID of actually logged in user
-        var currentUserId = 1;
-        if (this.state.userId === currentUserId && this.state.cabinet) {
+        let currentUserId = 1;
+        if (this.state.userId === currentUserId) {
         return <Link to={"/profile/" + this.props.profile.id + "/settings"}>
             <span className="icon"><ion-icon name="settings"></ion-icon></span>
         </Link>
@@ -62,12 +49,12 @@ export default class ProfileTile extends React.Component {
                     <div className="column">
                         <p className="is-uppercase has-text-weight-bold">
                             {this.props.profile.firstName + " " +
-                            this.props.profile.lastName}
+                            this.props.profile.secondName}
                         </p>
-                        <p>@{this.props.profile.login}</p>
+                        <p>@{this.props.profile.username}</p>
 
                         <StarRatings
-                            rating={this.props.profile.mark}
+                            rating={this.props.profile.rating}
                             starDimension="20px"
                             starSpacing="2px"
                             starEmptyColor='rgb(236, 236, 236)'
@@ -84,12 +71,12 @@ export default class ProfileTile extends React.Component {
                                     <span className="icon">
                                         <ion-icon name="mail"></ion-icon>
                                     </span>
-                            {this.props.profile.email}</p>
+                            {this.props.profile.emailAddress}</p>
                         <p className="text has-text-justified">
                                     <span className="icon">
                                         <ion-icon name="navigate"></ion-icon>
                                     </span>
-                            {this.props.profile.city}</p>
+                            {this.props.profile.location}</p>
 
                         {
                             this.renderNewServiceButton()

@@ -12,6 +12,7 @@ import ServiceCreator from './service/ServiceCreator';
 import Service from './service/Service';
 import Results from './search/Results';
 import ProfileSearch from './search/ProfileSearch';
+import GlobalSearch from "./search/GlobalSearch";
 
 function MainRouting() {
     return (
@@ -44,6 +45,7 @@ function MainRouting() {
                 <Route path="/search">
                     <Switch>
                         <Route exact path="/search/people" component={ProfileSearch}/>
+                        <Route exact path="/search/global" component={GlobalSearch}/>
                         <Route component={Error404}/>
                     </Switch>
                 </Route>
