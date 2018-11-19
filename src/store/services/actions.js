@@ -3,8 +3,12 @@ import * as Services from '../../microservices/services';
 
 export function getService(serviceId) {
     return async (dispatch, getState) => {
-        let service = await Services.getService(serviceId);
-        dispatch({ type: types.SERVICE_FETCHED, service });
+        let res = await Services.getService(serviceId);
+        dispatch({
+            type: types.SERVICE_FETCHED,
+            errors: res.errors,
+            service: res.service
+        });
     };
 }
 
@@ -16,8 +20,12 @@ export function resetService() {
 
 export function searchService(query) {
     return async (dispatch, getState) => {
-        let services = await Services.serviceSearch(query);
-        dispatch({ type: types.SEARCH_FETCHED, services });
+        let res = await Services.serviceSearch(query);
+        dispatch({
+            type: types.SEARCH_FETCHED,
+            errors: res.errors,
+            services: res.services,
+        });
     };
 }
 

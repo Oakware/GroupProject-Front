@@ -37,28 +37,18 @@ class Homepage extends React.Component {
             this.props.dispatch(servicesActions.searchService({
                 text: query
             }));
+        } else {
+            this.props.dispatch(servicesActions.resetSearch());
         }
     }
 
-    renderSearchResults() {
-        let { servicesFound } = this.props;
-        if (!servicesFound)
-            return false;
+    renderSearchErrors() {
+        let { searchErrors } = this.props;
 
-        if (servicesFound.length) {
-            return (
-                <div className="columns is-multiline">
-                    {servicesFound.map(service =>
-                        <div className="column is-12-mobile is-6-tablet" key={service.id}>
-                            <ServiceTile className="search-result" service={service}/>
-                        </div>)
-                    }
-                </div>
-            );
-        } else {
+        if (searchErrors && searchErrors.message) {
             return (
                 <h1 className="title has-text-centered not-found-text">
-                    nothing found
+                    {searchErrors.message}
                 </h1>
             );
         }
@@ -75,12 +65,12 @@ class Homepage extends React.Component {
                             <div className="column is-9-tablet is-7-desktop">
                                 <div className="field has-addons">
                                     <div className="control is-expanded">
-                                        <input
-                                            name="query"
-                                            value={this.state.queryValue}
-                                            onChange={this.onQueryChange}
-                                            onKeyUp={this.onQueryEnter}
-                                            className="input is-rounded" type="text"/>
+                                        <input className="input is-rounded"
+                                               type="search" name="query"
+                                               value={this.state.query}
+                                               autoComplete="off"
+                                               onChange={this.onQueryChange}
+                                               onKeyUp={this.onQueryEnter}/>
                                     </div>
                                     <div className="control">
                                         <button className="button is-rounded is-info"
@@ -92,7 +82,15 @@ class Homepage extends React.Component {
                             </div>
                         </div>
 
-                        {this.renderSearchResults()}
+                        {this.renderSearchErrors()}
+
+                        <div className="columns is-multiline">
+                            {servicesFound.map(service =>
+                                <div className="column is-12-mobile is-6-tablet" key={service.id}>
+                                    <ServiceTile className="search-result" service={service}/>
+                                </div>)
+                            }
+                        </div>
                     </div>
                 </section>
             </main>
@@ -102,7 +100,8 @@ class Homepage extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        servicesFound: servicesSelectors.getFoundServices(state)
+        searchErrors: servicesSelectors.getServicesSearchErrors(state),
+        servicesFound: servicesSelectors.getFoundServices(state),
     };
 }
 

@@ -28,10 +28,49 @@ let sleep = (t = 500) => new Promise(resolve => setTimeout(resolve, t));
 
 export async function getProfile(id) {
     await sleep();
-    return profiles[id];
+
+    let profile = profiles[id];
+
+    if (!profile) {
+        return {
+            errors: {
+                code: 404,
+                message: 'profile not found'
+            }
+        }
+    }
+
+    return {profile};
+}
+
+export async function updateProfile(userId, data) {
+    let profile = profiles[userId];
+
+    if (!profile) {
+        return {
+            errors: {
+                code: 404,
+                message: 'profile not found'
+            }
+        };
+    }
+
+    Object.assign(profile, data);
+
+    return {profile};
 }
 
 export async function profileSearch(query) {
     await sleep();
-    return profiles;
+
+    if (query.text === 'profile') {
+        return {
+            errors: {
+                message: 'nothing found'
+            },
+            profiles: []
+        };
+    }
+
+    return {profiles};
 }

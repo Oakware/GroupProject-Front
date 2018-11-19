@@ -1,4 +1,26 @@
 import * as gateway from './gateway';
+import Keycloak from 'keycloak-js';
+
+// let keycloak = Keycloak({
+//     url: 'http://localhost:8080/auth',
+//     realm: 'demo',
+//     clientId: 'shilo'
+// });
+//
+// keycloak.init({ flow: 'implicit' }).success(function (authenticated) {
+//     console.log(authenticated ? keycloak : 'not authenticated');
+//     if (!authenticated) {
+//         keycloak.login();
+//     }
+//     keycloak.loadUserProfile().success(result => {
+//         console.log(result);
+//     });
+//     // else
+//         // keycloak.updateToken(30).success(result => console.log(keycloak));
+// }).error(function () {
+//     console.log('failed to initialize');
+//     // keycloak.logout();
+// });
 
 function generateToken() {
     return {
@@ -7,10 +29,22 @@ function generateToken() {
     };
 }
 
-export async function registerUser(query) {
+export function loadToken() {
+    try {
+        return JSON.parse(localStorage['auth:token']);
+    } catch (e) {
+        return null;
+    }
+}
+
+export function saveToken(token) {
+    localStorage['auth:token'] = JSON.stringify(token);
+}
+
+export async function register(query) {
     return {
-        token: generateToken(),
-        errors: {}
+        errors: {},
+        token: generateToken()
     }
 }
 
@@ -19,8 +53,11 @@ export async function login(query) {
     //     headers: { authorization: localStorage.getItem('token') }
     // });
 
+    let token = generateToken();
+    saveToken(token);
+
     return {
-        token: generateToken(),
-        errors: {}
+        errors: {},
+        token
     }
 }

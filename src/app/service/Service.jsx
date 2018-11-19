@@ -17,18 +17,23 @@ class Service extends React.Component {
         this.props.dispatch(servicesActions.resetService());
     }
 
+    renderServiceErrors() {
+        let { serviceErrors } = this.props;
+
+        if (serviceErrors && serviceErrors.message) {
+            return (
+                <h1 className="title has-text-centered has-text-danger not-found-text">
+                    {serviceErrors.message}
+                </h1>
+            );
+        }
+    }
+
     renderService() {
         let { service } = this.props;
 
-        if (!this.props.serviceExist) {
-            return (
-                <h1 className="title has-text-centered has-text-danger not-found-text">
-                    service not found
-                </h1>
-            );
-        } else if (!service) {
+        if (!service)
             return false;
-        }
 
         return (
             <div className="box">
@@ -60,6 +65,7 @@ class Service extends React.Component {
             <main className="Service">
                 <section className="section">
                     <div className="container">
+                        {this.renderServiceErrors()}
                         {this.renderService()}
                     </div>
                 </section>
@@ -70,7 +76,7 @@ class Service extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        serviceExist: servicesSelectors.isServiceExist(state),
+        serviceErrors: servicesSelectors.getServiceFetchErrors(state),
         service: servicesSelectors.getService(state)
     };
 }
