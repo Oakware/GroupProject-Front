@@ -1,4 +1,26 @@
 import * as gateway from './gateway';
+import Keycloak from 'keycloak-js';
+
+// let keycloak = Keycloak({
+//     url: 'http://localhost:8080/auth',
+//     realm: 'demo',
+//     clientId: 'shilo'
+// });
+//
+// keycloak.init({ flow: 'implicit' }).success(function (authenticated) {
+//     console.log(authenticated ? keycloak : 'not authenticated');
+//     if (!authenticated) {
+//         keycloak.login();
+//     }
+//     keycloak.loadUserProfile().success(result => {
+//         console.log(result);
+//     });
+//     // else
+//         // keycloak.updateToken(30).success(result => console.log(keycloak));
+// }).error(function () {
+//     console.log('failed to initialize');
+//     // keycloak.logout();
+// });
 
 function generateToken() {
     return {
