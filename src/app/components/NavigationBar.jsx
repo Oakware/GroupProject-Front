@@ -46,11 +46,17 @@ export default class NavigationBar extends React.Component {
                             </i>
                             <span> Home </span>
                         </NavLink>
+                        <NavLink className="navbar-item" activeClassName="active-link" exact to="/search/global">
+                            <i className="icon">
+                                <ion-icon name="search"/>
+                            </i>
+                            <span> Services </span>
+                        </NavLink>
                         <NavLink className="navbar-item" activeClassName="active-link" exact to="/search/people">
                             <i className="icon">
                                 <ion-icon name="search"/>
                             </i>
-                            <span> Search </span>
+                            <span> People </span>
                         </NavLink>
                     </div>
                     <div className="navbar-end">

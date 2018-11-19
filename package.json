@@ -17,6 +17,7 @@
         "axios": "^0.18.0",
         "bulma": "^0.7.2",
         "keycloak-js": "^4.6.0",
+        "bulma-divider": "^2.0.1",
         "react": "^16.6.1",
         "react-dom": "^16.6.1",
         "react-redux": "^5.1.0",

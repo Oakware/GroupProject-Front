@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import './Homepage.scss';
 import * as servicesActions from '../../store/services/actions';
 import * as servicesSelectors from '../../store/services/reducer';
-import ServiceTile from '../components/ServiceTile';
+import ServiceTile from '../service/ServiceTile';
 
 class Homepage extends React.Component {
     constructor(props) {
