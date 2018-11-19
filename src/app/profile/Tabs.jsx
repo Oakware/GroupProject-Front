@@ -23,7 +23,7 @@ export default class Tabs extends React.Component {
     renderServiceTiles(services) {
         return services.map((s) =>
             <div className="column is-6-desktop is-10-tablet" key={s.id}>
-                <ServiceTile className="service-tile" service={s}/>
+                <ServiceTile className="service-tile" service={s} small={false}/>
             </div>
         );
     }

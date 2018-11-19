@@ -7,6 +7,7 @@ import * as servicesActions from '../../store/services/actions';
 import * as servicesSelectors from '../../store/services/reducer';
 import StarRatings from "react-star-ratings";
 import CommentTile from "./CommentTile";
+import ProfileTile from "../profile/ProfileTile";
 
 class Service extends React.Component {
     componentDidMount() {
@@ -88,6 +89,48 @@ class Service extends React.Component {
         return result;
     }
 
+    getOwner() {
+        let {service} = this.props;
+        if (!service)
+            return false;
+        return service.owner
+    }
+
+    renderCurrentCustomers() {
+        let customers = [];
+        customers.push({
+            id: 2,
+            username: "ellegal",
+            firstName: "Elena",
+            secondName: "Galitska",
+            emailAddress: "elgal0@dmoz.org",
+            description: "Hi! I am cool.",
+            location: "Kyiv",
+            rating: 5,
+            photo: "https://media.giphy.com/media/7ieOyZw7sogO4/source.gif",
+            walletAddress: "address2"
+        });
+
+        customers.push({
+            id: 2,
+            username: "whoami",
+            firstName: "Gossip",
+            secondName: "Girl",
+            emailAddress: "gg@gfail.org",
+            description: "And who am I? That secret I will never tell. XOXO",
+            location: "NYC",
+            rating: 5,
+            photo: "https://data.whicdn.com/images/38906065/original.gif",
+            walletAddress: "address3"
+        });
+
+        let result = [];
+        customers.map((c) =>
+            result.push(<hr/>, <ProfileTile profile={c} small={true}/>)
+        );
+        return result;
+    }
+
     render() {
         return (
             <main className="Service">
@@ -95,8 +138,17 @@ class Service extends React.Component {
                     <div className="container box">
                         {this.renderServiceErrors()}
                         {this.renderService()}
+                        <Link to={this.props.location.pathname + "/chats"}>
+                            <button className="button">View Chats</button>
+                        </Link>
+                        {this.getOwner() != "@iduchan0" ?
+                            <button className="button is-pulled-right">Send Message</button> :
+                            <div className="section">
+                                <p className="title is-6">Current Customers</p>
+                                {this.renderCurrentCustomers()}
+                            </div>}
                         <section className="section">
-                            <p className="title is-5">Reviews</p>
+                            <p className="title is-6">Reviews</p>
                             {this.renderComments()}
                         </section>
                     </div>

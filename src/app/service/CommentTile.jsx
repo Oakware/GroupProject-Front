@@ -1,6 +1,8 @@
 import React from 'react';
 import './ServiceTile.scss';
 import StarRatings from "react-star-ratings";
+import {Link} from 'react-router-dom';
+
 
 
 export default class CommentTile extends React.Component {
@@ -53,11 +55,14 @@ export default class CommentTile extends React.Component {
                         <img className="is-rounded" src={this.getAuthorById(this.state.comment.customerId).photo}/>
                     </figure>
                     <div className="column">
-                        <p className="is-text">{this.getAuthorById(this.state.comment.customerId).username}
-                            <span
-                                className="is-text has-text-grey-light is-pulled-right">{this.state.comment.time.replace('T', ' ')}
+                        <Link to={"/profile/" + this.state.comment.customerId}>
+                            <p className="is-text">{this.getAuthorById(this.state.comment.customerId).username}
+                                <span
+                                    className="is-text has-text-grey-light is-pulled-right">{this.state.comment.time.replace('T', ' ')}
                         </span>
-                        </p>
+                            </p>
+                        </Link>
+
                         <StarRatings
                             rating={this.state.comment.rating}
                             starDimension="20px"
