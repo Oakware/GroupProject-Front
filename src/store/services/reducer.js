@@ -3,6 +3,7 @@ import * as types from './action-types';
 const initialState = {
     serviceFetchErrors: {},
     service: undefined,
+    userServices: [],
     servicesSearchErrors: {},
     servicesFound: [],
 };
@@ -20,6 +21,11 @@ export default function reduce(state = initialState, action = {}) {
                 ...state,
                 serviceFetchErrors: {},
                 service: undefined
+            };
+        case types.USER_SERVICES_FETCHED:
+            return {
+                ...state,
+                userServices: action.services
             };
         case types.SEARCH_FETCHED:
             return {
@@ -44,6 +50,10 @@ export function getServiceFetchErrors(state) {
 
 export function getService(state) {
     return state.services.service;
+}
+
+export function getUserServices(state) {
+    return state.services.userServices;
 }
 
 export function getServicesSearchErrors(state) {

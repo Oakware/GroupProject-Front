@@ -1,6 +1,6 @@
 import * as types from './action-types';
-import * as authSelectors from '../auth/reducer';
 import * as Profiles from '../../microservices/profiles';
+import * as Auth from '../../microservices/auth';
 
 export function getProfile(id) {
     return async (dispatch, getState) => {
@@ -15,7 +15,7 @@ export function getProfile(id) {
 
 export function updateProfile(data) {
     return async (dispatch, getState) => {
-        let userId = authSelectors.getUserId(getState());
+        let userId = Auth.getUserId();
         let res = Profiles.updateProfile(userId, data);
         dispatch({
             type: types.PROFILE_UPDATED,

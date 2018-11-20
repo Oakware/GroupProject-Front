@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import * as authActions from '../../store/auth/actions';
 
-class Login extends React.Component {
+export default class Login extends React.Component {
     constructor(props) {
         super(props);
 
@@ -23,7 +23,7 @@ class Login extends React.Component {
     }
 
     onSubmit() {
-        this.props.dispatch(authActions.fetchToken());
+        //
     }
 
     renderForm() {
@@ -84,9 +84,3 @@ class Login extends React.Component {
         );
     }
 }
-
-function mapStateToProps(state) {
-    return {};
-}
-
-export default connect(mapStateToProps)(Login);

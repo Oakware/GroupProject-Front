@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import StarRatings from 'react-star-ratings';
 
 import './Service.scss';
 import * as servicesActions from '../../store/services/actions';
 import * as servicesSelectors from '../../store/services/reducer';
-import StarRatings from "react-star-ratings";
 
 class Service extends React.Component {
     componentDidMount() {

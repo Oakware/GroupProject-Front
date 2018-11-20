@@ -1,63 +1,42 @@
 import * as gateway from './gateway';
 import Keycloak from 'keycloak-js';
 
-// let keycloak = Keycloak({
-//     url: 'http://localhost:8080/auth',
-//     realm: 'demo',
-//     clientId: 'shilo'
-// });
-//
-// keycloak.init({ flow: 'implicit' }).success(function (authenticated) {
-//     console.log(authenticated ? keycloak : 'not authenticated');
-//     if (!authenticated) {
-//         keycloak.login();
-//     }
-//     keycloak.loadUserProfile().success(result => {
-//         console.log(result);
-//     });
-//     // else
-//         // keycloak.updateToken(30).success(result => console.log(keycloak));
-// }).error(function () {
-//     console.log('failed to initialize');
-//     // keycloak.logout();
-// });
+let keycloak = Keycloak({
+    url: gateway.paths.auth,
+    realm: 'demo',
+    clientId: 'shilo'
+});
 
-function generateToken() {
-    return {
-        userId: 1,
-        key: Math.trunc(Math.random() * 1000)
-    };
-}
-
-export function loadToken() {
-    try {
-        return JSON.parse(localStorage['auth:token']);
-    } catch (e) {
-        return null;
+keycloak.init({ flow: 'implicit' }).success(function (authenticated) {
+    console.log(keycloak);
+    console.log(authenticated ? 'authenticated' : 'not authenticated');
+    if (authenticated) {
+        keycloak.loadUserProfile()
+            .success(console.log)
+            .error(console.error);
+    } else if (isAuthenticated()) {
+        keycloak.login();
     }
+}).error(function () {
+    console.error('Keycloak: failed to initialize');
+});
+
+export function register() {
+    keycloak.register();
 }
 
-export function saveToken(token) {
-    localStorage['auth:token'] = JSON.stringify(token);
+export function login() {
+    keycloak.login();
 }
 
-export async function register(query) {
-    return {
-        errors: {},
-        token: generateToken()
-    }
+export function logout() {
+    keycloak.logout();
 }
 
-export async function login(query) {
-    // let res = await axios.get(gateway.get('/auth'), {
-    //     headers: { authorization: localStorage.getItem('token') }
-    // });
+export function isAuthenticated() {
+    return keycloak.subject != null;
+}
 
-    let token = generateToken();
-    saveToken(token);
-
-    return {
-        errors: {},
-        token
-    }
+export function getUserId() {
+    return keycloak.subject;
 }
