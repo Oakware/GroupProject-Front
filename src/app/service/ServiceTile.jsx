@@ -20,7 +20,7 @@ export default class ServiceTile extends React.Component {
     render() {
         return (
             //TODO: onclick open service page
-            <article className={"ServiceTile box " + this.props.className}>
+            <article className={"ServiceTile " + this.props.className + (this.props.small ? null : " box")}>
 
                 <p className="title is-5 has-text-centered is-marginless">
                     <Link to={"/service/" + this.props.service.id}>
@@ -35,14 +35,18 @@ export default class ServiceTile extends React.Component {
                     starEmptyColor='rgb(236, 236, 236)'
                     starRatedColor='hsl(141, 71%, 48%)'
                 /></div>
-                <p className="title is-7 has-text-centered has-text-grey is-marginless">{this.props.service.owner}</p>
-                <p className="text">
-                    <span className="title is-6">Price:</span> {this.props.service.price} Milo
-                </p>
-                <div className="is-text is-6 has-text-justified">
-                    <span className="title is-6">Description:</span>
-                    <p>{this.props.service.description}</p>
-                </div>
+                {this.props.small ? null :
+                    <div>
+                        <p className="title is-7 has-text-centered has-text-grey is-marginless">{this.props.service.owner}</p>
+                        <p className="text">
+                            <span className="title is-6">Price:</span> {this.props.service.price} Milo
+                        </p>
+                        <div className="is-text is-6 has-text-justified">
+                            <span className="title is-6">Description:</span>
+                            <p>{this.props.service.description}</p>
+                        </div>
+                    </div>
+                }
             </article>
         );
     }

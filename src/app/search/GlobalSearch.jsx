@@ -28,7 +28,7 @@ export default class GlobalSearch extends React.Component {
         }
         else {
             this.setState({
-                'categories': this.state.categories.concat(newCategory)
+                'categories': this.state.categories.concat(newCategory.replace(' &', ''))
             }, () => {
                 classes.add('is-success');
                 console.log(this.state.categories)
@@ -57,6 +57,37 @@ export default class GlobalSearch extends React.Component {
         });
     }
 
+    renderCategories() {
+        let categories = [
+            {
+                "Graphics Design":
+                    ["Logo Design", "Illustration", "Portraits & Caricatures", "Flyers & Brochures", "Web & Mobile Design", "Other"]
+            },
+            {
+                "Writing Translation":
+                    ["Resumes & Cover Letters", "Website Content", "Translation", "Press Releases", "Creative Writing", "Other"]
+            },
+            {
+                "Music Audio":
+                    ["Songwriters", "Producers & Composers", "Singers", "Sound Effects", "Mixing & Mastering", "Other"]
+            },
+            {
+                "Programming Tech":
+                    ["WordPress", "Web Programming", "Support & IT", "Data Analysis & Reports", "Databases", "QA", "User Testing", "Desktop Applications", "Mobile Apps & Web", "Other"]
+            }];
+
+        let result = [];
+        categories.map((category) => {
+            result.push(
+                <p className="control" onClick={(e) => this.selectCategory(e)}>
+                <a className="button">
+                    {(Object.keys(category)[0]).replace(' ', ' & ')}
+                </a>
+            </p>)
+        });
+        return result
+    }
+
     updateInputValue(evt) {
         this.setState({
             queryValue: evt.target.value,
@@ -82,46 +113,7 @@ export default class GlobalSearch extends React.Component {
                                 <br/>
                                 <p className="title is-4">Category</p>
                                 <div className="field is-grouped is-grouped-multiline">
-                                    <p className="control" onClick={(e) => this.selectCategory(e)}>
-                                        <a className="button">
-                                            Home
-                                        </a>
-                                    </p>
-                                    <p className="control" onClick={(e) => this.selectCategory(e)}>
-                                        <a className="button">
-                                            IT & Technology
-                                        </a>
-                                    </p>
-                                    <p className="control" onClick={(e) => this.selectCategory(e)}>
-                                        <a className="button">
-                                            Graphics & Design
-                                        </a>
-                                    </p>
-                                    <p className="control" onClick={(e) => this.selectCategory(e)}>
-                                        <a className="button">
-                                            Writing & Translation
-                                        </a>
-                                    </p>
-                                    <p className="control" onClick={(e) => this.selectCategory(e)}>
-                                        <a className="button">
-                                            Video & Animation
-                                        </a>
-                                    </p>
-                                    <p className="control" onClick={(e) => this.selectCategory(e)}>
-                                        <a className="button">
-                                            Music & Audio
-                                        </a>
-                                    </p>
-                                    <p className="control" onClick={(e) => this.selectCategory(e)}>
-                                        <a className="button">
-                                            Business
-                                        </a>
-                                    </p>
-                                    <p className="control" onClick={(e) => this.selectCategory(e)}>
-                                        <a className="button">
-                                            Fun & Lifestyle
-                                        </a>
-                                    </p>
+                                    {this.renderCategories()}
                                 </div>
                                 <hr/>
                                 <p className="title is-4">Price Range</p>
@@ -221,7 +213,7 @@ export default class GlobalSearch extends React.Component {
                         </div>
                     </div>
                 </section>
-                </main>
-                );
-                }
-                }
+            </main>
+        );
+    }
+}
