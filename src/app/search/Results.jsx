@@ -179,7 +179,7 @@ export default class Results extends React.Component {
             result.push(<div className="column is-6-desktop is-10-tablet" key={p.id}>
                     <Link to={"/profile/" + p.id}>
                         <article className="box">
-                            <ProfileTile profile={p} cabinet={false}/>
+                            <ProfileTile profile={p} cabinet={false} small={true}/>
                         </article>
                     </Link>
                 </div>

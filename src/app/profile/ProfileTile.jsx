@@ -16,10 +16,10 @@ export default class ProfileTile extends React.Component {
         //TODO: ID of actually logged in user
         let currentUserId = 1;
         if (this.state.userId === currentUserId) {
-        return <Link className="button is-success has-text-white"
-                     to={"/profile/" + this.props.profile.id + "/create"}>
-            New Service
-        </Link>
+            return this.props.small ? null : <Link className="button is-success has-text-white"
+                         to={"/profile/" + this.props.profile.id + "/create"}>
+                New Service
+            </Link>
         }
     }
 
@@ -27,30 +27,32 @@ export default class ProfileTile extends React.Component {
         //TODO: ID of actually logged in user
         let currentUserId = 1;
         if (this.state.userId === currentUserId) {
-        return <Link to={"/profile/" + this.props.profile.id + "/settings"}>
-            <span className="icon"><ion-icon name="settings"></ion-icon></span>
-        </Link>
+            return <Link to={"/profile/" + this.props.profile.id + "/settings"}>
+                <span className="icon"><ion-icon name="settings"></ion-icon></span>
+            </Link>
         }
     }
 
     render() {
         return (
-            //TODO: onclick open profile page
             <main className="ProfileTile">
 
                 <div className="columns">
-                    <div className="column is-3">
-                        <figure className="image is-480x480">
+
+                    <div className={"column " + (this.props.small ? "is-2" : "is-3")}>
+                        <figure className={"image " + (this.props.small ? "is-320x320" : "is-480x480")}>
                             <img
                                 src={this.props.profile.photo}></img>
                         </figure>
 
                     </div>
                     <div className="column">
-                        <p className="is-uppercase has-text-weight-bold">
-                            {this.props.profile.firstName + " " +
-                            this.props.profile.secondName}
-                        </p>
+                        <Link to={"/profile/" + this.state.userId}>
+                            <p className="is-uppercase has-text-weight-bold">
+                                {this.props.profile.firstName + " " +
+                                this.props.profile.secondName}
+                            </p>
+                        </Link>
                         <p>@{this.props.profile.username}</p>
 
                         <StarRatings
@@ -60,34 +62,39 @@ export default class ProfileTile extends React.Component {
                             starEmptyColor='rgb(236, 236, 236)'
                             starRatedColor='hsl(141, 71%, 48%)'
                         />
-
                         <br/>
-                        <p className="text has-text-justified">
+                        {this.props.small ? null :
+                            <div>
+                                <p className="text has-text-justified">
                                     <span className="icon">
                                         <ion-icon name="information-circle"></ion-icon>
                                     </span>
-                            {this.props.profile.description}</p>
-                        <p className="text has-text-justified">
+                                    {this.props.profile.description}</p>
+                                <p className="text has-text-justified">
                                     <span className="icon">
                                         <ion-icon name="mail"></ion-icon>
                                     </span>
-                            {this.props.profile.emailAddress}</p>
-                        <p className="text has-text-justified">
+                                    {this.props.profile.emailAddress}</p>
+                                <p className="text has-text-justified">
                                     <span className="icon">
                                         <ion-icon name="navigate"></ion-icon>
                                     </span>
-                            {this.props.profile.location}</p>
+                                    {this.props.profile.location}</p>
 
-                        {
-                            this.renderNewServiceButton()
+                                {
+                                    this.renderNewServiceButton()
+                                }
+                            </div>
                         }
                     </div>
 
-                    <div className="column is-1">
-                        {
-                            this.renderSettingsButton()
-                        }
-                    </div>
+                    {this.props.small ? null :
+                        <div className="column is-1">
+                            {
+                                this.renderSettingsButton()
+                            }
+                        </div>
+                    }
                 </div>
 
 

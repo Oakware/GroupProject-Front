@@ -13,6 +13,8 @@ import Service from './service/Service';
 import Results from './search/Results';
 import ProfileSearch from './search/ProfileSearch';
 import GlobalSearch from "./search/GlobalSearch";
+import ServiceChats from "./service/ServiceChats";
+import Chat from "./service/Chat";
 
 function MainRouting() {
     return (
@@ -39,6 +41,8 @@ function MainRouting() {
                 <Route path="/service">
                     <Switch>
                         <Route exact path="/service/:serviceId" component={Service}/>
+                        <Route exact path="/service/:serviceId/chats" component={ServiceChats}/>
+                        <Route exact path="/service/:serviceId/chats/:customerId" component={Chat}/>
                         <Route component={Error404}/>
                     </Switch>
                 </Route>
