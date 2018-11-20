@@ -1,1 +1,6 @@
-.Profile {}
+.Profile {
+    .not-found-text {
+        text-transform: lowercase;
+        font-variant: small-caps;
+    }
+}

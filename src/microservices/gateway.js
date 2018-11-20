@@ -12,18 +12,19 @@ function servicePath(rootPath, pathsGen) {
 }
 
 export const paths = {
-    profiles: servicePath(get('/user_profile/profiles'), get => [{
+    auth: 'http://localhost:8080/auth',
+    profiles: servicePath('http://35.244.240.101/profiles', get => [{
         profile: (id) => get('/' + id),
         update: get('/update'),
         search: get('/search'),
     }]),
-    services: servicePath(get('/services/sevices'), get => [{
+    services: servicePath('http://35.244.186.40/services', get => [{
         all: get('/all'),
         service: get('/id'),
         user: get('/user'),
         search: get('/intext'),
     }]),
-    chat: servicePath(get('/chat_comment'), get => [{
+    chat: servicePath(get('http://35.244.172.73'), get => [{
         //
     }]),
 };

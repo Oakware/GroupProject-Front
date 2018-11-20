@@ -18,13 +18,23 @@ export function resetService() {
     };
 }
 
+export function getUserServices(userId) {
+    return async (dispatch, getState) => {
+        let res = await Services.getUserServices(userId);
+        dispatch({
+            type: types.USER_SERVICES_FETCHED,
+            services: res.services
+        });
+    };
+}
+
 export function searchService(query) {
     return async (dispatch, getState) => {
         let res = await Services.serviceSearch(query);
         dispatch({
             type: types.SEARCH_FETCHED,
             errors: res.errors,
-            services: res.services,
+            services: res.services
         });
     };
 }

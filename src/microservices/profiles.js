@@ -1,3 +1,6 @@
+import axios from 'axios';
+import * as gateway from './gateway';
+
 const profiles = {
     1: {
         id: 1,
@@ -27,8 +30,9 @@ const profiles = {
 let sleep = (t = 500) => new Promise(resolve => setTimeout(resolve, t));
 
 export async function getProfile(id) {
-    await sleep();
+    // let res = await axios.get(gateway.paths.profiles.profile(id));
 
+    await sleep();
     let profile = profiles[id];
 
     if (!profile) {

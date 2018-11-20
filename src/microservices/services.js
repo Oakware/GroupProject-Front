@@ -56,24 +56,43 @@ export async function getService(serviceId) {
     return {service};
 }
 
+export async function getUserServices(userId) {
+    let res = await axios.get(gateway.paths.services.user, {
+        params: {
+            user: userId
+        }
+    });
+
+    return { services: res.data.result }
+
+    // await sleep();
+    // return {services};
+}
+
 export async function serviceSearch(query) {
-    // console.log('request');
-    // let res = await axios.get('http://localhost:8080/services/intext', {
-    //     params: query
-    // });
-    // console.log(res);
-    // return res.result.result;
+    console.log('request');
+    let res = await axios.get(gateway.paths.services.search, {
+        params: query
+    });
+    console.log(res);
+    let services = res.data.result.result;
+    return {
+        errors: {
+            message: services.length ? undefined : 'nothing found'
+        },
+        services
+    };
 
-    await sleep();
-
-    if (query.text === 'service') {
-        return {
-            errors: {
-                message: 'nothing found'
-            },
-            services: []
-        };
-    }
-
-    return {services};
+    // await sleep();
+    //
+    // if (query.text === 'service') {
+    //     return {
+    //         errors: {
+    //             message: 'nothing found'
+    //         },
+    //         services: []
+    //     };
+    // }
+    //
+    // return {services};
 }

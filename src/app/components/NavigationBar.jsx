@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
 import './NavigationBar.scss';
+import * as Auth from '../../microservices/auth';
 
 function renderLink(path, text) {
     return (
@@ -25,7 +26,7 @@ export default class NavigationBar extends React.Component {
     }
 
     render() {
-        let userLoggedIn = true;
+        let isAuthenticated = Auth.isAuthenticated();
 
         return (
             <header className="NavigationBar navbar">
@@ -60,8 +61,11 @@ export default class NavigationBar extends React.Component {
                         </NavLink>
                     </div>
                     <div className="navbar-end">
-                        {userLoggedIn ? renderLink('/auth/login', 'Login') : false}
-                        {userLoggedIn ? renderLink('/auth/register', 'Register') : false}
+                        {!isAuthenticated ? <a className="navbar-item" onClick={Auth.register}> Register </a> : false}
+                        {!isAuthenticated ? <a className="navbar-item" onClick={Auth.login}> Login </a> : false}
+                        { isAuthenticated ? <a className="navbar-item" onClick={Auth.logout}> Logout </a> : false}
+                        {/*{!isAuthenticated ? renderLink('/auth/login', 'Login') : false}*/}
+                        {/*{!isAuthenticated ? renderLink('/auth/register', 'Register') : false}*/}
 
                         <NavLink className="navbar-item" activeClassName="active-link" exact to="/profile/1">
                             <i className="icon">
