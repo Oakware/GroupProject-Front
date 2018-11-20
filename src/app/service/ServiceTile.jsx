@@ -20,7 +20,7 @@ export default class ServiceTile extends React.Component {
     render() {
         return (
             //TODO: onclick open service page
-            <article className={"ServiceTile " + this.props.className + (this.props.small ? null : "box")}>
+            <article className={"ServiceTile " + this.props.className + (this.props.small ? null : " box")}>
 
                 <p className="title is-5 has-text-centered is-marginless">
                     <Link to={"/service/" + this.props.service.id}>
