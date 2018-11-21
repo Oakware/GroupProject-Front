@@ -16,6 +16,7 @@ export default class GlobalSearch extends React.Component {
         };
 
         this.showResults = this.showResults.bind(this);
+        this.onQueryEnter = this.onQueryEnter.bind(this);
     }
 
     selectCategory(e) {
@@ -80,10 +81,10 @@ export default class GlobalSearch extends React.Component {
         categories.map((category) => {
             result.push(
                 <p className="control" onClick={(e) => this.selectCategory(e)}>
-                <a className="button">
-                    {(Object.keys(category)[0]).replace(' ', ' & ')}
-                </a>
-            </p>)
+                    <a className="button">
+                        {(Object.keys(category)[0]).replace(' ', ' & ')}
+                    </a>
+                </p>)
         });
         return result
     }
@@ -94,22 +95,42 @@ export default class GlobalSearch extends React.Component {
         });
     }
 
+    onQueryEnter(e) {
+        if (e.key === 'Enter')
+            this.showResults();
+    }
+
     render() {
         return (
             <main className="GlobalSearch">
                 <section className="section">
                     <div className="container">
+                        <div className="columns is-centered">
+                            <div className="column is-9-tablet is-7-desktop">
+                                <div className="field has-addons">
+                                    <div className="control is-expanded">
+                                        <input className="input is-rounded"
+                                               type="search" name="query"
+                                               value={this.state.queryValue}
+                                               autoComplete="off"
+                                               onChange={evt => this.updateInputValue(evt, 0)}
+                                               onKeyUp={this.onQueryEnter}/>
+                                    </div>
+                                    <div className="control">
+                                        <button className="button is-rounded is-info"
+                                                onClick={this.showResults}>
+                                            Search
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div className="columns">
+
                             <div className="column is-3">
 
-                                <div className="control is-expanded">
-                                    <input
-                                        value={this.state.queryValue}
-                                        onChange={evt => this.updateInputValue(evt, 0)}
-                                        className="input is-rounded" type="text"
-                                        placeholder="Search..."/>
 
-                                </div>
                                 <br/>
                                 <p className="title is-4">Category</p>
                                 <div className="field is-grouped is-grouped-multiline">
@@ -197,11 +218,11 @@ export default class GlobalSearch extends React.Component {
                                         />
                                     </label>
                                 </div>
-                                <div className="control">
-                                    <button className="button is-rounded is-info"
-                                            onClick={(e) => this.showResults(e)}>Show Results
-                                    </button>
-                                </div>
+                                {/*<div className="control">*/}
+                                    {/*<button className="button is-rounded is-info"*/}
+                                            {/*onClick={(e) => this.showResults(e)}>Show Results*/}
+                                    {/*</button>*/}
+                                {/*</div>*/}
 
                             </div>
                             <div className="column is-1">

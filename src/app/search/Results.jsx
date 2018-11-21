@@ -141,8 +141,8 @@ export default class Results extends React.Component {
         }
         let result = [];
         services.map((s) =>
-            result.push(<div className="column is-12">
-                <ServiceTile service={s} key={s.id}/>
+            result.push(<div className="column is-12" key={s.id}>
+                <ServiceTile service={s}/>
             </div>)
         );
         return result
