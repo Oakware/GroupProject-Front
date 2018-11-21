@@ -4,14 +4,10 @@ import StarRatings from "react-star-ratings";
 import {Link} from 'react-router-dom';
 
 
-
 export default class CommentTile extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            'comment': this.props.comment,
-        };
     }
 
     getAuthorById(id) {
@@ -52,25 +48,27 @@ export default class CommentTile extends React.Component {
                 <hr/>
                 <div className="columns">
                     <figure className="image is-16x16 column is-1">
-                        <img className="is-rounded" src={this.getAuthorById(this.state.comment.customerId).photo}/>
+                        <img className="is-rounded" src={this.getAuthorById(this.props.comment.customerId).photo}/>
                     </figure>
                     <div className="column">
-                        <Link to={"/profile/" + this.state.comment.customerId}>
-                            <p className="is-text">{this.getAuthorById(this.state.comment.customerId).username}
+                        <Link to={"/profile/" + this.props.comment.customerId}>
+                            <p className="is-text">@{this.getAuthorById(this.props.comment.customerId).username}
                                 <span
-                                    className="is-text has-text-grey-light is-pulled-right">{this.state.comment.time.replace('T', ' ')}
+                                    className="is-text has-text-grey-light is-pulled-right">{this.props.comment.time[0] +
+                                "-" + this.props.comment.time[1] + "-" + this.props.comment.time[2] + "  " +
+                                this.props.comment.time[3] + ":" + this.props.comment.time[4] + ":" + this.props.comment.time[5]}
                         </span>
                             </p>
                         </Link>
 
                         <StarRatings
-                            rating={this.state.comment.rating}
+                            rating={this.props.comment.rating}
                             starDimension="20px"
                             starSpacing="2px"
                             starEmptyColor='rgb(236, 236, 236)'
                             starRatedColor='hsl(141, 71%, 48%)'
                         />
-                        <p className="is-text">{this.state.comment.commentBody}</p>
+                        <p className="is-text">{this.props.comment.commentBody}</p>
                     </div>
                 </div>
             </article>

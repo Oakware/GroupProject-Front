@@ -8,11 +8,14 @@ import CommentTile from "./CommentTile";
 import ProfileTile from "../profile/ProfileTile";
 import * as servicesActions from '../../store/services/actions';
 import * as servicesSelectors from '../../store/services/reducer';
+import * as chatActions from '../../store/chat/actions';
+import * as chatSelectors from '../../store/chat/reducer';
 
 class Service extends React.Component {
     componentDidMount() {
         let {serviceId} = this.props.match.params;
         this.props.dispatch(servicesActions.getService(serviceId));
+        this.props.dispatch(chatActions.getServiceComments(serviceId));
     }
 
     componentWillUnmount() {
@@ -63,24 +66,10 @@ class Service extends React.Component {
     }
 
     renderComments() {
-        let comments = [
-            {
-                "id": 1,
-                "serviceId": 1,
-                "customerId": 1,
-                "time": "2018-11-17T21:34:53",
-                "rating": 5,
-                "commentBody": "This individual does her job perfectly)0))00"
-            },
-            {
-                "id": 2,
-                "serviceId": 1,
-                "customerId": 2,
-                "time": "2018-11-16T11:00:53",
-                "rating": 1,
-                "commentBody": "Awful."
-            }
-        ];
+        let {comments} = this.props;
+
+        if (!comments)
+            return false;
 
         let result = [];
         comments.map((c) =>
@@ -161,8 +150,8 @@ class Service extends React.Component {
 function mapStateToProps(state) {
     return {
         serviceErrors: servicesSelectors.getServiceFetchErrors(state),
-        service: servicesSelectors.getService(state)
-
+        service: servicesSelectors.getService(state),
+        comments: chatSelectors.getServiceComments(state)
     };
 }
 
