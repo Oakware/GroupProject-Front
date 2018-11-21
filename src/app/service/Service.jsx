@@ -162,6 +162,7 @@ function mapStateToProps(state) {
     return {
         serviceErrors: servicesSelectors.getServiceFetchErrors(state),
         service: servicesSelectors.getService(state)
+
     };
 }
 
