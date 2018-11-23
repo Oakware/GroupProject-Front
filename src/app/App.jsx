@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 
 import router from './router';
 import { configureStore } from '../store';
+import * as authActions from '../store/auth/actions';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -11,7 +12,7 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-        // this.store.dispatch();
+        this.store.dispatch(authActions.initAuth());
     }
 
     render() {

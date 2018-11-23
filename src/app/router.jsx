@@ -12,9 +12,9 @@ import ServiceCreator from './service/ServiceCreator';
 import Service from './service/Service';
 import Results from './search/Results';
 import ProfileSearch from './search/ProfileSearch';
-import GlobalSearch from "./search/GlobalSearch";
-import ServiceChats from "./service/ServiceChats";
-import Chat from "./service/Chat";
+import GlobalSearch from './search/GlobalSearch';
+import ServiceChats from './service/ServiceChats';
+import Chat from './service/Chat';
 
 function MainRouting() {
     return (

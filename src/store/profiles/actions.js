@@ -1,6 +1,5 @@
 import * as types from './action-types';
 import * as Profiles from '../../microservices/profiles';
-import * as Auth from '../../microservices/auth';
 
 export function getProfile(id) {
     return async (dispatch, getState) => {
@@ -15,7 +14,7 @@ export function getProfile(id) {
 
 export function updateProfile(data) {
     return async (dispatch, getState) => {
-        let userId = Auth.getUserId();
+        let userId = '1';
         let res = Profiles.updateProfile(userId, data);
         dispatch({
             type: types.PROFILE_UPDATED,

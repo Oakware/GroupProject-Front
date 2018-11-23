@@ -1,32 +1,65 @@
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { withRouter, NavLink, Link } from 'react-router-dom';
 
 import './NavigationBar.scss';
-import * as Auth from '../../microservices/auth';
+import * as authActions from '../../store/auth/actions';
+import * as authSelectors from '../../store/auth/reducer';
 
-function renderLink(path, text) {
-    return (
-        <NavLink className="navbar-item" activeClassName="active-link" exact to={path}>
-            {text}
-        </NavLink>
-    );
-}
-
-export default class NavigationBar extends React.Component {
+class NavigationBar extends React.Component {
     constructor(props) {
         super(props);
 
-        this.menuRef = React.createRef();
+        this.state = {
+            menuActive: false
+        };
+
         this.onMenuClick = this.onMenuClick.bind(this);
+        this.onLinkClicked = this.onLinkClicked.bind(this);
     }
 
-    onMenuClick(e) {
-        this.menuRef.current.classList.toggle('is-active');
-        e.target.classList.toggle('is-active');
+    onMenuClick() {
+        this.setState((state, props) => ({
+            menuActive: !state.menuActive
+        }));
+    }
+
+    onLinkClicked() {
+        this.setState({
+            menuActive: false
+        });
+    }
+
+    renderLink(path, text, icon) {
+        return (
+            <NavLink className="navbar-item"
+                     activeClassName="active-link"
+                     exact to={path}
+                     onClick={this.onLinkClicked}
+            >
+                <i className="icon">
+                    <ion-icon name={icon}/>
+                </i>
+                <span> {text} </span>
+            </NavLink>
+        );
+    }
+
+    renderAuthLink(text, isAuth, action) {
+        let authenticated = this.props.userAuthenticated;
+
+        if (isAuth !== authenticated)
+            return false;
+
+        return (
+            <a className="navbar-item" onClick={() => this.props.dispatch(action())}>
+                {text}
+            </a>
+        );
     }
 
     render() {
-        let isAuthenticated = Auth.isAuthenticated();
+        let activeClass = this.state.menuActive ? 'is-active' : '';
 
         return (
             <header className="NavigationBar navbar">
@@ -35,47 +68,33 @@ export default class NavigationBar extends React.Component {
                         <img src="resources/logo.png" alt="Logo"/>
                     </Link>
 
-                    <a className="navbar-burger burger" onClick={this.onMenuClick}>
+                    <a className={"navbar-burger burger " + activeClass} onClick={this.onMenuClick}>
                         <span/> <span/> <span/>
                     </a>
                 </div>
-                <div className="navbar-menu" ref={this.menuRef}>
+                <div className={"navbar-menu " + activeClass}>
                     <div className="navbar-start">
-                        <NavLink className="navbar-item" activeClassName="active-link" exact to="/">
-                            <i className="icon">
-                                <ion-icon name="home"/>
-                            </i>
-                            <span> Home </span>
-                        </NavLink>
-                        <NavLink className="navbar-item" activeClassName="active-link" exact to="/search/global">
-                            <i className="icon">
-                                <ion-icon name="search"/>
-                            </i>
-                            <span> Services </span>
-                        </NavLink>
-                        <NavLink className="navbar-item" activeClassName="active-link" exact to="/search/people">
-                            <i className="icon">
-                                <ion-icon name="search"/>
-                            </i>
-                            <span> People </span>
-                        </NavLink>
+                        {this.renderLink('/', 'Home', 'home')}
+                        {this.renderLink('/search/global', 'Services', 'search')}
+                        {this.renderLink('/search/people', 'People', 'search')}
                     </div>
                     <div className="navbar-end">
-                        {!isAuthenticated ? <a className="navbar-item" onClick={Auth.register}> Register </a> : false}
-                        {!isAuthenticated ? <a className="navbar-item" onClick={Auth.login}> Login </a> : false}
-                        { isAuthenticated ? <a className="navbar-item" onClick={Auth.logout}> Logout </a> : false}
-                        {/*{!isAuthenticated ? renderLink('/auth/login', 'Login') : false}*/}
-                        {/*{!isAuthenticated ? renderLink('/auth/register', 'Register') : false}*/}
+                        {this.renderAuthLink('Register', false, authActions.register)}
+                        {this.renderAuthLink('Login', false, authActions.login)}
+                        {this.renderAuthLink('Logout', true, authActions.logout)}
 
-                        <NavLink className="navbar-item" activeClassName="active-link" exact to="/profile/1">
-                            <i className="icon">
-                                <ion-icon name="person"/>
-                            </i>
-                            <span> Profile </span>
-                        </NavLink>
+                        {this.renderLink('/profile/1', 'Profile', 'person')}
                     </div>
                 </div>
             </header>
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        userAuthenticated: authSelectors.isAuthenticated(state),
+    };
+}
+
+export default withRouter(connect(mapStateToProps)(NavigationBar));
