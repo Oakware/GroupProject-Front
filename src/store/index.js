@@ -2,15 +2,17 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 
 import auth from './auth/reducer';
-import profiles from './profiles/reducer';
-import services from './services/reducer';
 import chat from './chat/reducer';
+import profile from './profile/reducer';
+import search from './search/reducer';
+import service from './service/reducer';
 
 export const reducer = combineReducers({
     auth,
-    profiles,
-    services,
     chat,
+    profile,
+    search,
+    service,
 });
 
 export function configureStore() {

@@ -4,20 +4,13 @@ import { connect } from 'react-redux';
 import './Profile.scss';
 import Tabs from "./Tabs";
 import ProfileTile from "./ProfileTile";
-import * as profilesActions from '../../store/profiles/actions';
-import * as profilesSelectors from '../../store/profiles/reducer';
-import * as servicesActions from '../../store/services/actions';
-import * as servicesSelectors from '../../store/services/reducer';
+import * as profileActions from '../../store/profile/actions';
+import * as profileSelectors from '../../store/profile/reducer';
 
 class Profile extends React.Component {
     componentDidMount() {
         let { userId } = this.props.match.params;
-        this.props.dispatch(profilesActions.getProfile(userId));
-        this.props.dispatch(servicesActions.getUserServices(userId));
-    }
-
-    componentWillUnmount() {
-        this.props.dispatch(profilesActions.resetProfile());
+        this.props.dispatch(profileActions.getProfile(userId));
     }
 
     renderProfileErrors() {
@@ -69,9 +62,9 @@ class Profile extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        profileErrors: profilesSelectors.getProfileFetchErrors(state),
-        profile: profilesSelectors.getProfile(state),
-        userServices: servicesSelectors.getUserServices(state)
+        profileErrors: profileSelectors.getFetchErrors(state),
+        profile: profileSelectors.getProfile(state),
+        userServices: profileSelectors.getUserServices(state)
     };
 }
 

@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import './Homepage.scss';
-import * as servicesActions from '../../store/services/actions';
-import * as servicesSelectors from '../../store/services/reducer';
+import * as searchActions from '../../store/search/actions';
+import * as searchSelectors from '../../store/search/reducer';
 import ServiceTile from '../service/ServiceTile';
 
 class Homepage extends React.Component {
@@ -34,11 +34,11 @@ class Homepage extends React.Component {
     onSearchService() {
         let { query } = this.state;
         if (query.length > 0) {
-            this.props.dispatch(servicesActions.searchService({
+            this.props.dispatch(searchActions.searchService({
                 text: query
             }));
         } else {
-            this.props.dispatch(servicesActions.resetSearch());
+            this.props.dispatch(searchActions.resetServicesSearch());
         }
     }
 
@@ -100,8 +100,8 @@ class Homepage extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        searchErrors: servicesSelectors.getServicesSearchErrors(state),
-        servicesFound: servicesSelectors.getFoundServices(state),
+        searchErrors: searchSelectors.getServicesSearchErrors(state),
+        servicesFound: searchSelectors.getFoundServices(state),
     };
 }
 

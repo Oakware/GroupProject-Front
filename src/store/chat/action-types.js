@@ -1,1 +1,0 @@
-export const COMMENTS_FETCHED = 'chat.COMMENTS_FETCHED';

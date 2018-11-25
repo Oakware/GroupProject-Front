@@ -1,7 +1,6 @@
 import React from 'react';
 import StarRatings from "react-star-ratings";
 import {Link} from 'react-router-dom';
-import 'react-chat-elements/dist/main.css';
 import {ChatItem} from 'react-chat-elements'
 import ServiceTile from "./ServiceTile";
 

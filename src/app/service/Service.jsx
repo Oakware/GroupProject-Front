@@ -6,20 +6,13 @@ import StarRatings from 'react-star-ratings';
 import './Service.scss';
 import CommentTile from "./CommentTile";
 import ProfileTile from "../profile/ProfileTile";
-import * as servicesActions from '../../store/services/actions';
-import * as servicesSelectors from '../../store/services/reducer';
-import * as chatActions from '../../store/chat/actions';
-import * as chatSelectors from '../../store/chat/reducer';
+import * as serviceActions from '../../store/service/actions';
+import * as serviceSelectors from '../../store/service/reducer';
 
 class Service extends React.Component {
     componentDidMount() {
         let {serviceId} = this.props.match.params;
-        this.props.dispatch(servicesActions.getService(serviceId));
-        this.props.dispatch(chatActions.getServiceComments(serviceId));
-    }
-
-    componentWillUnmount() {
-        this.props.dispatch(servicesActions.resetService());
+        this.props.dispatch(serviceActions.getService(serviceId));
     }
 
     renderServiceErrors() {
@@ -124,22 +117,24 @@ class Service extends React.Component {
         return (
             <main className="Service">
                 <section className="section">
-                    <div className="container box">
+                    <div className="container">
                         {this.renderServiceErrors()}
-                        {this.renderService()}
-                        <Link to={this.props.location.pathname + "/chats"}>
-                            <button className="button">View Chats</button>
-                        </Link>
-                        {this.getOwner() != "@iduchan0" ?
-                            <button className="button is-pulled-right">Send Message</button> :
-                            <div className="section">
-                                <p className="title is-6">Current Customers</p>
-                                {this.renderCurrentCustomers()}
-                            </div>}
-                        <section className="section">
-                            <p className="title is-6">Reviews</p>
-                            {this.renderComments()}
-                        </section>
+                        <div className="box">
+                            {this.renderService()}
+                            <Link to={this.props.location.pathname + "/chats"}>
+                                <button className="button">View Chats</button>
+                            </Link>
+                            {this.getOwner() != "@iduchan0" ?
+                                <button className="button is-pulled-right">Send Message</button> :
+                                <div className="section">
+                                    <p className="title is-6">Current Customers</p>
+                                    {this.renderCurrentCustomers()}
+                                </div>}
+                            <section className="section">
+                                <p className="title is-6">Reviews</p>
+                                {this.renderComments()}
+                            </section>
+                        </div>
                     </div>
                 </section>
             </main>
@@ -149,9 +144,9 @@ class Service extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        serviceErrors: servicesSelectors.getServiceFetchErrors(state),
-        service: servicesSelectors.getService(state),
-        comments: chatSelectors.getServiceComments(state)
+        serviceErrors: serviceSelectors.getFetchErrors(state),
+        service: serviceSelectors.getService(state),
+        comments: serviceSelectors.getComments(state)
     };
 }
 
