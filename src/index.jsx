@@ -10,6 +10,6 @@ if (process.env.NODE_ENV !== 'production' && module.hot) {
     HotApp = hot(module)(App);
 }
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     ReactDOM.render(<HotApp/>, document.getElementById('app-root'));
 });
