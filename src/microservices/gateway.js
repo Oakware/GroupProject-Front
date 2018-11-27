@@ -22,7 +22,7 @@ export const paths = {
         all: get('/all'),
         service: get('/id'),
         user: get('/user'),
-        search: get('/filter'),
+        search: get('/intext'),
     })),
     chat: servicePath('http://35.244.172.73', get => ({
         allComments: get('/comments/aquire/all'),

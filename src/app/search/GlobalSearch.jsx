@@ -1,8 +1,11 @@
 import React from 'react';
 import StarRatings from "react-star-ratings";
 import ServiceTile from "../service/ServiceTile";
+import {connect} from "react-redux";
+import * as searchSelectors from "../../store/search/reducer";
+import * as searchActions from "../../store/search/actions";
 
-export default class GlobalSearch extends React.Component {
+class GlobalSearch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,6 +22,20 @@ export default class GlobalSearch extends React.Component {
 
         this.showResults = this.showResults.bind(this);
         this.onQueryEnter = this.onQueryEnter.bind(this);
+        this.getResults = this.getResults.bind(this);
+    }
+
+
+    renderSearchErrors() {
+        let {searchErrors} = this.props;
+
+        if (searchErrors && searchErrors.message) {
+            return (
+                <h1 className="title has-text-centered not-found-text">
+                    {searchErrors.message}
+                </h1>
+            );
+        }
     }
 
     selectCategory(e) {
@@ -53,6 +70,7 @@ export default class GlobalSearch extends React.Component {
         this.setState({
             showResults: true
         });
+        this.getResults()
     }
 
     renderCategories() {
@@ -107,66 +125,38 @@ export default class GlobalSearch extends React.Component {
             this.showResults();
     }
 
-    renderResults() {
-        let params = {
-            text: this.state.queryValue,
-            mark: this.state.rating,
-            priceFrom: this.state.priceRange.min,
-            priceTo: this.state.priceRange.max,
-            category: this.state.categories,
-            asc: this.state.asc,
-            fieldToSort: this.state.fieldToSort
-        };
+    getResults() {
+        let query = this.state.queryValue;
+        if (query.length > 0) {
+            this.props.dispatch(searchActions.searchService({
+                text: query,
+                mark: this.state.rating,
+                priceFrom: this.state.priceRange.min,
+                priceTo: this.state.priceRange.max,
+                category: this.state.categories,
+                asc: this.state.asc,
+                fieldToSort: this.state.fieldToSort
+            }));
+        } else {
+            this.props.dispatch(searchActions.resetServicesSearch());
+        }
+    }
 
-        let services = [
-            {
-                key: 1,
-                id: 1,
-                name: "Walk Your Dog",
-                description: "Hamburger excepteur ex non. Picanha labore t-bone excepteur, shoulder jerky frankfurter jowl venison veniam andouille tail shank chicken prosciutto. Lorem et capicola pariatur frankfurter, fugiat turkey. Ex consequat dolore, eiusmod shank bacon tri-tip shoulder elit. Jowl rump tenderloin officia labore reprehenderit.",
-                owner: "@iduchan0",
-                mark: 3,
-                price: 3
-            },
-            {
-                key: 2,
-                id: 2,
-                name: "Feed Your Cat",
-                description: "In t-bone salami occaecat tongue nostrud cupim dolore pancetta doner short ribs. Reprehenderit burgdoggen alcatra cupidatat non id laborum lorem andouille mollit. Chuck ham hock dolor ground round, esse porchetta kevin salami alcatra proident beef ribs incididunt anim nostrud ut. Pig cupim picanha frankfurter sint officia kielbasa qui.",
-                owner: "@iduchan0",
-                mark: 4,
-                price: 3
-            },
-            {
-                key: 3,
-                id: 3,
-                name: "Debug Your Code",
-                description: "Bacon ipsum dolor amet deserunt officia in consectetur strip steak. Strip steak labore sint ham chuck buffalo, sunt velit reprehenderit andouille kevin. Pastrami velit jowl do voluptate turducken, landjaeger anim tongue dolor sirloin chicken et strip steak fatback. Frankfurter doner filet mignon minim, pancetta exercitation shank non chuck.",
-                owner: "@iduchan0",
-                mark: 3.5,
-                price: 4
-            },
-            {
-                key: 4,
-                id: 4,
-                name: "Merge Your Branches",
-                description: "Ullamco dolor id laborum ham ham hock meatball consequat. In strip steak pork loin, nostrud short ribs aliquip nulla aliqua. Landjaeger biltong dolor ullamco. Nisi mollit pork chop in ut. Beef ribs frankfurter rump jowl voluptate drumstick.",
-                owner: "@iduchan0",
-                mark: 5,
-                price: 5
-            }
-        ];
+    renderSearchErrors() {
+        let { searchErrors } = this.props;
 
-        let result = [];
-        services.map((s) =>
-            result.push(<div className="column is-12" key={s.id}>
-                <ServiceTile service={s}/>
-            </div>)
-        );
-        return result
+        if (searchErrors && searchErrors.message) {
+            return (
+                <h1 className="title has-text-centered not-found-text">
+                    {searchErrors.message}
+                </h1>
+            );
+        }
     }
 
     render() {
+        let { servicesFound } = this.props;
+
         return (
             <main className="GlobalSearch">
                 <section className="section">
@@ -308,7 +298,12 @@ export default class GlobalSearch extends React.Component {
                                 <p className="title is-4">Results</p>
                                 {this.state.showResults ?
                                     <div id="results" className="columns is-multiline is-centered">
-                                        {this.renderResults()}
+                                        {servicesFound.map((service) =>
+                                            <div className="column is-12" key={service.id}>
+                                                <ServiceTile service={service}/>
+                                            </div>
+                                        )}
+                                        {this.renderSearchErrors()}
                                     </div> : null}
                             </div>
                         </div>
@@ -318,3 +313,14 @@ export default class GlobalSearch extends React.Component {
         );
     }
 }
+
+function
+
+mapStateToProps(state) {
+    return {
+        searchErrors: searchSelectors.getServicesSearchErrors(state),
+        servicesFound: searchSelectors.getFoundServices(state),
+    };
+}
+
+export default connect(mapStateToProps)(GlobalSearch);
