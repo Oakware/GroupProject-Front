@@ -60,12 +60,6 @@ export default class ServiceCreator extends React.Component {
                     result.push(
                         new Option(sub, sub));
                 });
-                {/*<option key={categories.indexOf(category)}>*/
-                }
-                {/*{category[(Object.keys(category)[0]).replace(' & ', ' ')]}*/
-                }
-                {/*</option>)*/
-                }
             }
         });
         let subSelect = document.getElementById("subcategory");

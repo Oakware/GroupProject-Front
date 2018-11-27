@@ -27,6 +27,9 @@ export default class ServiceTile extends React.Component {
                         {this.props.service.name}
                     </Link>
                 </p>
+                <p className="title is-7 has-text-grey-light has-text-centered is-marginless">
+                        {this.props.service.category} : {this.props.service.subcategory}
+                </p>
 
                 <div className="has-text-centered"><StarRatings
                     rating={this.props.service.mark}

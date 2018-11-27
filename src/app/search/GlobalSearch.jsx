@@ -12,7 +12,9 @@ export default class GlobalSearch extends React.Component {
                 'min': 0,
                 'max': 100
             },
-            'rating': 1
+            'rating': 1,
+            'fieldToSort': 'name',
+            'asc': true
         };
 
         this.showResults = this.showResults.bind(this);
@@ -20,7 +22,7 @@ export default class GlobalSearch extends React.Component {
     }
 
     selectCategory(e) {
-        let newCategory = e.target.textContent;
+        let newCategory = e.target.textContent.replace(" & ", " ");
         let classes = e.target.classList;
         if (this.state.categories.includes(newCategory)) {
             this.state.categories.splice(this.state.categories.indexOf(newCategory), 1);
@@ -95,6 +97,16 @@ export default class GlobalSearch extends React.Component {
         });
     }
 
+    selectSorting(evt) {
+        let sortSelectValue = evt.target.value;
+        this.setState({
+            asc: sortSelectValue % 2 ? true : false,
+            fieldToSort: sortSelectValue < 3 ? 'name' :
+                (sortSelectValue < 5 ? 'price' : 'rating')
+        })
+
+    }
+
     onQueryEnter(e) {
         if (e.key === 'Enter')
             this.showResults();
@@ -129,8 +141,6 @@ export default class GlobalSearch extends React.Component {
                         <div className="columns">
 
                             <div className="column is-3">
-
-
                                 <br/>
                                 <p className="title is-4">Category</p>
                                 <div className="field is-grouped is-grouped-multiline">
@@ -218,11 +228,24 @@ export default class GlobalSearch extends React.Component {
                                         />
                                     </label>
                                 </div>
-                                {/*<div className="control">*/}
-                                    {/*<button className="button is-rounded is-info"*/}
-                                            {/*onClick={(e) => this.showResults(e)}>Show Results*/}
-                                    {/*</button>*/}
-                                {/*</div>*/}
+                                <hr/>
+                                <p className="title is-4">Sort By</p>
+                                <div className="control select is-rounded">
+                                    <select id="sort" defaultValue={1} onChange={(e) => this.selectSorting(e)}>
+                                        <option value={1}>Name Asceding</option>
+                                        <option value={2}>Name Desceding</option>
+                                        <option value={3}>Price Asceding</option>
+                                        <option value={4}>Price Desceding</option>
+                                        <option value={5}>Rating Asceding</option>
+                                        <option value={6}>Rating Desceding</option>
+                                    </select>
+                                </div>
+                                <br/>
+                                <div className="control">
+                                    <button className="button is-rounded is-info"
+                                            onClick={(e) => this.showResults(e)}>Show Results
+                                    </button>
+                                </div>
 
                             </div>
                             <div className="column is-1">
