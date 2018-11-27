@@ -1,15 +1,78 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 export default class ServiceCreator extends React.Component {
 
+    renderCategories() {
+        let categories = [
+            {
+                "Graphics Design":
+                    ["Logo Design", "Illustration", "Portraits & Caricatures", "Flyers & Brochures", "Web & Mobile Design", "Other"]
+            },
+            {
+                "Writing Translation":
+                    ["Resumes & Cover Letters", "Website Content", "Translation", "Press Releases", "Creative Writing", "Other"]
+            },
+            {
+                "Music Audio":
+                    ["Songwriters", "Producers & Composers", "Singers", "Sound Effects", "Mixing & Mastering", "Other"]
+            },
+            {
+                "Programming Tech":
+                    ["WordPress", "Web Programming", "Support & IT", "Data Analysis & Reports", "Databases", "QA", "User Testing", "Desktop Applications", "Mobile Apps & Web", "Other"]
+            }];
 
-    getCategories() {
-        return ["Category 1", "Category 2"]
+        let result = [];
+        categories.map((category) => {
+            result.push(
+                <option key={categories.indexOf(category)}>
+                    {(Object.keys(category)[0]).replace(' ', ' & ')}
+                </option>)
+        });
+        return result
     }
 
-    getSubCategories(category) {
-        return ["Subcategory 1", "Subcategory 2"]
+    renderSubcategories() {
+        let categories = [
+            {
+                "Graphics Design":
+                    ["Logo Design", "Illustration", "Portraits & Caricatures", "Flyers & Brochures", "Web & Mobile Design", "Other"]
+            },
+            {
+                "Writing Translation":
+                    ["Resumes & Cover Letters", "Website Content", "Translation", "Press Releases", "Creative Writing", "Other"]
+            },
+            {
+                "Music Audio":
+                    ["Songwriters", "Producers & Composers", "Singers", "Sound Effects", "Mixing & Mastering", "Other"]
+            },
+            {
+                "Programming Tech":
+                    ["WordPress", "Web Programming", "Support & IT", "Data Analysis & Reports", "Databases", "QA", "User Testing", "Desktop Applications", "Mobile Apps & Web", "Other"]
+            }];
+
+
+        let categoryField = document.getElementById("category").value;
+        let result = [];
+        categories.map((category) => {
+            if ((Object.keys(category)[0]).replace(' ', ' & ') == categoryField) {
+                category[(Object.keys(category)[0]).replace(' & ', ' ')].forEach(sub => {
+                    result.push(
+                        new Option(sub, sub));
+                });
+                {/*<option key={categories.indexOf(category)}>*/
+                }
+                {/*{category[(Object.keys(category)[0]).replace(' & ', ' ')]}*/
+                }
+                {/*</option>)*/
+                }
+            }
+        });
+        let subSelect = document.getElementById("subcategory");
+        console.log(result);
+        for (var i = 0; i < result.length; i++) {
+            subSelect.options[i] = result[i];
+        }
     }
 
     render() {
@@ -41,7 +104,8 @@ export default class ServiceCreator extends React.Component {
                             <div className="field-body">
                                 <div className="field">
                                     <p className="control is-expanded">
-                                        <input className="input textarea" type="text" placeholder="Tell us some details."/>
+                                        <input className="input textarea" type="text"
+                                               placeholder="Tell us some details."/>
                                     </p>
                                 </div>
                             </div>
@@ -53,15 +117,12 @@ export default class ServiceCreator extends React.Component {
                             </div>
                             <div className="field-body">
                                 <div className="field">
-                                    <p className="control is-expanded">
-                                        <div className="select is-rounded">
-                                            <select>
-                                                {/*TODO: real categories and subcategories*/}
-                                                <option>Category #1</option>
-                                                <option>Category #2</option>
-                                            </select>
-                                        </div>
-                                    </p>
+                                    <div className="control select is-rounded">
+                                        <select id="category" onChange={this.renderSubcategories}>
+                                            <option disabled selected>Select Category..</option>
+                                            {this.renderCategories()}
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -72,14 +133,11 @@ export default class ServiceCreator extends React.Component {
                             </div>
                             <div className="field-body">
                                 <div className="field">
-                                    <p className="control is-expanded">
-                                        <div className="select is-rounded">
-                                            <select>
-                                                <option>Subcategory #1</option>
-                                                <option>Subcategory #2</option>
-                                            </select>
-                                        </div>
-                                    </p>
+                                    <div className="control select is-rounded">
+                                        <select id="subcategory">
+                                            <option disabled>Select Category First..</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
