@@ -1,6 +1,6 @@
 import React from 'react';
 import StarRatings from "react-star-ratings";
-import Results from "./Results";
+import ServiceTile from "../service/ServiceTile";
 
 export default class GlobalSearch extends React.Component {
     constructor(props) {
@@ -26,7 +26,6 @@ export default class GlobalSearch extends React.Component {
         let classes = e.target.classList;
         if (this.state.categories.includes(newCategory)) {
             this.state.categories.splice(this.state.categories.indexOf(newCategory), 1);
-            console.log(this.state.categories);
             classes.remove('is-success');
         }
         else {
@@ -34,19 +33,16 @@ export default class GlobalSearch extends React.Component {
                 'categories': this.state.categories.concat(newCategory.replace(' &', ''))
             }, () => {
                 classes.add('is-success');
-                console.log(this.state.categories)
             })
         }
 
     }
 
     pickPrice(e) {
-        console.log(e.target);
         if (e.target.placeholder == 'Min : 0')
             this.state.priceRange.min = e.target.value;
         else
             this.state.priceRange.max = e.target.value;
-        console.log(this.state.priceRange)
     }
 
     selectRating(e) {
@@ -54,7 +50,6 @@ export default class GlobalSearch extends React.Component {
     }
 
     showResults() {
-        console.log(this.state);
         this.setState({
             showResults: true
         });
@@ -110,6 +105,65 @@ export default class GlobalSearch extends React.Component {
     onQueryEnter(e) {
         if (e.key === 'Enter')
             this.showResults();
+    }
+
+    renderResults() {
+        let params = {
+            text: this.state.queryValue,
+            mark: this.state.rating,
+            priceFrom: this.state.priceRange.min,
+            priceTo: this.state.priceRange.max,
+            category: this.state.categories,
+            asc: this.state.asc,
+            fieldToSort: this.state.fieldToSort
+        };
+
+        let services = [
+            {
+                key: 1,
+                id: 1,
+                name: "Walk Your Dog",
+                description: "Hamburger excepteur ex non. Picanha labore t-bone excepteur, shoulder jerky frankfurter jowl venison veniam andouille tail shank chicken prosciutto. Lorem et capicola pariatur frankfurter, fugiat turkey. Ex consequat dolore, eiusmod shank bacon tri-tip shoulder elit. Jowl rump tenderloin officia labore reprehenderit.",
+                owner: "@iduchan0",
+                mark: 3,
+                price: 3
+            },
+            {
+                key: 2,
+                id: 2,
+                name: "Feed Your Cat",
+                description: "In t-bone salami occaecat tongue nostrud cupim dolore pancetta doner short ribs. Reprehenderit burgdoggen alcatra cupidatat non id laborum lorem andouille mollit. Chuck ham hock dolor ground round, esse porchetta kevin salami alcatra proident beef ribs incididunt anim nostrud ut. Pig cupim picanha frankfurter sint officia kielbasa qui.",
+                owner: "@iduchan0",
+                mark: 4,
+                price: 3
+            },
+            {
+                key: 3,
+                id: 3,
+                name: "Debug Your Code",
+                description: "Bacon ipsum dolor amet deserunt officia in consectetur strip steak. Strip steak labore sint ham chuck buffalo, sunt velit reprehenderit andouille kevin. Pastrami velit jowl do voluptate turducken, landjaeger anim tongue dolor sirloin chicken et strip steak fatback. Frankfurter doner filet mignon minim, pancetta exercitation shank non chuck.",
+                owner: "@iduchan0",
+                mark: 3.5,
+                price: 4
+            },
+            {
+                key: 4,
+                id: 4,
+                name: "Merge Your Branches",
+                description: "Ullamco dolor id laborum ham ham hock meatball consequat. In strip steak pork loin, nostrud short ribs aliquip nulla aliqua. Landjaeger biltong dolor ullamco. Nisi mollit pork chop in ut. Beef ribs frankfurter rump jowl voluptate drumstick.",
+                owner: "@iduchan0",
+                mark: 5,
+                price: 5
+            }
+        ];
+
+        let result = [];
+        services.map((s) =>
+            result.push(<div className="column is-12" key={s.id}>
+                <ServiceTile service={s}/>
+            </div>)
+        );
+        return result
     }
 
     render() {
@@ -252,7 +306,10 @@ export default class GlobalSearch extends React.Component {
                             </div>
                             <div className="column is-8">
                                 <p className="title is-4">Results</p>
-                                {this.state.showResults ? <Results query={this.state.queryValue} for='service'/> : null}
+                                {this.state.showResults ?
+                                    <div id="results" className="columns is-multiline is-centered">
+                                        {this.renderResults()}
+                                    </div> : null}
                             </div>
                         </div>
                     </div>
