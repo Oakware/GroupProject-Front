@@ -143,7 +143,7 @@ class GlobalSearch extends React.Component {
     }
 
     renderSearchErrors() {
-        let { searchErrors } = this.props;
+        let {searchErrors} = this.props;
 
         if (searchErrors && searchErrors.message) {
             return (
@@ -155,7 +155,7 @@ class GlobalSearch extends React.Component {
     }
 
     render() {
-        let { servicesFound } = this.props;
+        let {servicesFound} = this.props;
 
         return (
             <main className="GlobalSearch">
@@ -314,9 +314,7 @@ class GlobalSearch extends React.Component {
     }
 }
 
-function
-
-mapStateToProps(state) {
+function mapStateToProps(state) {
     return {
         searchErrors: searchSelectors.getServicesSearchErrors(state),
         servicesFound: searchSelectors.getFoundServices(state),

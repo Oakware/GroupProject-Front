@@ -1,8 +1,11 @@
 import React from 'react';
 import ProfileTile from "../profile/ProfileTile";
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+import * as searchSelectors from "../../store/search/reducer";
+import * as searchActions from "../../store/search/actions";
 
-export default class ProfileSearch extends React.Component {
+class ProfileSearch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,6 +15,30 @@ export default class ProfileSearch extends React.Component {
 
         this.showResults = this.showResults.bind(this);
         this.onQueryEnter = this.onQueryEnter.bind(this);
+        this.onSearchProfile = this.onSearchProfile.bind(this);
+    }
+
+    renderSearchErrors() {
+        let {searchErrors} = this.props;
+
+        if (searchErrors && searchErrors.message) {
+            return (
+                <h1 className="title has-text-centered not-found-text">
+                    {searchErrors.message}
+                </h1>
+            );
+        }
+    }
+
+    onSearchProfile() {
+        let {queryValue} = this.state;
+        if (queryValue.length > 0) {
+            this.props.dispatch(searchActions.searchProfile({
+                query: queryValue
+            }));
+        } else {
+            this.props.dispatch(searchActions.resetProfilesSearch());
+        }
     }
 
     updateInputValue(evt) {
@@ -29,50 +56,11 @@ export default class ProfileSearch extends React.Component {
         this.setState({
             showResults: true
         });
-    }
-
-    renderResults() {
-        console.log('here');
-        const profiles = [
-            {
-                id: 1,
-                username: "iduchan0",
-                firstName: "Ivor",
-                secondName: "Duchan",
-                emailAddress: "iduchan0@dmoz.org",
-                description: "Hi! I am a cool guy, who is an expert Software Engineer." +
-                "\n I can help you with any of your projects for a low price.",
-                location: "Lviv",
-                rating: 3.6,
-                photo: "https://media.giphy.com/media/3M9zf3NSuNgBWM3RWC/giphy.gif"
-            },
-            {
-                id: 2,
-                username: "ellegal",
-                firstName: "Elena",
-                secondName: "Galitska",
-                emailAddress: "elgal0@dmoz.org",
-                description: "Hi! I am cool.",
-                location: "Kyiv",
-                rating: 5,
-                photo: "https://media.giphy.com/media/7ieOyZw7sogO4/source.gif"
-            }
-        ];
-
-        let result = [];
-        profiles.map((p) =>
-            result.push(<div className="column is-6-desktop is-10-tablet" key={p.id}>
-                <Link to={"/profile/" + p.id}>
-                    <article className="box">
-                        <ProfileTile profile={p} cabinet={false} small={true}/>
-                    </article>
-                </Link>
-            </div>)
-        );
-        return result
+        this.onSearchProfile();
     }
 
     render() {
+        let {profilesFound} = this.props;
         return (
             <main className="ProfileSearch">
                 <section className="section">
@@ -100,7 +88,18 @@ export default class ProfileSearch extends React.Component {
 
                         {this.state.showResults ?
                             <div id="results" className="columns is-multiline is-centered">
-                                {this.renderResults()}
+                                {console.log(profilesFound)}
+
+                                {profilesFound.map((p) =>
+                                    <div className="column is-6-desktop is-10-tablet" key={p.id}>
+                                        <Link to={"/profile/" + p.id}>
+                                            <article className="box">
+                                                <ProfileTile profile={p} cabinet={false} small={true}/>
+                                            </article>
+                                        </Link>
+                                    </div>
+                                )}
+                                {this.renderSearchErrors()}
                             </div> : null}
                     </div>
                 </section>
@@ -108,3 +107,12 @@ export default class ProfileSearch extends React.Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        searchErrors: searchSelectors.getProfilesSearchErrors(state),
+        profilesFound: searchSelectors.getFoundProfiles(state),
+    };
+}
+
+export default connect(mapStateToProps)(ProfileSearch);
