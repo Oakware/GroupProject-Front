@@ -83,6 +83,8 @@ function addEntry(config) {
     config.output.filename = 'static/[name].bundle.js';
 }
 
+// ================================= EXPORTS ================================= //
+
 function getWebpackConfig(mode = devMode) {
     let useFeatures = ['babel', 'css', 'sass'];
 
@@ -100,7 +102,8 @@ function getWebpackConfig(mode = devMode) {
     }
 
     config.plugins.push(new CopyWebpackPlugin([
-        { from: 'src/resources', to: 'resources', test: /\.png$/ }
+        { from: 'src/resources', to: 'resources', ignore: [ '*.ai' ] },
+        { from: 'node_modules/ionicons/dist', to: 'static/ionicons' }
     ]));
 
     return config;
