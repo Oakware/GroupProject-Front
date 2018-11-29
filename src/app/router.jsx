@@ -10,7 +10,6 @@ import Profile from './profile/Profile';
 import ProfileSettings from './profile/ProfileSettings';
 import ServiceCreator from './service/ServiceCreator';
 import Service from './service/Service';
-import Results from './search/Results';
 import ProfileSearch from './search/ProfileSearch';
 import GlobalSearch from './search/GlobalSearch';
 import ServiceChats from './service/ServiceChats';
@@ -53,7 +52,6 @@ function MainRouting() {
                         <Route component={Error404}/>
                     </Switch>
                 </Route>
-                <Route exact path="/results" component={Results}/>
                 <Route component={Error404}/>
             </Switch>
         </>

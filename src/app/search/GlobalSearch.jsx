@@ -1,8 +1,11 @@
 import React from 'react';
 import StarRatings from "react-star-ratings";
-import Results from "./Results";
+import ServiceTile from "../service/ServiceTile";
+import {connect} from "react-redux";
+import * as searchSelectors from "../../store/search/reducer";
+import * as searchActions from "../../store/search/actions";
 
-export default class GlobalSearch extends React.Component {
+class GlobalSearch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,19 +15,34 @@ export default class GlobalSearch extends React.Component {
                 'min': 0,
                 'max': 100
             },
-            'rating': 1
+            'rating': 1,
+            'fieldToSort': 'name',
+            'asc': true
         };
 
         this.showResults = this.showResults.bind(this);
         this.onQueryEnter = this.onQueryEnter.bind(this);
+        this.getResults = this.getResults.bind(this);
+    }
+
+
+    renderSearchErrors() {
+        let {searchErrors} = this.props;
+
+        if (searchErrors && searchErrors.message) {
+            return (
+                <h1 className="title has-text-centered not-found-text">
+                    {searchErrors.message}
+                </h1>
+            );
+        }
     }
 
     selectCategory(e) {
-        let newCategory = e.target.textContent;
+        let newCategory = e.target.textContent.replace(" & ", " ");
         let classes = e.target.classList;
         if (this.state.categories.includes(newCategory)) {
             this.state.categories.splice(this.state.categories.indexOf(newCategory), 1);
-            console.log(this.state.categories);
             classes.remove('is-success');
         }
         else {
@@ -32,19 +50,16 @@ export default class GlobalSearch extends React.Component {
                 'categories': this.state.categories.concat(newCategory.replace(' &', ''))
             }, () => {
                 classes.add('is-success');
-                console.log(this.state.categories)
             })
         }
 
     }
 
     pickPrice(e) {
-        console.log(e.target);
         if (e.target.placeholder == 'Min : 0')
             this.state.priceRange.min = e.target.value;
         else
             this.state.priceRange.max = e.target.value;
-        console.log(this.state.priceRange)
     }
 
     selectRating(e) {
@@ -52,10 +67,10 @@ export default class GlobalSearch extends React.Component {
     }
 
     showResults() {
-        console.log(this.state);
         this.setState({
             showResults: true
         });
+        this.getResults()
     }
 
     renderCategories() {
@@ -95,12 +110,53 @@ export default class GlobalSearch extends React.Component {
         });
     }
 
+    selectSorting(evt) {
+        let sortSelectValue = evt.target.value;
+        this.setState({
+            asc: sortSelectValue % 2 ? true : false,
+            fieldToSort: sortSelectValue < 3 ? 'name' :
+                (sortSelectValue < 5 ? 'price' : 'rating')
+        })
+
+    }
+
     onQueryEnter(e) {
         if (e.key === 'Enter')
             this.showResults();
     }
 
+    getResults() {
+        let query = this.state.queryValue;
+        if (query.length > 0) {
+            this.props.dispatch(searchActions.searchService({
+                text: query,
+                mark: this.state.rating,
+                priceFrom: this.state.priceRange.min,
+                priceTo: this.state.priceRange.max,
+                category: this.state.categories,
+                asc: this.state.asc,
+                fieldToSort: this.state.fieldToSort
+            }));
+        } else {
+            this.props.dispatch(searchActions.resetServicesSearch());
+        }
+    }
+
+    renderSearchErrors() {
+        let {searchErrors} = this.props;
+
+        if (searchErrors && searchErrors.message) {
+            return (
+                <h1 className="title has-text-centered not-found-text">
+                    {searchErrors.message}
+                </h1>
+            );
+        }
+    }
+
     render() {
+        let {servicesFound} = this.props;
+
         return (
             <main className="GlobalSearch">
                 <section className="section">
@@ -129,8 +185,6 @@ export default class GlobalSearch extends React.Component {
                         <div className="columns">
 
                             <div className="column is-3">
-
-
                                 <br/>
                                 <p className="title is-4">Category</p>
                                 <div className="field is-grouped is-grouped-multiline">
@@ -218,18 +272,39 @@ export default class GlobalSearch extends React.Component {
                                         />
                                     </label>
                                 </div>
-                                {/*<div className="control">*/}
-                                    {/*<button className="button is-rounded is-info"*/}
-                                            {/*onClick={(e) => this.showResults(e)}>Show Results*/}
-                                    {/*</button>*/}
-                                {/*</div>*/}
+                                <hr/>
+                                <p className="title is-4">Sort By</p>
+                                <div className="control select is-rounded">
+                                    <select id="sort" defaultValue={1} onChange={(e) => this.selectSorting(e)}>
+                                        <option value={1}>Name Asceding</option>
+                                        <option value={2}>Name Desceding</option>
+                                        <option value={3}>Price Asceding</option>
+                                        <option value={4}>Price Desceding</option>
+                                        <option value={5}>Rating Asceding</option>
+                                        <option value={6}>Rating Desceding</option>
+                                    </select>
+                                </div>
+                                <br/>
+                                <div className="control">
+                                    <button className="button is-rounded is-info"
+                                            onClick={(e) => this.showResults(e)}>Show Results
+                                    </button>
+                                </div>
 
                             </div>
                             <div className="column is-1">
                             </div>
                             <div className="column is-8">
                                 <p className="title is-4">Results</p>
-                                {this.state.showResults ? <Results query={this.state.queryValue} for='service'/> : null}
+                                {this.state.showResults ?
+                                    <div id="results" className="columns is-multiline is-centered">
+                                        {servicesFound.map((service) =>
+                                            <div className="column is-12" key={service.id}>
+                                                <ServiceTile service={service}/>
+                                            </div>
+                                        )}
+                                        {this.renderSearchErrors()}
+                                    </div> : null}
                             </div>
                         </div>
                     </div>
@@ -238,3 +313,12 @@ export default class GlobalSearch extends React.Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        searchErrors: searchSelectors.getServicesSearchErrors(state),
+        servicesFound: searchSelectors.getFoundServices(state),
+    };
+}
+
+export default connect(mapStateToProps)(GlobalSearch);
