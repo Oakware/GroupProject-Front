@@ -1,8 +1,8 @@
 import axios from 'axios';
 import * as gateway from './gateway';
 
-const profiles = {
-    1: {
+const profiles = [
+    {
         id: 1,
         username: "iduchan0",
         firstName: "Ivor",
@@ -13,8 +13,7 @@ const profiles = {
         location: "Lviv",
         rating: 3.6,
         photo: "https://media.giphy.com/media/3M9zf3NSuNgBWM3RWC/giphy.gif"
-    },
-    2: {
+    }, {
         id: 2,
         username: "ellegal",
         firstName: "Elena",
@@ -25,7 +24,7 @@ const profiles = {
         rating : 5,
         photo: "https://media.giphy.com/media/7ieOyZw7sogO4/source.gif"
     }
-};
+];
 
 let sleep = (t = 500) => new Promise(resolve => setTimeout(resolve, t));
 
@@ -33,7 +32,7 @@ export async function getProfile(id) {
     // let res = await axios.get(gateway.paths.profiles.profile(id));
 
     await sleep();
-    let profile = profiles[id];
+    let profile = profiles.find(p => p.id.toString() === id);
 
     if (!profile) {
         return {
@@ -48,7 +47,7 @@ export async function getProfile(id) {
 }
 
 export async function updateProfile(userId, data) {
-    let profile = profiles[userId];
+    let profile = profiles.find(p => p.id.toString() === id);
 
     if (!profile) {
         return {
@@ -65,9 +64,21 @@ export async function updateProfile(userId, data) {
 }
 
 export async function profileSearch(query) {
+    // let res = axios.get(gateway.paths.profiles.search, {
+    //     params: query
+    // });
+    //
+    // let profiles = res.data;
+    // return {
+    //     errors: {
+    //         message: profiles.length ? undefined : 'nothing found'
+    //     },
+    //     profiles
+    // };
+
     await sleep();
 
-    if (query.text === 'profile') {
+    if (query.query === 'profile') {
         return {
             errors: {
                 message: 'nothing found'

@@ -78,11 +78,10 @@ export async function getUserServices(userId) {
 }
 
 export async function serviceSearch(query) {
-    console.log('request');
     let res = await axios.get(gateway.paths.services.search, {
         params: query
     });
-    console.log(res);
+
     let services = res.data.result.result;
     return {
         errors: {
