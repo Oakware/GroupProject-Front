@@ -4,6 +4,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const devMode  = 'development';
 const prodMode = 'production';
@@ -80,7 +81,7 @@ function addEntry(config) {
     }));
 
     config.output.path = path.resolve(buildDir);
-    config.output.filename = 'static/[name].bundle.js';
+    config.output.filename = 'static/[name].[hash].js';
 }
 
 // ================================= EXPORTS ================================= //
@@ -97,7 +98,7 @@ function getWebpackConfig(mode = devMode) {
         config.devtool = 'inline-source-map';
     } else if (mode === prodMode) {
         config.plugins.push(new MiniCssExtractPlugin({
-            filename: "static/[name].bundle.css",
+            filename: "static/[name].[hash].css",
         }));
     }
 
@@ -105,6 +106,8 @@ function getWebpackConfig(mode = devMode) {
         { from: 'src/resources', to: 'resources', ignore: [ '*.ai' ] },
         { from: 'node_modules/ionicons/dist', to: 'static/ionicons' }
     ]));
+
+    config.plugins.push(new CleanWebpackPlugin([buildDir]));
 
     return config;
 }
