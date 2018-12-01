@@ -41,8 +41,7 @@ export default class ProfileTile extends React.Component {
 
                     <div className={"column " + (this.props.small ? "is-2" : "is-3")}>
                         <figure className={"image " + (this.props.small ? "is-320x320" : "is-480x480")}>
-                            <img
-                                src={this.props.profile.photo}></img>
+                            <img src={this.props.profile.photo}/>
                         </figure>
 
                     </div>
