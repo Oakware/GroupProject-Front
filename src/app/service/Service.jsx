@@ -10,7 +10,18 @@ import * as serviceSelectors from '../../store/service/reducer';
 
 class Service extends React.Component {
     componentDidMount() {
-        let {serviceId} = this.props.match.params;
+        this.loadService();
+    }
+
+    componentDidUpdate(prevProps) {
+        let { serviceId } = this.props.match.params;
+        let { prevServiceId } = prevProps.match.params;
+        if (serviceId !== prevServiceId)
+            this.loadService();
+    }
+
+    loadService() {
+        let { serviceId } = this.props.match.params;
         this.props.dispatch(serviceActions.getService(serviceId));
     }
 

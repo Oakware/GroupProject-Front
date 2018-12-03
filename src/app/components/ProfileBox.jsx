@@ -6,7 +6,7 @@ export default function ProfileBox(props) {
     let { profile } = props;
 
     return (
-        <div className="media box">
+        <div className="ProfileBox media box">
             <figure className="media-left">
                 <p className="image is-64x64">
                     <img className="is-rounded" src={profile.photo}/>

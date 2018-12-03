@@ -83,7 +83,7 @@ class NavigationBar extends React.Component {
                         {this.renderAuthLink('Login', false, authActions.login)}
                         {this.renderAuthLink('Logout', true, authActions.logout)}
 
-                        {this.renderLink('/profile/1', 'Profile', 'person')}
+                        {this.renderLink('/profile', 'Profile', 'person')}
                     </div>
                 </div>
             </header>

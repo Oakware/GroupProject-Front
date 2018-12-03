@@ -29,10 +29,14 @@ const profiles = [
 let sleep = (t = 500) => new Promise(resolve => setTimeout(resolve, t));
 
 export async function getProfile(id) {
-    // let res = await axios.get(gateway.paths.profiles.profile(id));
+    let res = await axios.get(gateway.paths.profiles.profile, {
+        params: {id}
+    });
 
-    await sleep();
-    let profile = profiles.find(p => p.id.toString() === id);
+    let profile = res.data;
+
+    // await sleep();
+    // let profile = profiles.find(p => p.id.toString() === id);
 
     if (!profile) {
         return {
@@ -46,8 +50,21 @@ export async function getProfile(id) {
     return {profile};
 }
 
+export async function createProfile(id, kcProfile) {
+    let profile = {
+        id,
+        username: kcProfile.username,
+        firstName: kcProfile.firstName,
+        secondName: kcProfile.lastName,
+        emailAddress: kcProfile.email,
+    };
+
+    await axios.post(gateway.paths.profiles.update, profile);
+    return await getProfile(id);
+}
+
 export async function updateProfile(userId, data) {
-    let profile = profiles.find(p => p.id.toString() === id);
+    let res = await axios.post(gateway.paths.profiles.update, data);
 
     if (!profile) {
         return {
@@ -64,28 +81,28 @@ export async function updateProfile(userId, data) {
 }
 
 export async function profileSearch(query) {
-    // let res = axios.get(gateway.paths.profiles.search, {
-    //     params: query
-    // });
+    let res = await axios.get(gateway.paths.profiles.search, {
+        params: query
+    });
+
+    let profiles = res.data;
+    return {
+        errors: {
+            message: profiles.length ? undefined : 'nothing found'
+        },
+        profiles
+    };
+
+    // await sleep();
     //
-    // let profiles = res.data;
-    // return {
-    //     errors: {
-    //         message: profiles.length ? undefined : 'nothing found'
-    //     },
-    //     profiles
-    // };
-
-    await sleep();
-
-    if (query.query === 'profile') {
-        return {
-            errors: {
-                message: 'nothing found'
-            },
-            profiles: []
-        };
-    }
-
-    return {profiles};
+    // if (query.query === 'profile') {
+    //     return {
+    //         errors: {
+    //             message: 'nothing found'
+    //         },
+    //         profiles: []
+    //     };
+    // }
+    //
+    // return {profiles};
 }

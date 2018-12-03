@@ -2,15 +2,34 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import './Profile.scss';
-import Tabs from "./Tabs";
-import ProfileTile from "./ProfileTile";
+import Tabs from './Tabs';
 import * as profileActions from '../../store/profile/actions';
+import * as authSelectors from '../../store/auth/reducer';
 import * as profileSelectors from '../../store/profile/reducer';
+import {Link} from 'react-router-dom';
+import StarRatings from 'react-star-ratings';
+
+function getUserId(props) {
+    let { userId } = props.match.params;
+    return userId || props.curUserId;
+}
 
 class Profile extends React.Component {
     componentDidMount() {
-        let { userId } = this.props.match.params;
-        this.props.dispatch(profileActions.getProfile(userId));
+        this.loadProfile();
+    }
+
+    componentDidUpdate(prevProps) {
+        let userId = getUserId(this.props);
+        let prevUserId = getUserId(prevProps);
+        if (userId !== prevUserId)
+            this.loadProfile();
+    }
+
+    loadProfile() {
+        let userId = getUserId(this.props);
+        if (userId)
+            this.props.dispatch(profileActions.getProfile(userId));
     }
 
     renderProfileErrors() {
@@ -22,6 +41,23 @@ class Profile extends React.Component {
                     {profileErrors.message}
                 </h1>
             );
+        }
+    }
+
+    renderNewServiceButton() {
+        if (getUserId(this.props) === this.props.curUserId) {
+            return <Link className="button is-success has-text-white"
+                         to={"/profile/" + this.props.profile.id + "/create"}>
+                New Service
+            </Link>
+        }
+    }
+
+    renderSettingsButton() {
+        if (getUserId(this.props) === this.props.curUserId) {
+            return <Link to={"/profile/" + this.props.profile.id + "/settings"}>
+                <span className="icon"> <ion-icon name="settings"/> </span>
+            </Link>
         }
     }
 
@@ -40,7 +76,56 @@ class Profile extends React.Component {
 
         return (
             <div className="box has-background-white">
-                <ProfileTile profile={profile}/>
+                <section>
+                    <div className="columns">
+                        <div className="column is-3">
+                            <figure className="image is-480x480">
+                                <img src={this.props.profile.photo}/>
+                            </figure>
+                        </div>
+                        <div className="column">
+                            <p className="is-uppercase has-text-weight-bold">
+                                {this.props.profile.fullName}
+                            </p>
+                            <p>@{this.props.profile.username}</p>
+
+                            <StarRatings
+                                rating={this.props.profile.rating}
+                                starDimension="20px"
+                                starSpacing="2px"
+                                starEmptyColor='rgb(236, 236, 236)'
+                                starRatedColor='hsl(141, 71%, 48%)'
+                            />
+                            <br/>
+                            <div>
+                                <p className="text has-text-justified">
+                                    <span className="icon">
+                                        <ion-icon name="information-circle"/>
+                                    </span>
+                                    <span> {this.props.profile.description} </span>
+                                </p>
+                                <p className="text has-text-justified">
+                                    <span className="icon">
+                                        <ion-icon name="mail"/>
+                                    </span>
+                                    <span> {this.props.profile.emailAddress} </span>
+                                </p>
+                                <p className="text has-text-justified">
+                                    <span className="icon">
+                                        <ion-icon name="navigate"/>
+                                    </span>
+                                    <span> {this.props.profile.location} </span>
+                                </p>
+
+                                {this.renderNewServiceButton()}
+                            </div>
+                        </div>
+
+                        <div className="column is-1">
+                            {this.renderSettingsButton()}
+                        </div>
+                    </div>
+                </section>
                 <Tabs userId={this.props.match.params.userId} services={services}/>
             </div>
         );
@@ -62,6 +147,7 @@ class Profile extends React.Component {
 
 function mapStateToProps(state) {
     return {
+        curUserId: authSelectors.getUserId(state),
         profileErrors: profileSelectors.getFetchErrors(state),
         profile: profileSelectors.getProfile(state),
         userServices: profileSelectors.getUserServices(state)

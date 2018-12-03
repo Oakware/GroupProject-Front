@@ -14,7 +14,7 @@ function servicePath(rootPath, pathsGen) {
 export const paths = {
     auth: 'http://35.186.198.0/auth',
     profiles: servicePath('http://35.244.240.101/profiles', get => ({
-        profile: (id) => get('/' + id),
+        profile: get('/get'),
         update: get('/update'),
         search: get('/search'),
     })),
