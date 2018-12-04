@@ -9,7 +9,7 @@ export default function ProfileBox(props) {
         <div className="ProfileBox media box">
             <figure className="media-left">
                 <p className="image is-64x64">
-                    <img className="is-rounded" src={profile.photo}/>
+                    <img className="is-rounded" src={profile.profilePicturePath}/>
                 </p>
             </figure>
             <div className="media-content">

@@ -15,7 +15,7 @@ class GlobalSearch extends React.Component {
                 'min': 0,
                 'max': 100
             },
-            'rating': 1,
+            'rating': 0,
             'fieldToSort': 'name',
             'asc': true
         };
@@ -39,7 +39,7 @@ class GlobalSearch extends React.Component {
     }
 
     selectCategory(e) {
-        let newCategory = e.target.textContent.replace(" & ", " ");
+        let newCategory = e.target.textContent.replace(" & ", "_");
         let classes = e.target.classList;
         if (this.state.categories.includes(newCategory)) {
             this.state.categories.splice(this.state.categories.indexOf(newCategory), 1);
@@ -47,7 +47,7 @@ class GlobalSearch extends React.Component {
         }
         else {
             this.setState({
-                'categories': this.state.categories.concat(newCategory.replace(' &', ''))
+                'categories': this.state.categories.concat(newCategory.replace(' & ', '_'))
             }, () => {
                 classes.add('is-success');
             })
@@ -77,7 +77,7 @@ class GlobalSearch extends React.Component {
         let categories = [
             {
                 "Graphics Design":
-                    ["Logo Design", "Illustration", "Portraits & Caricatures", "Flyers & Brochures", "Web & Mobile Design", "Other"]
+                    ["Logo_Design", "Illustration", "Portraits & Caricatures", "Flyers & Brochures", "Web & Mobile Design", "Other"]
             },
             {
                 "Writing Translation":
@@ -130,7 +130,7 @@ class GlobalSearch extends React.Component {
         if (query.length > 0) {
             this.props.dispatch(searchActions.searchService({
                 text: query,
-                mark: this.state.rating,
+                mark: this.state.rating == -1 ? null : this.state.rating,
                 priceFrom: this.state.priceRange.min,
                 priceTo: this.state.priceRange.max,
                 category: this.state.categories,
@@ -217,6 +217,10 @@ class GlobalSearch extends React.Component {
                                 <hr/>
                                 <p className="title is-4">Rating</p>
                                 <div className="control" onChange={(e) => this.selectRating(e)}>
+                                    <label className="radio">
+                                        <input type="radio" name="rating" value="-1"/> Any
+                                    </label>
+                                    <br/>
                                     <label className="radio">
                                         <input type="radio" name="rating" value="1"/>
                                         <StarRatings

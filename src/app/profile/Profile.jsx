@@ -80,7 +80,7 @@ class Profile extends React.Component {
                     <div className="columns">
                         <div className="column is-3">
                             <figure className="image is-480x480">
-                                <img src={this.props.profile.photo}/>
+                                <img src={this.props.profile.profilePicturePath}/>
                             </figure>
                         </div>
                         <div className="column">

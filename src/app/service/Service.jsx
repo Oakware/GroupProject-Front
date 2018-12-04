@@ -18,6 +18,7 @@ class Service extends React.Component {
 
         this.onCommentChanged = this.onCommentChanged.bind(this);
         this.onPostComment = this.onPostComment.bind(this);
+        this.makeOrder = this.makeOrder.bind(this);
     }
 
     componentDidMount() {
@@ -62,6 +63,11 @@ class Service extends React.Component {
         } else return false;
     }
 
+    makeOrder(){
+        var key = prompt("Enter your secret key");
+        console.log(key)
+    }
+
     renderServiceSection() {
         let {service, ownerProfile} = this.props;
 
@@ -90,7 +96,8 @@ class Service extends React.Component {
                         <div className="column is-narrow">
                             <div className="columns is-mobile">
                                 <div className="column">
-                                    <a className="button is-primary is-fullwidth"> Buy: {service.price} Milo </a>
+                                    <a className="button is-primary is-fullwidth"
+                                    onClick={this.makeOrder}> Buy: {service.price} Milo </a>
                                 </div>
                                 <div className="column">
                                     <Link className="button is-info is-outlined is-fullwidth"

@@ -10,16 +10,16 @@ export default class ServiceTile extends React.Component {
     constructor(props) {
         super(props);
 
-        this.handleClick = this.handleClick.bind(this);
+        this.approveWork = this.approveWork.bind(this);
     }
 
-    handleClick() {
-
+    approveWork(){
+        var key = prompt("Enter your secret key");
+        console.log(key)
     }
 
     render() {
         return (
-            //TODO: onclick open service page
             <article className={"ServiceTile " + this.props.className + (this.props.small ? null : " box")}>
 
                 <p className="title is-5 has-text-centered is-marginless">
@@ -28,11 +28,11 @@ export default class ServiceTile extends React.Component {
                     </Link>
                 </p>
                 <p className="title is-7 has-text-grey-light has-text-centered is-marginless">
-                        {this.props.service.category} : {this.props.service.subcategory}
+                    {this.props.service.category} : {this.props.service.subcategory}
                 </p>
 
                 <div className="has-text-centered"><StarRatings
-                    rating={this.props.service.mark}
+                    rating={(this.props.service.mark) == "Infinity" ? 0 : this.props.service.mark}
                     starDimension="20px"
                     starSpacing="2px"
                     starEmptyColor='rgb(236, 236, 236)'
@@ -48,6 +48,9 @@ export default class ServiceTile extends React.Component {
                             <span className="title is-6">Description:</span>
                             <p>{this.props.service.description}</p>
                         </div>
+
+                        {this.props.approve ?
+                            <a className="button" onClick={this.approveWork}>Approve Work</a> : null}
                     </div>
                 }
             </article>

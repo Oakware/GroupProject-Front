@@ -57,6 +57,7 @@ export async function createProfile(id, kcProfile) {
         firstName: kcProfile.firstName,
         secondName: kcProfile.lastName,
         emailAddress: kcProfile.email,
+        profilePicturePath : "https://robohash.org/" + kcProfile.username + "?set=set4"
     };
 
     await axios.post(gateway.paths.profiles.update, profile);

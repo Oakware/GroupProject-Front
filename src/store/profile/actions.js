@@ -24,7 +24,7 @@ export function getProfile(id) {
 
 export function updateProfile(data) {
     return async (dispatch, getState) => {
-        let userId = '1';
+        let userId = data.id;
         let res = Profiles.updateProfile(userId, data);
         dispatch({
             type: types.PROFILE_UPDATED,

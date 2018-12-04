@@ -2,8 +2,22 @@ import React from 'react';
 
 import ServiceTile from "../service/ServiceTile";
 import './Tabs.scss';
+import * as profileSelectors from "../../store/profile/reducer";
+import * as authSelectors from "../../store/auth/reducer";
+import {connect} from "react-redux";
+import {ProfileSettings} from "./ProfileSettings";
+import * as profileActions from "../../store/profile/actions";
 
-export default class Tabs extends React.Component {
+export class Tabs extends React.Component {
+    componentDidMount() {
+        this.loadProfile();
+    }
+
+    loadProfile() {
+        let userId = this.props.curUserId;
+        if (userId)
+            this.props.dispatch(profileActions.getProfile(userId));
+    }
 
     openTab(evt, tabName, nowActive) {
         let i, x, tablinks, nowActiveTab;
@@ -20,22 +34,24 @@ export default class Tabs extends React.Component {
         document.getElementById(tabName).style.display = "block";
     }
 
-    renderServiceTiles(services) {
+    renderServiceTiles(services, approve) {
         return services.map((s) =>
             <div className="column is-6-desktop is-10-tablet" key={s.id}>
-                <ServiceTile className="service-tile" service={s} small={false}/>
+                <ServiceTile className="service-tile" service={s} small={false} approve={approve}/>
             </div>
         );
     }
 
-    renderTabsNames(){
+    renderTabsNames() {
         //TODO: ID of actually logged in user
-        let currentUserId = 1;
+        let currentUserId = this.props.curUserId;
         if (this.props.userId == currentUserId) {
             let result = [];
             result.push(<li id="MyServ" className="tab is-active"
-                            onClick={() => this.openTab(event, 'MyServContent', 'MyServ')}><a>My Services</a></li>);
-            result.push(<li id="MyOrd" className="tab" onClick={() => this.openTab(event, 'MyOrdContent', 'MyOrd')}>
+                            onClick={() => this.openTab(event, 'MyServContent', 'MyServ')} key={1}><a>My Services</a>
+            </li>);
+            result.push(<li id="MyOrd" className="tab" onClick={() => this.openTab(event, 'MyOrdContent', 'MyOrd')}
+                            key={2}>
                 <a>My Orders</a></li>);
             return result
         }
@@ -64,7 +80,7 @@ export default class Tabs extends React.Component {
                     </div>
                     <div id="MyOrdContent" className="content-tab" style={{display: "none"}}>
                         <div className="columns is-multiline is-centered">
-                            {this.renderServiceTiles(this.props.services.ordered_services)}
+                            {this.renderServiceTiles(this.props.services.ordered_services, true)}
                         </div>
                     </div>
                 </div>
@@ -72,4 +88,13 @@ export default class Tabs extends React.Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        curUserId: authSelectors.getUserId(state),
+        profile: profileSelectors.getProfile(state),
+    };
+}
+
+export default connect(mapStateToProps)(Tabs);
 
