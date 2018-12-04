@@ -25,6 +25,12 @@ export async function getServiceComments(serviceId) {
     return { comments };
 }
 
+export async function getLastMessages(serviceId) {
+    let res = await axios.get(gateway.paths.chat.lastMessagesForService(serviceId));
+    let messages = res.data || [];
+    return { messages };
+}
+
 export async function addServiceComment(comment) {
     await axios.post(gateway.paths.chat.addServiceComment, comment);
     return {success: true};

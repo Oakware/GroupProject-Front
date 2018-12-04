@@ -28,5 +28,6 @@ export const paths = {
         allComments: get('/comments/aquire/all'),
         serviceComments: id => get('/comments/aquire/service/' + id),
         addServiceComment: get('/comments/save'),
+        lastMessagesForService: id => get('/dialog/aquire/service/' + id)
     })),
 };

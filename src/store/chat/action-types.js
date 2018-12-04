@@ -1,0 +1,1 @@
+export const MESSAGES_FETCHED = 'chat.MESSAGES_FETCHED';

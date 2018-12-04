@@ -3,40 +3,69 @@ import StarRatings from "react-star-ratings";
 import {Link} from 'react-router-dom';
 import {ChatItem} from 'react-chat-elements'
 import ServiceTile from "./ServiceTile";
+import * as serviceSelectors from "../../store/service/reducer";
+import * as chatSelectors from "../../store/chat/reducer";
+import {connect} from "react-redux";
+import * as serviceActions from "../../store/service/actions";
+import * as chatActions from "../../store/chat/actions";
+import * as profileActions from "../../store/profile/actions";
 
 
-export default class ServiceChats extends React.Component {
+export class ServiceChats extends React.Component {
 
     constructor(props) {
         super(props);
     }
 
+    componentDidMount() {
+        this.loadService();
+        this.loadMessages();
+    }
+
+    componentDidUpdate(prevProps) {
+        let serviceId = this.props.match.params.serviceId;
+        let prevServiceId = prevProps.match.params.serviceId;
+        if (serviceId !== prevServiceId)
+            this.loadService();
+    }
+
+    loadService() {
+        let {serviceId} = this.props.match.params;
+        this.props.dispatch(serviceActions.getService(serviceId));
+    }
+
+    loadMessages() {
+        this.props.dispatch(chatActions.getLastMessages(1998));
+    }
+
     renderChats() {
-        let chats = [{}];
-        let chatItems = [
-            {
-                "avatar": 'https://data.whicdn.com/images/38906065/original.gif',
-                "alt": 'GossipGirl',
-                "title": 'Gossip Girl',
-                "subtitle": 'What are you doing?',
-                "date": new Date(),
-                "unread": 0,
-                "customer": 3
-            },
-            {
-                "avatar": 'https://media.giphy.com/media/7ieOyZw7sogO4/source.gif',
-                "alt": 'Reactjs',
-                "title": 'Elena Galitska',
-                "subtitle": 'I want it!',
-                "date": new Date("2018-11-17T21:35:56"),
-                "unread": 1,
-                "customer": 2
-            }];
+        let {messages} = this.props;
+        let chatItems = [];
+
+        if (!messages)
+            return false;
+
+
+        messages.forEach((m) => {
+
+            let {profile} = dispatch(profileActions.getProfile(m.customerId));
+            let chatItem = {
+                "id": m.id,
+                "avatar": profile.profilePicturePath,
+                "alt": profile.fullName,
+                "title": profile.fullName + " " + profile.username,
+                "subtitle": m.messegeBody,
+                "date": m.time,
+                "unread": m.fromServiceProvider ? 1 : 0,
+                "customer": m.customerId
+            };
+
+            chatItems.push(chatItem);
+        });
 
         let result = [];
-        console.log(this.props.location.pathname);
         chatItems.map((c) =>
-            result.push(<Link to={this.props.location.pathname + "/" + c.customer}>
+            result.push(<Link to={this.props.location.pathname + "/" + c.customer} key={c.avatar}>
                 <ChatItem
                     avatar={c.avatar}
                     alt={c.alt}
@@ -48,25 +77,18 @@ export default class ServiceChats extends React.Component {
         return result;
     }
 
-    getService() {
-        return {
-            key: 1,
-            id: 1,
-            name: "Walk Your Dog",
-            description: "Hamburger excepteur ex non. Picanha labore t-bone excepteur, shoulder jerky frankfurter jowl venison veniam andouille tail shank chicken prosciutto. Lorem et capicola pariatur frankfurter, fugiat turkey. Ex consequat dolore, eiusmod shank bacon tri-tip shoulder elit. Jowl rump tenderloin officia labore reprehenderit.",
-            owner: "@iduchan0",
-            mark: 3,
-            price: 3
-        }
-    }
-
 
     render() {
+        let {service} = this.props;
+        if (!service)
+            return false;
+
+
         return (
             <main className="ServiceChats">
                 <section className="section">
                     <div className="container box">
-                        <ServiceTile service={this.getService()} small={true}/>
+                        <ServiceTile service={service} small={true}/>
                         {this.renderChats()}
                     </div>
                 </section>
@@ -74,3 +96,14 @@ export default class ServiceChats extends React.Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        serviceErrors: serviceSelectors.getFetchErrors(state),
+        service: serviceSelectors.getService(state),
+        messages: chatSelectors.getLastMessages(state),
+        messagesErrors: chatSelectors.getFetchErrors(state)
+    };
+}
+
+export default connect(mapStateToProps)(ServiceChats);

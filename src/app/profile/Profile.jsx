@@ -126,7 +126,7 @@ class Profile extends React.Component {
                         </div>
                     </div>
                 </section>
-                <Tabs userId={this.props.match.params.userId} services={services}/>
+                <Tabs userId={this.props.curUserId} services={services}/>
             </div>
         );
     }
