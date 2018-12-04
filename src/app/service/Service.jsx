@@ -4,15 +4,46 @@ import {connect} from 'react-redux';
 import StarRatings from 'react-star-ratings';
 
 import './Service.scss';
-import CommentTile from "./CommentTile";
-import ProfileTile from "../profile/ProfileTile";
+import ProfileBox from '../components/ProfileBox';
 import * as serviceActions from '../../store/service/actions';
 import * as serviceSelectors from '../../store/service/reducer';
 
 class Service extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            comment: ''
+        };
+
+        this.onCommentChanged = this.onCommentChanged.bind(this);
+        this.onPostComment = this.onPostComment.bind(this);
+    }
+
     componentDidMount() {
-        let {serviceId} = this.props.match.params;
+        this.loadService();
+    }
+
+    componentDidUpdate(prevProps) {
+        let serviceId = this.props.match.params.serviceId;
+        let prevServiceId = prevProps.match.params.serviceId;
+        if (serviceId !== prevServiceId)
+            this.loadService();
+    }
+
+    loadService() {
+        let { serviceId } = this.props.match.params;
         this.props.dispatch(serviceActions.getService(serviceId));
+    }
+
+    onCommentChanged(e) {
+        this.setState({
+            comment: e.target.value
+        });
+    }
+
+    onPostComment() {
+        this.props.dispatch(serviceActions.addComment(this.state.comment));
     }
 
     renderServiceErrors() {
@@ -20,123 +51,125 @@ class Service extends React.Component {
 
         if (serviceErrors && serviceErrors.message) {
             return (
-                <h1 className="title has-text-centered has-text-danger not-found-text">
-                    {serviceErrors.message}
-                </h1>
+                <section className="section">
+                    <div className="container">
+                        <h1 className="title has-text-centered has-text-danger not-found-text">
+                            {serviceErrors.message}
+                        </h1>
+                    </div>
+                </section>
             );
-        }
+        } else return false;
     }
 
-    renderService() {
-        let {service} = this.props;
+    renderServiceSection() {
+        let {service, ownerProfile} = this.props;
 
         if (!service)
+            return false;
+
+        let profileBox = ownerProfile
+            ? <ProfileBox profile={ownerProfile}/>
+            : false;
+
+        return (
+            <section className="section">
+                <div className="container">
+                    <div className="columns">
+                        <div className="column">
+                            <h1 className="title"> {service.name} </h1>
+                            <div className="subtitle">
+                                <StarRatings
+                                    rating={service.mark}
+                                    starDimension="1.7rem"
+                                    starSpacing="2px"
+                                    starEmptyColor="rgb(236, 236, 236)"
+                                    starRatedColor="hsl(141, 71%, 48%)"/>
+                            </div>
+                        </div>
+                        <div className="column is-narrow">
+                            <div className="columns is-mobile">
+                                <div className="column">
+                                    <a className="button is-primary is-fullwidth"> Buy: {service.price} Milo </a>
+                                </div>
+                                <div className="column">
+                                    <Link className="button is-info is-outlined is-fullwidth"
+                                          to={this.props.location.pathname + "/chats"}>
+                                        Chat
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 className="title is-4"> Description </h2>
+                    <article className="content">
+                        <p> {service.description} </p>
+                    </article>
+                    {profileBox}
+                </div>
+            </section>
+        );
+    }
+
+    renderComment(comment) {
+        return (
+            <article className="media" key={comment.id}>
+                <figure className="media-left">
+                    <p className="image is-64x64">
+                        {/*<img className="is-rounded" src={}/>*/}
+                    </p>
+                </figure>
+                <div className="media-content">
+                    <div className="content">
+                        <strong> Kayli Eunice </strong>
+                        <p> {comment.commentBody} </p>
+                    </div>
+                </div>
+            </article>
+        );
+    }
+
+    renderCommentsSection() {
+        let {service, comments, ownerProfile = {}} = this.props;
+
+        if (!service || !comments)
             return false;
 
         return (
-            <div className="">
-                <h1 className="title is-4 has-text-centered"> {service.name} </h1>
-                <div className="has-text-centered">
-                    <StarRatings
-                        rating={service.mark}
-                        starDimension="20px"
-                        starSpacing="2px"
-                        starEmptyColor='rgb(236, 236, 236)'
-                        starRatedColor='hsl(141, 71%, 48%)'/>
+            <section className="section">
+                <div className="container">
+                    <h2 className="title is-4"> Comments </h2>
+                    <article className="media">
+                        <figure className="media-left">
+                            <p className="image is-64x64">
+                                <img className="is-rounded" src={ownerProfile.photo}/>
+                            </p>
+                        </figure>
+                        <div className="media-content">
+                            <div className="field">
+                                <p className="control">
+                                    <textarea className="textarea"
+                                              placeholder="Add a comment..."
+                                              value={this.state.comment}
+                                              onChange={this.onCommentChanged}/>
+                                </p>
+                            </div>
+                            <a className="button is-primary" onClick={this.onPostComment}>Submit</a>
+                        </div>
+                    </article>
+                    {comments.map(comment => this.renderComment(comment))}
                 </div>
-                <div className="has-text-centered">
-                    {service.owner}
-                    {' \xB7 '}
-                    Price: {service.price} Milo
-                </div>
-
-                <section className="section">
-                    <h2 className="title is-5"> Description </h2>
-                    <div> {service.description} </div>
-                </section>
-            </div>
+            </section>
         );
-    }
-
-    renderComments() {
-        let {comments} = this.props;
-
-        if (!comments)
-            return false;
-
-        let result = [];
-        comments.map((c) =>
-            result.push(<CommentTile comment={c}/>)
-        );
-        return result;
-    }
-
-    getOwner() {
-        let {service} = this.props;
-        if (!service)
-            return false;
-        return service.owner
-    }
-
-    renderCurrentCustomers() {
-        let customers = [];
-        customers.push({
-            id: 2,
-            username: "ellegal",
-            firstName: "Elena",
-            secondName: "Galitska",
-            emailAddress: "elgal0@dmoz.org",
-            description: "Hi! I am cool.",
-            location: "Kyiv",
-            rating: 5,
-            photo: "https://media.giphy.com/media/7ieOyZw7sogO4/source.gif",
-            walletAddress: "address2"
-        });
-
-        customers.push({
-            id: 2,
-            username: "whoami",
-            firstName: "Gossip",
-            secondName: "Girl",
-            emailAddress: "gg@gfail.org",
-            description: "And who am I? That secret I will never tell. XOXO",
-            location: "NYC",
-            rating: 5,
-            photo: "https://data.whicdn.com/images/38906065/original.gif",
-            walletAddress: "address3"
-        });
-
-        let result = [];
-        customers.map((c) =>
-            result.push(<hr/>, <ProfileTile profile={c} small={true}/>)
-        );
-        return result;
     }
 
     render() {
         return (
             <main className="Service">
-                <section className="section">
-                    <div className="container">
-                        {this.renderServiceErrors()}
-                        <div className="box">
-                            {this.renderService()}
-                            <Link to={this.props.location.pathname + "/chats"}>
-                                <button className="button">View Chats</button>
-                            </Link>
-                            {this.getOwner() != "@iduchan0" ?
-                                <button className="button is-pulled-right">Send Message</button> :
-                                <div className="section">
-                                    <p className="title is-6">Current Customers</p>
-                                    {this.renderCurrentCustomers()}
-                                </div>}
-                            <section className="section">
-                                <p className="title is-6">Reviews</p>
-                                {this.renderComments()}
-                            </section>
-                        </div>
-                    </div>
-                </section>
+                {this.renderServiceErrors()}
+                {this.renderServiceSection()}
+                {this.renderCommentsSection()}
             </main>
         );
     }
@@ -146,6 +179,7 @@ function mapStateToProps(state) {
     return {
         serviceErrors: serviceSelectors.getFetchErrors(state),
         service: serviceSelectors.getService(state),
+        ownerProfile: serviceSelectors.getOwnerProfile(state),
         comments: serviceSelectors.getComments(state)
     };
 }

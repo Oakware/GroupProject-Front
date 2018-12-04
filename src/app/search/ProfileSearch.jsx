@@ -1,9 +1,9 @@
 import React from 'react';
-import ProfileTile from "../profile/ProfileTile";
-import {Link} from "react-router-dom";
-import {connect} from "react-redux";
-import * as searchSelectors from "../../store/search/reducer";
-import * as searchActions from "../../store/search/actions";
+import {connect} from 'react-redux';
+
+import * as searchSelectors from '../../store/search/reducer';
+import * as searchActions from '../../store/search/actions';
+import ProfileBox from '../components/ProfileBox';
 
 class ProfileSearch extends React.Component {
     constructor(props) {
@@ -88,15 +88,9 @@ class ProfileSearch extends React.Component {
 
                         {this.state.showResults ?
                             <div id="results" className="columns is-multiline is-centered">
-                                {console.log(profilesFound)}
-
                                 {profilesFound.map((p) =>
                                     <div className="column is-6-desktop is-10-tablet" key={p.id}>
-                                        <Link to={"/profile/" + p.id}>
-                                            <article className="box">
-                                                <ProfileTile profile={p} cabinet={false} small={true}/>
-                                            </article>
-                                        </Link>
+                                        <ProfileBox profile={p} cabinet={false} small={true}/>
                                     </div>
                                 )}
                                 {this.renderSearchErrors()}

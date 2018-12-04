@@ -1,8 +1,8 @@
 import axios from 'axios';
 import * as gateway from './gateway';
 
-const profiles = {
-    1: {
+const profiles = [
+    {
         id: 1,
         username: "iduchan0",
         firstName: "Ivor",
@@ -13,8 +13,7 @@ const profiles = {
         location: "Lviv",
         rating: 3.6,
         photo: "https://media.giphy.com/media/3M9zf3NSuNgBWM3RWC/giphy.gif"
-    },
-    2: {
+    }, {
         id: 2,
         username: "ellegal",
         firstName: "Elena",
@@ -25,15 +24,19 @@ const profiles = {
         rating : 5,
         photo: "https://media.giphy.com/media/7ieOyZw7sogO4/source.gif"
     }
-};
+];
 
 let sleep = (t = 500) => new Promise(resolve => setTimeout(resolve, t));
 
 export async function getProfile(id) {
-    // let res = await axios.get(gateway.paths.profiles.profile(id));
+    let res = await axios.get(gateway.paths.profiles.profile, {
+        params: {id}
+    });
 
-    await sleep();
-    let profile = profiles[id];
+    let profile = res.data;
+
+    // await sleep();
+    // let profile = profiles.find(p => p.id.toString() === id);
 
     if (!profile) {
         return {
@@ -47,8 +50,21 @@ export async function getProfile(id) {
     return {profile};
 }
 
+export async function createProfile(id, kcProfile) {
+    let profile = {
+        id,
+        username: kcProfile.username,
+        firstName: kcProfile.firstName,
+        secondName: kcProfile.lastName,
+        emailAddress: kcProfile.email,
+    };
+
+    await axios.post(gateway.paths.profiles.update, profile);
+    return await getProfile(id);
+}
+
 export async function updateProfile(userId, data) {
-    let profile = profiles[userId];
+    let res = await axios.post(gateway.paths.profiles.update, data);
 
     if (!profile) {
         return {
@@ -65,16 +81,28 @@ export async function updateProfile(userId, data) {
 }
 
 export async function profileSearch(query) {
-    await sleep();
+    let res = await axios.get(gateway.paths.profiles.search, {
+        params: query
+    });
 
-    if (query.text === 'profile') {
-        return {
-            errors: {
-                message: 'nothing found'
-            },
-            profiles: []
-        };
-    }
+    let profiles = res.data;
+    return {
+        errors: {
+            message: profiles.length ? undefined : 'nothing found'
+        },
+        profiles
+    };
 
-    return {profiles};
+    // await sleep();
+    //
+    // if (query.query === 'profile') {
+    //     return {
+    //         errors: {
+    //             message: 'nothing found'
+    //         },
+    //         profiles: []
+    //     };
+    // }
+    //
+    // return {profiles};
 }

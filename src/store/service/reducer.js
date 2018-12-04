@@ -3,8 +3,8 @@ import * as types from './action-types';
 const initialState = {
     fetchErrors: {},
     service: undefined,
+    ownerProfile: undefined,
     comments: [],
-    usersOrdered: [],
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -15,15 +15,20 @@ export default function reduce(state = initialState, action = {}) {
                 fetchErrors: action.errors,
                 service: action.service
             };
+        case types.OWNER_FETCHED:
+            return {
+                ...state,
+                ownerProfile: action.profile
+            };
         case types.COMMENTS_FETCHED:
             return {
                 ...state,
                 comments: action.comments
             };
-        case types.USERS_ORDERED_FETCHED:
+        case types.APPEND_COMMENT:
             return {
                 ...state,
-                usersOrdered: action.users
+                comments: state.comments.concat([action.comment])
             };
         default:
             return state;
@@ -32,4 +37,5 @@ export default function reduce(state = initialState, action = {}) {
 
 export const getFetchErrors = (state) => state.service.fetchErrors;
 export const getService = (state) => state.service.service;
+export const getOwnerProfile = (state) => state.service.ownerProfile;
 export const getComments = (state) => state.service.comments;

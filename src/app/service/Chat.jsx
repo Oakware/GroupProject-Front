@@ -1,10 +1,9 @@
 import React from 'react';
 import StarRatings from "react-star-ratings";
 import {Link} from 'react-router-dom';
-import {Button, MessageBox} from 'react-chat-elements'
-import {MessageList} from 'react-chat-elements'
-import {Input} from 'react-chat-elements'
-import ProfileTile from "../profile/ProfileTile";
+import {Button, MessageBox} from 'react-chat-elements';
+import {MessageList} from 'react-chat-elements';
+import {Input} from 'react-chat-elements';
 import ServiceTile from "./ServiceTile";
 
 
