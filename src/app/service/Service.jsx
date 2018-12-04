@@ -9,13 +9,24 @@ import * as serviceActions from '../../store/service/actions';
 import * as serviceSelectors from '../../store/service/reducer';
 
 class Service extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            comment: ''
+        };
+
+        this.onCommentChanged = this.onCommentChanged.bind(this);
+        this.onPostComment = this.onPostComment.bind(this);
+    }
+
     componentDidMount() {
         this.loadService();
     }
 
     componentDidUpdate(prevProps) {
-        let { serviceId } = this.props.match.params;
-        let { prevServiceId } = prevProps.match.params;
+        let serviceId = this.props.match.params.serviceId;
+        let prevServiceId = prevProps.match.params.serviceId;
         if (serviceId !== prevServiceId)
             this.loadService();
     }
@@ -23,6 +34,16 @@ class Service extends React.Component {
     loadService() {
         let { serviceId } = this.props.match.params;
         this.props.dispatch(serviceActions.getService(serviceId));
+    }
+
+    onCommentChanged(e) {
+        this.setState({
+            comment: e.target.value
+        });
+    }
+
+    onPostComment() {
+        this.props.dispatch(serviceActions.addComment(this.state.comment));
     }
 
     renderServiceErrors() {
@@ -91,6 +112,24 @@ class Service extends React.Component {
         );
     }
 
+    renderComment(comment) {
+        return (
+            <article className="media" key={comment.id}>
+                <figure className="media-left">
+                    <p className="image is-64x64">
+                        {/*<img className="is-rounded" src={}/>*/}
+                    </p>
+                </figure>
+                <div className="media-content">
+                    <div className="content">
+                        <strong> Kayli Eunice </strong>
+                        <p> {comment.commentBody} </p>
+                    </div>
+                </div>
+            </article>
+        );
+    }
+
     renderCommentsSection() {
         let {service, comments, ownerProfile = {}} = this.props;
 
@@ -110,30 +149,16 @@ class Service extends React.Component {
                         <div className="media-content">
                             <div className="field">
                                 <p className="control">
-                                    <textarea className="textarea" placeholder="Add a comment..."/>
+                                    <textarea className="textarea"
+                                              placeholder="Add a comment..."
+                                              value={this.state.comment}
+                                              onChange={this.onCommentChanged}/>
                                 </p>
                             </div>
-                            <a className="button is-primary">Submit</a>
+                            <a className="button is-primary" onClick={this.onPostComment}>Submit</a>
                         </div>
                     </article>
-                    <article className="media">
-                        <figure className="media-left">
-                            <p className="image is-64x64">
-                                <img className="is-rounded" src={ownerProfile.photo}/>
-                            </p>
-                        </figure>
-                        <div className="media-content">
-                            <div className="content">
-                                <strong> Kayli Eunice </strong>
-                                <p>
-                                    Sed convallis scelerisque mauris, non pulvinar nunc mattis vel. Maecenas
-                                    varius felis sit amet magna vestibulum euismod malesuada cursus libero.
-                                    Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
-                                    cubilia Curae; Phasellus lacinia non nisl id feugiat.
-                                </p>
-                            </div>
-                        </div>
-                    </article>
+                    {comments.map(comment => this.renderComment(comment))}
                 </div>
             </section>
         );

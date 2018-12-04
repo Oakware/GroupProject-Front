@@ -26,5 +26,7 @@ export const paths = {
     })),
     chat: servicePath('http://35.244.172.73', get => ({
         allComments: get('/comments/aquire/all'),
+        serviceComments: id => get('/comments/aquire/service/' + id),
+        addServiceComment: get('/comments/save'),
     })),
 };

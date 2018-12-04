@@ -52,9 +52,15 @@ const services = [
 let sleep = (t = 500) => new Promise(resolve => setTimeout(resolve, t));
 
 export async function getService(serviceId) {
-    await sleep();
+    let res = await axios.get(gateway.paths.services.service, {
+        params: {id: serviceId}
+    });
 
-    let service = services.find(s => s.id.toString() === serviceId);
+    let service = res.data.result;
+
+    // await sleep();
+    //
+    // let service = services.find(s => s.id.toString() === serviceId);
 
     if (!service) {
         return {

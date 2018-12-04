@@ -31,8 +31,7 @@ function MainRouting() {
                 </Route>
                 <Route path="/profile">
                     <Switch>
-                        <Route exact path="/profile" component={Profile}/>
-                        <Route exact path="/profile/:userId" component={Profile}/>
+                        <Route exact path="/profile/:userId?" component={Profile}/>
                         <Route exact path="/profile/:userId/settings" component={ProfileSettings}/>
                         <Route exact path="/profile/:userId/create" component={ServiceCreator}/>
                         <Route component={Error404}/>

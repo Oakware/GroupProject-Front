@@ -59,6 +59,7 @@ class NavigationBar extends React.Component {
     }
 
     render() {
+        let authenticated = this.props.userAuthenticated;
         let activeClass = this.state.menuActive ? 'is-active' : '';
 
         return (
@@ -83,7 +84,7 @@ class NavigationBar extends React.Component {
                         {this.renderAuthLink('Login', false, authActions.login)}
                         {this.renderAuthLink('Logout', true, authActions.logout)}
 
-                        {this.renderLink('/profile', 'Profile', 'person')}
+                        {authenticated? this.renderLink('/profile', 'Profile', 'person') : false}
                     </div>
                 </div>
             </header>

@@ -5,7 +5,6 @@ const initialState = {
     service: undefined,
     ownerProfile: undefined,
     comments: [],
-    usersOrdered: [],
 };
 
 export default function reduce(state = initialState, action = {}) {
@@ -26,10 +25,10 @@ export default function reduce(state = initialState, action = {}) {
                 ...state,
                 comments: action.comments
             };
-        case types.USERS_ORDERED_FETCHED:
+        case types.APPEND_COMMENT:
             return {
                 ...state,
-                usersOrdered: action.users
+                comments: state.comments.concat([action.comment])
             };
         default:
             return state;
