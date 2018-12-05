@@ -6,6 +6,7 @@ import chat from './chat/reducer';
 import profile from './profile/reducer';
 import search from './search/reducer';
 import service from './service/reducer';
+import user from './user/reducer';
 
 export const reducer = combineReducers({
     auth,
@@ -13,6 +14,7 @@ export const reducer = combineReducers({
     profile,
     search,
     service,
+    user,
 });
 
 export function configureStore() {

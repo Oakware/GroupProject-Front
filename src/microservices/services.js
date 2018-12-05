@@ -49,18 +49,12 @@ const services = [
     }
 ];
 
-let sleep = (t = 500) => new Promise(resolve => setTimeout(resolve, t));
-
 export async function getService(serviceId) {
     let res = await axios.get(gateway.paths.services.service, {
         params: {id: serviceId}
     });
 
     let service = res.data.result;
-
-    // await sleep();
-    //
-    // let service = services.find(s => s.id.toString() === serviceId);
 
     if (!service) {
         return {
@@ -82,9 +76,6 @@ export async function getUserServices(userId) {
     });
 
     return { services: res.data.result }
-
-    // await sleep();
-    // return {services};
 }
 
 export async function serviceSearch(query) {
@@ -99,17 +90,11 @@ export async function serviceSearch(query) {
         },
         services
     };
+}
 
-    // await sleep();
-    //
-    // if (query.text === 'service') {
-    //     return {
-    //         errors: {
-    //             message: 'nothing found'
-    //         },
-    //         services: []
-    //     };
-    // }
-    //
-    // return {services};
+export async function addService(data) {
+    let res = await axios.post(gateway.paths.services.addService, data);
+
+    let service = res.data;
+    return {service};
 }

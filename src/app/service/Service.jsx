@@ -136,10 +136,10 @@ class Service extends React.Component {
                 <div className="media-content">
                     <div className="field">
                         <p className="control">
-                                    <textarea className="textarea"
-                                              placeholder="Add a comment..."
-                                              value={this.state.comment}
-                                              onChange={this.onCommentChanged}/>
+                            <textarea className="textarea"
+                                      placeholder="Add a comment..."
+                                      value={this.state.comment}
+                                      onChange={this.onCommentChanged}/>
                         </p>
                     </div>
                     <a className="button is-primary" onClick={this.onPostComment}>Submit</a>

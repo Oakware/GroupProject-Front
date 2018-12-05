@@ -23,8 +23,9 @@ export const paths = {
         service: get('/id'),
         user: get('/user'),
         search: get('/filter'),
+        addService: get('/add_service'),
     })),
-    chat: servicePath('http://35.244.175.183', get => ({
+    chat: servicePath('http://35.186.216.149', get => ({
         allComments: get('/comments/aquire/all'),
         serviceComments: id => get('/comments/aquire/service/' + id),
         addServiceComment: get('/comments/save'),

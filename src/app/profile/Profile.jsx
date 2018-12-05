@@ -46,7 +46,7 @@ class Profile extends React.Component {
 
     renderNewServiceButton() {
         if (getUserId(this.props) === this.props.curUserId) {
-            return <Link className="button is-success has-text-white"
+            return <Link className="button is-primary"
                          to={"/service/create"}>
                 New Service
             </Link>

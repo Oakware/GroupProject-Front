@@ -56,7 +56,10 @@ export function addComment(commentBody) {
             rating: 4
         };
 
+        // post comment
         let res = await Chat.addServiceComment(comment);
+        comment.user = authSelectors.getUserProfile(state);
+
         if (res.success) {
             dispatch({
                 type: types.APPEND_COMMENT,

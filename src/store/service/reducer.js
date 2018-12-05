@@ -28,7 +28,7 @@ export default function reduce(state = initialState, action = {}) {
         case types.APPEND_COMMENT:
             return {
                 ...state,
-                comments: state.comments.concat([action.comment])
+                comments: [action.comment, ...state.comments]
             };
         default:
             return state;
