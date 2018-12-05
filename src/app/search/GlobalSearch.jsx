@@ -130,7 +130,7 @@ class GlobalSearch extends React.Component {
                 mark: this.state.rating == -1 ? null : this.state.rating,
                 priceFrom: this.state.priceRange.min,
                 priceTo: this.state.priceRange.max,
-                category: this.state.categories,
+                category: this.state.categories[0],
                 asc: this.state.asc,
                 fieldToSort: this.state.fieldToSort
             }));
