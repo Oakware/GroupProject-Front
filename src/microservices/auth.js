@@ -22,3 +22,7 @@ export function loadUserProfile() {
             .error(() => console.error('[Keycloak] failed to load profile'))
     });
 }
+
+export function getToken() {
+    return keycloak.token;
+}

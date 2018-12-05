@@ -10,29 +10,38 @@ export function getService(serviceId) {
         let servicePromise = Services.getService(serviceId);
         let commentsPromise = Chat.getServiceComments(serviceId);
 
+        let service, comments;
+
+        // load service
         let res = await servicePromise;
-        let service = res.service;
+        service = res.service;
         dispatch({
             type: types.SERVICE_FETCHED,
             errors: res.errors,
             service: res.service
         });
 
+        // if 404
         if (service == null)
             return;
 
-        let ownerPromise = Profiles.getProfile(service.user_id);
-
-        res = await commentsPromise;
-        dispatch({
-            type: types.COMMENTS_FETCHED,
-            comments: res.comments
-        });
-
-        res = await ownerPromise;
+        // load owner
+        res = await Profiles.getProfile(service.user_id);
         dispatch({
             type: types.OWNER_FETCHED,
             profile: res.profile
+        });
+
+        // load comments
+        res = await commentsPromise;
+        comments = res.comments;
+
+        // load comments profiles
+        let profiles = await Promise.all(comments.map(c => Profiles.getProfile(c.customerId)));
+        comments.forEach((c, i) => c.user = profiles[i].profile);
+        dispatch({
+            type: types.COMMENTS_FETCHED,
+            comments: res.comments
         });
     };
 }

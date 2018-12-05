@@ -5,6 +5,7 @@ import StarRatings from 'react-star-ratings';
 
 import './Service.scss';
 import ProfileBox from '../components/ProfileBox';
+import * as authSelectors from '../../store/auth/reducer';
 import * as serviceActions from '../../store/service/actions';
 import * as serviceSelectors from '../../store/service/reducer';
 
@@ -119,17 +120,47 @@ class Service extends React.Component {
         );
     }
 
+    renderCommentForm() {
+        let {curUserProfile} = this.props;
+
+        if (!curUserProfile)
+            return false;
+
+        return (
+            <article className="media">
+                <figure className="media-left">
+                    <p className="image is-64x64">
+                        <img className="is-rounded" src={curUserProfile.profilePicturePath}/>
+                    </p>
+                </figure>
+                <div className="media-content">
+                    <div className="field">
+                        <p className="control">
+                                    <textarea className="textarea"
+                                              placeholder="Add a comment..."
+                                              value={this.state.comment}
+                                              onChange={this.onCommentChanged}/>
+                        </p>
+                    </div>
+                    <a className="button is-primary" onClick={this.onPostComment}>Submit</a>
+                </div>
+            </article>
+        );
+    }
+
     renderComment(comment) {
+        let {user = {}} = comment;
+
         return (
             <article className="media" key={comment.id}>
                 <figure className="media-left">
                     <p className="image is-64x64">
-                        {/*<img className="is-rounded" src={}/>*/}
+                        <img className="is-rounded" src={user.profilePicturePath}/>
                     </p>
                 </figure>
                 <div className="media-content">
                     <div className="content">
-                        <strong> Kayli Eunice </strong>
+                        <strong> {user.fullName} </strong>
                         <p> {comment.commentBody} </p>
                     </div>
                 </div>
@@ -138,7 +169,7 @@ class Service extends React.Component {
     }
 
     renderCommentsSection() {
-        let {service, comments, ownerProfile = {}} = this.props;
+        let {service, comments} = this.props;
 
         if (!service || !comments)
             return false;
@@ -147,24 +178,7 @@ class Service extends React.Component {
             <section className="section">
                 <div className="container">
                     <h2 className="title is-4"> Comments </h2>
-                    <article className="media">
-                        <figure className="media-left">
-                            <p className="image is-64x64">
-                                <img className="is-rounded" src={ownerProfile.photo}/>
-                            </p>
-                        </figure>
-                        <div className="media-content">
-                            <div className="field">
-                                <p className="control">
-                                    <textarea className="textarea"
-                                              placeholder="Add a comment..."
-                                              value={this.state.comment}
-                                              onChange={this.onCommentChanged}/>
-                                </p>
-                            </div>
-                            <a className="button is-primary" onClick={this.onPostComment}>Submit</a>
-                        </div>
-                    </article>
+                    {this.renderCommentForm()}
                     {comments.map(comment => this.renderComment(comment))}
                 </div>
             </section>
@@ -184,6 +198,7 @@ class Service extends React.Component {
 
 function mapStateToProps(state) {
     return {
+        curUserProfile: authSelectors.getUserProfile(state),
         serviceErrors: serviceSelectors.getFetchErrors(state),
         service: serviceSelectors.getService(state),
         ownerProfile: serviceSelectors.getOwnerProfile(state),

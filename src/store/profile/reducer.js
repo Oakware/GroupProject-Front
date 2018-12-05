@@ -2,7 +2,7 @@ import * as types from './action-types';
 
 const initialState = {
     fetchErrors: {},
-    profile: undefined,
+    profile: null,
     userServices: [],
 };
 
@@ -14,14 +14,6 @@ export default function reduce(state = initialState, action = {}) {
                 fetchErrors: action.errors,
                 profile: action.profile
             };
-        case types.PROFILE_UPDATED:
-            if (getProfile(state).id === action.profile.id) {
-                return {
-                    ...state,
-                    profile: action.profile
-                };
-            }
-            return state;
         case types.USER_SERVICES_FETCHED:
             return {
                 ...state,

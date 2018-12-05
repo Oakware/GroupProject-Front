@@ -1,14 +1,14 @@
 import React from 'react';
-import StarRatings from "react-star-ratings";
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {ChatItem} from 'react-chat-elements'
-import ServiceTile from "./ServiceTile";
-import * as serviceSelectors from "../../store/service/reducer";
-import * as chatSelectors from "../../store/chat/reducer";
-import {connect} from "react-redux";
-import * as serviceActions from "../../store/service/actions";
-import * as chatActions from "../../store/chat/actions";
-import * as profileActions from "../../store/profile/actions";
+import {ChatItem} from 'react-chat-elements';
+
+import ServiceTile from './ServiceTile';
+import * as serviceSelectors from '../../store/service/reducer';
+import * as chatSelectors from '../../store/chat/reducer';
+import * as serviceActions from '../../store/service/actions';
+import * as chatActions from '../../store/chat/actions';
+import * as profileActions from '../../store/profile/actions';
 
 
 export class ServiceChats extends React.Component {
@@ -47,14 +47,13 @@ export class ServiceChats extends React.Component {
 
 
         messages.forEach((m) => {
-
-            let {profile} = dispatch(profileActions.getProfile(m.customerId));
+            let {profile} = this.props.dispatch(profileActions.getProfile(m.customerId));
             let chatItem = {
                 "id": m.id,
                 "avatar": profile.profilePicturePath,
                 "alt": profile.fullName,
                 "title": profile.fullName + " " + profile.username,
-                "subtitle": m.messegeBody,
+                "subtitle": m.messageBody,
                 "date": m.time,
                 "unread": m.fromServiceProvider ? 1 : 0,
                 "customer": m.customerId

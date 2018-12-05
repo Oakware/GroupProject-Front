@@ -6,7 +6,6 @@ export function getLastMessages(serviceId) {
         let messagesPromise = Chat.getLastMessages(serviceId);
 
         let res = await messagesPromise;
-        console.log(res);
         dispatch({
             type: types.MESSAGES_FETCHED,
             messages: res.messages

@@ -21,15 +21,3 @@ export function getProfile(id) {
         });
     };
 }
-
-export function updateProfile(data) {
-    return async (dispatch, getState) => {
-        let userId = data.id;
-        let res = Profiles.updateProfile(userId, data);
-        dispatch({
-            type: types.PROFILE_UPDATED,
-            errors: res.errors,
-            profile: res.profile
-        });
-    };
-}

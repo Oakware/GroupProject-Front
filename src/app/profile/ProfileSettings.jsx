@@ -1,27 +1,15 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import * as profileSelectors from "../../store/profile/reducer";
-import * as authSelectors from "../../store/auth/reducer";
-import {connect} from "react-redux";
-import * as profileActions from "../../store/profile/actions";
+import {connect} from 'react-redux';
+
+import * as authActions from '../../store/auth/actions';
+import * as authSelectors from '../../store/auth/reducer';
 
 export class ProfileSettings extends React.Component {
-
     constructor(props) {
         super(props);
 
         this.generatePicture = this.generatePicture.bind(this);
         this.updateUser = this.updateUser.bind(this);
-    }
-
-    componentDidMount() {
-        this.loadProfile();
-    }
-
-    loadProfile() {
-        let userId = this.props.curUserId;
-        if (userId)
-            this.props.dispatch(profileActions.getProfile(userId));
     }
 
     changeValue(key, e) {
@@ -44,16 +32,15 @@ export class ProfileSettings extends React.Component {
 
         profile.fullName = profile.firstName + " " + profile.secondName;
 
-        this.props.dispatch(profileActions.updateProfile(profile)).then(() => {
-            this.props.history.push('/profile/' + this.props.curUserId)
-        }).catch((error) => {
-            this.props.history.push('/profile/' + this.props.curUserId)
+        this.props.dispatch(authActions.updateProfile(profile)).then(() => {
+            this.props.history.push('/profile')
+        }).catch(() => {
+            this.props.history.push('/profile')
         })
-
     }
 
     render() {
-        let {profile} = this.props;
+        let {history, profile} = this.props;
 
         if (!profile)
             return false;
@@ -142,21 +129,6 @@ export class ProfileSettings extends React.Component {
 
                         <hr/>
 
-                        {/*<div className="field is-horizontal">*/}
-                            {/*<div className="field-label is-normal">*/}
-                                {/*<label className="label">New Password</label>*/}
-                            {/*</div>*/}
-                            {/*<div className="field-body">*/}
-                                {/*<div className="field">*/}
-                                    {/*<p className="control is-normal">*/}
-                                        {/*<input name="password" className="input" type="password"*/}
-                                               {/*onChange={(e) => this.changeValue("password", e)}/>*/}
-                                    {/*</p>*/}
-                                {/*</div>*/}
-                            {/*</div>*/}
-                        {/*</div>*/}
-                        {/*<hr/>*/}
-
                         <div className="field is-horizontal">
                             <div className="field-label is-normal">
                                 <label className="label">Description</label>
@@ -189,21 +161,16 @@ export class ProfileSettings extends React.Component {
 
 
                         <div className="field is-horizontal">
-                            <div className="field-label">
-                                <Link className="button is-danger has-text-white"
-                                      to={"/profile/" + this.props.curUserId}>
-                                    Cancel
-                                </Link>
-                            </div>
-
+                            <div className="field-label"/>
                             <div className="field-body">
-                                <div className="field">
+                                <div className="field is-grouped">
                                     <div className="control">
-                                        {/*TODO: on submit create a new service on server*/}
-                                        <a className="button is-success has-text-white"
-                                           onClick={this.updateUser}>
+                                        <a className="button is-success" onClick={this.updateUser}>
                                             Update
                                         </a>
+                                    </div>
+                                    <div className="control">
+                                        <a className="button" onClick={history.goBack}> Cancel </a>
                                     </div>
                                 </div>
                             </div>
@@ -219,7 +186,7 @@ export class ProfileSettings extends React.Component {
 function mapStateToProps(state) {
     return {
         curUserId: authSelectors.getUserId(state),
-        profile: profileSelectors.getProfile(state),
+        profile: authSelectors.getUserProfile(state),
     };
 }
 

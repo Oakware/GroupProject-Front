@@ -3,7 +3,7 @@ import * as gateway from './gateway';
 
 const profiles = [
     {
-        id: 1,
+        id: "1",
         username: "iduchan0",
         firstName: "Ivor",
         secondName: "Duchan",
@@ -14,7 +14,7 @@ const profiles = [
         rating: 3.6,
         photo: "https://media.giphy.com/media/3M9zf3NSuNgBWM3RWC/giphy.gif"
     }, {
-        id: 2,
+        id: "2",
         username: "ellegal",
         firstName: "Elena",
         secondName: "Galitska",
@@ -60,25 +60,12 @@ export async function createProfile(id, kcProfile) {
         profilePicturePath : "https://robohash.org/" + kcProfile.username + "?set=set4"
     };
 
-    await axios.post(gateway.paths.profiles.update, profile);
-    return await getProfile(id);
+    return await updateProfile(profile);
 }
 
-export async function updateProfile(userId, data) {
-    let res = await axios.post(gateway.paths.profiles.update, data);
-
-    if (!profile) {
-        return {
-            errors: {
-                code: 404,
-                message: 'profile not found'
-            }
-        };
-    }
-
-    Object.assign(profile, data);
-
-    return {profile};
+export async function updateProfile(profile) {
+    await axios.post(gateway.paths.profiles.update, profile);
+    return await getProfile(profile.id);
 }
 
 export async function profileSearch(query) {

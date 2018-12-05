@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 import './Profile.scss';
 import Tabs from './Tabs';
-import * as profileActions from '../../store/profile/actions';
 import * as authSelectors from '../../store/auth/reducer';
+import * as profileActions from '../../store/profile/actions';
 import * as profileSelectors from '../../store/profile/reducer';
 import {Link} from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
@@ -47,7 +47,7 @@ class Profile extends React.Component {
     renderNewServiceButton() {
         if (getUserId(this.props) === this.props.curUserId) {
             return <Link className="button is-success has-text-white"
-                         to={"/profile/" + this.props.profile.id + "/create"}>
+                         to={"/service/create"}>
                 New Service
             </Link>
         }
@@ -55,7 +55,7 @@ class Profile extends React.Component {
 
     renderSettingsButton() {
         if (getUserId(this.props) === this.props.curUserId) {
-            return <Link to={"/profile/" + this.props.profile.id + "/settings"}>
+            return <Link to={"/profile/settings"}>
                 <span className="icon"> <ion-icon name="settings"/> </span>
             </Link>
         }

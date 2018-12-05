@@ -2,11 +2,10 @@ import * as types from './action-types';
 
 const initialState = {
     fetchErrors: {},
-    messages: []
+    messages: [],
 };
 
 export default function reduce(state = initialState, action = {}) {
-    console.log(action);
     switch (action.type) {
         case types.MESSAGES_FETCHED:
             return {
@@ -19,5 +18,5 @@ export default function reduce(state = initialState, action = {}) {
     }
 }
 
-export const getFetchErrors = (state) => state.fetchErrors;
-export const getLastMessages = (state) => state.messages;
+export const getFetchErrors = (state) => state.chat.fetchErrors;
+export const getLastMessages = (state) => state.chat.messages;

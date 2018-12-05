@@ -31,14 +31,14 @@ function MainRouting() {
                 </Route>
                 <Route path="/profile">
                     <Switch>
+                        <Route exact path="/profile/settings" component={ProfileSettings}/>
                         <Route exact path="/profile/:userId?" component={Profile}/>
-                        <Route exact path="/profile/:userId/settings" component={ProfileSettings}/>
-                        <Route exact path="/profile/:userId/create" component={ServiceCreator}/>
                         <Route component={Error404}/>
                     </Switch>
                 </Route>
                 <Route path="/service">
                     <Switch>
+                        <Route exact path="/service/create" component={ServiceCreator}/>
                         <Route exact path="/service/:serviceId" component={Service}/>
                         <Route exact path="/service/:serviceId/chats" component={ServiceChats}/>
                         <Route exact path="/service/:serviceId/chats/:customerId" component={Chat}/>

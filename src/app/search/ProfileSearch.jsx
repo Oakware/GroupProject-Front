@@ -9,11 +9,9 @@ class ProfileSearch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            queryValue: '',
-            showResults: false
+            queryValue: ''
         };
 
-        this.showResults = this.showResults.bind(this);
         this.onQueryEnter = this.onQueryEnter.bind(this);
         this.onSearchProfile = this.onSearchProfile.bind(this);
     }
@@ -49,14 +47,7 @@ class ProfileSearch extends React.Component {
 
     onQueryEnter(e) {
         if (e.key === 'Enter')
-            this.showResults();
-    }
-
-    showResults() {
-        this.setState({
-            showResults: true
-        });
-        this.onSearchProfile();
+            this.onSearchProfile();
     }
 
     render() {
@@ -77,7 +68,7 @@ class ProfileSearch extends React.Component {
                                     </div>
                                     <div className="control">
                                         <button className="button is-rounded is-info"
-                                                onClick={this.showResults}>
+                                                onClick={this.onSearchProfile}>
                                             Search
                                         </button>
                                     </div>
@@ -85,16 +76,14 @@ class ProfileSearch extends React.Component {
                             </div>
                         </div>
 
-
-                        {this.state.showResults ?
-                            <div id="results" className="columns is-multiline is-centered">
-                                {profilesFound.map((p) =>
-                                    <div className="column is-6-desktop is-10-tablet" key={p.id}>
-                                        <ProfileBox profile={p} cabinet={false} small={true}/>
-                                    </div>
-                                )}
-                                {this.renderSearchErrors()}
-                            </div> : null}
+                        <div id="results" className="columns is-multiline is-centered">
+                            {profilesFound.map((p) =>
+                                <div className="column is-6-desktop is-10-tablet" key={p.id}>
+                                    <ProfileBox profile={p} cabinet={false} small={true}/>
+                                </div>
+                            )}
+                            {this.renderSearchErrors()}
+                        </div>
                     </div>
                 </section>
             </main>

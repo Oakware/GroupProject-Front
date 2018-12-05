@@ -2,8 +2,8 @@ import * as types from './action-types';
 
 const initialState = {
     fetchErrors: {},
-    service: undefined,
-    ownerProfile: undefined,
+    service: null,
+    ownerProfile: null,
     comments: [],
 };
 

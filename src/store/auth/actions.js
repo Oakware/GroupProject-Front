@@ -51,3 +51,14 @@ export function logout() {
         selectors.getKeycloak(getState()).logout();
     };
 }
+
+export function updateProfile(data) {
+    return async (dispatch, getState) => {
+        let res = await Profiles.updateProfile(data);
+        dispatch({
+            type: types.USER_PROFILE_UPDATED,
+            errors: res.errors,
+            profile: res.profile
+        });
+    };
+}

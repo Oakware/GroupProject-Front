@@ -70,6 +70,8 @@ export default class ServiceCreator extends React.Component {
     }
 
     render() {
+        let {history} = this.props;
+
         return (
             <main className="ServiceCreator">
                 <section className="section">
@@ -155,21 +157,14 @@ export default class ServiceCreator extends React.Component {
                         </div>
 
                         <div className="field is-horizontal">
-                            <div className="field-label">
-                                <Link className="button is-danger has-text-white"
-                                      to={"/profile/" + this.props.match.params.userId}>
-                                    Cancel
-                                </Link>
-                            </div>
-
+                            <div className="field-label"/>
                             <div className="field-body">
-                                <div className="field">
+                                <div className="field is-grouped">
                                     <div className="control">
-                                        {/*TODO: on submit create a new service on server*/}
-                                        <Link className="button is-success has-text-white"
-                                              to={"/post"}>
-                                            Post
-                                        </Link>
+                                        <a className="button is-success"> Post </a>
+                                    </div>
+                                    <div className="control">
+                                        <a className="button" onClick={history.goBack}> Cancel </a>
                                     </div>
                                 </div>
                             </div>

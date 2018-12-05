@@ -25,6 +25,11 @@ export default function reduce(state = initialState, action = {}) {
                 ...state,
                 userProfile: action.profile
             };
+        case types.USER_PROFILE_UPDATED:
+            return {
+                ...state,
+                userProfile: action.profile
+            };
         default:
             return state;
     }

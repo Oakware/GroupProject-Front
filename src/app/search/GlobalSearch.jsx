@@ -67,9 +67,6 @@ class GlobalSearch extends React.Component {
     }
 
     showResults() {
-        this.setState({
-            showResults: true
-        });
         this.getResults()
     }
 
@@ -147,7 +144,7 @@ class GlobalSearch extends React.Component {
 
         if (searchErrors && searchErrors.message) {
             return (
-                <h1 className="title has-text-centered not-found-text">
+                <h1 className="title has-text-centered is-uppercase">
                     {searchErrors.message}
                 </h1>
             );
@@ -300,15 +297,14 @@ class GlobalSearch extends React.Component {
                             </div>
                             <div className="column is-8">
                                 <p className="title is-4">Results</p>
-                                {this.state.showResults ?
-                                    <div id="results" className="columns is-multiline is-centered">
-                                        {servicesFound.map((service) =>
-                                            <div className="column is-12" key={service.id}>
-                                                <ServiceTile service={service}/>
-                                            </div>
-                                        )}
-                                        {this.renderSearchErrors()}
-                                    </div> : null}
+                                <div id="results" className="columns is-multiline is-centered">
+                                    {this.renderSearchErrors()}
+                                    {servicesFound.map((service) =>
+                                        <div className="column is-12" key={service.id}>
+                                            <ServiceTile service={service}/>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
