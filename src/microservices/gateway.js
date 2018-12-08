@@ -26,10 +26,10 @@ export const paths = {
         addService: get('/add_service'),
     })),
     chat: servicePath('http://35.186.216.149', get => ({
-        allComments: get('/comments/aquire/all'),
-        serviceComments: id => get('/comments/aquire/service/' + id),
+        serviceComments: id => get(`/comments/aquire/service/${id}`),
         addServiceComment: get('/comments/save'),
-        lastMessagesForService: id => get('/dialog/aquire/service/' + id),
-        allMessages: (serviceId, customerId) => get('/dialog/aquire/service/' + serviceId + "/customer/" + customerId)
+        serviceChats: id => get(`/dialog/aquire/service/${id}`),
+        userServiceMessages: (sid, cid) => get(`/dialog/aquire/service/${sid}/customer/${cid}`),
+        sendMessage: get('/dialog/save'),
     })),
 };

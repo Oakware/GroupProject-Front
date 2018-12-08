@@ -64,13 +64,34 @@ class Service extends React.Component {
         } else return false;
     }
 
-    makeOrder(){
+    makeOrder() {
         var key = prompt("Enter your secret key");
-        console.log(key)
+    }
+
+    renderChatButton() {
+        let {ownerProfile, curUserProfile} = this.props;
+        if (ownerProfile == null || curUserProfile == null)
+            return false;
+
+        if (ownerProfile.id === curUserProfile.id) {
+            return (
+                <Link className="button is-info is-outlined is-fullwidth"
+                      to={this.props.location.pathname + "/chats"}>
+                    Chats
+                </Link>
+            );
+        } else {
+            return (
+                <Link className="button is-info is-outlined is-fullwidth"
+                      to={this.props.location.pathname + "/chats/" + curUserProfile.id}>
+                    Chat
+                </Link>
+            );
+        }
     }
 
     renderServiceSection() {
-        let {service, ownerProfile} = this.props;
+        let {service, ownerProfile, curUserProfile} = this.props;
 
         if (!service)
             return false;
@@ -101,10 +122,7 @@ class Service extends React.Component {
                                     onClick={this.makeOrder}> Buy: {service.price} Milo </a>
                                 </div>
                                 <div className="column">
-                                    <Link className="button is-info is-outlined is-fullwidth"
-                                          to={this.props.location.pathname + "/chats"}>
-                                        Chat
-                                    </Link>
+                                    {this.renderChatButton()}
                                 </div>
                             </div>
                         </div>
@@ -173,8 +191,6 @@ class Service extends React.Component {
 
         if (!service || !comments)
             return false;
-
-        console.log(comments);
 
         return (
             <section className="section">

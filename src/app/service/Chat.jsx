@@ -1,20 +1,13 @@
 import React from 'react';
-import StarRatings from "react-star-ratings";
-import {Link} from 'react-router-dom';
-import {Button, MessageBox} from 'react-chat-elements';
-import {MessageList} from 'react-chat-elements';
-import {Input} from 'react-chat-elements';
-import ServiceTile from "./ServiceTile";
-import * as serviceActions from "../../store/service/actions";
-import {connect} from "react-redux";
-import {ServiceChats} from "./ServiceChats";
-import * as serviceSelectors from "../../store/service/reducer";
-import * as chatSelectors from "../../store/chats/reducer";
-import * as chatActions from "../../store/chats/actions";
+import {connect} from 'react-redux';
+import {Button, MessageBox, Input} from 'react-chat-elements';
 
+import ServiceTile from './ServiceTile';
+import * as authSelectors from '../../store/auth/reducer';
+import * as chatSelectors from '../../store/chats/reducer';
+import * as chatActions from '../../store/chats/actions';
 
-export class Chat extends React.Component {
-
+class Chat extends React.Component {
     constructor(props) {
         super(props);
 
@@ -26,7 +19,6 @@ export class Chat extends React.Component {
     }
 
     componentDidMount() {
-        this.loadService();
         this.loadMessages();
     }
 
@@ -34,37 +26,23 @@ export class Chat extends React.Component {
         let serviceId = this.props.match.params.serviceId;
         let prevServiceId = prevProps.match.params.serviceId;
         if (serviceId !== prevServiceId)
-            this.loadService();
-    }
-
-    loadService() {
-        let {serviceId} = this.props.match.params;
-        this.props.dispatch(serviceActions.getService(serviceId));
+            this.loadMessages();
     }
 
     loadMessages() {
-        let {serviceId} = this.props.match.params;
-        let {customerId} = this.props.match.params;
-        this.props.dispatch(chatActions.getAllMessages(serviceId, customerId));
+        let {serviceId, customerId} = this.props.match.params;
+        this.props.dispatch(chatActions.getUserMessages(serviceId, customerId));
     }
 
     postMessage() {
-        // request to post message
-    }
+        let {serviceId, customerId} = this.props.match.params;
 
-    getCustomer() {
-        return {
-            id: 2,
-            username: "whoami",
-            firstName: "Gossip",
-            secondName: "Girl",
-            emailAddress: "gg@gfail.org",
-            description: "And who am I? That secret I will never tell. XOXO",
-            location: "NYC",
-            rating: 5,
-            photo: "https://data.whicdn.com/images/38906065/original.gif",
-            walletAddress: "address3"
-        }
+        let message = {
+            serviceId: serviceId,
+            customerId: customerId,
+            messegeBody: this.state.message,
+            fromServiceProvider : false
+        };
     }
 
     getOwner() {
@@ -157,10 +135,9 @@ export class Chat extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        serviceErrors: serviceSelectors.getFetchErrors(state),
-        service: serviceSelectors.getService(state),
-        all_messages: chatSelectors.getAllMessages(state),
-        messagesErrors: chatSelectors.getFetchErrors(state)
+        curUser: authSelectors.getUserProfile(state),
+        service: chatSelectors.getService(state),
+        all_messages: chatSelectors.getUserMessages(state)
     };
 }
 

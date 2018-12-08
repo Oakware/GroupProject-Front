@@ -1,35 +1,45 @@
 import * as types from './action-types';
 
 const initialState = {
-    fetchErrors: {},
-    messages: [],
+    chats: [],
+    userMessages: [],
+    service: null,
+    serviceOwner: null,
 };
 
 export default function reduce(state = initialState, action = {}) {
     switch (action.type) {
-        case types.MESSAGES_FETCHED:
+        case types.CHATS_FETCHED:
             return {
                 ...state,
-                fetchErrors: action.errors,
-                messages: action.messages
+                chats: action.chats
             };
-        case types.ALL_MESSAGES_FETCHED:
+        case types.USER_MESSAGES_FETCHED:
             return {
                 ...state,
-                fetchErrors: action.errors,
-                all_messages: action.all_messages
+                userMessages: action.messages
             };
-        case types.OWNER_FETCHED:
+        case types.SERVICE_FETCHED:
             return {
                 ...state,
-                fetchErrors: action.errors,
-                owner: action.owner
+                service: action.service
+            };
+        case types.SERVICE_OWNER_FETCHED:
+            return {
+                ...state,
+                serviceOwner: action.profile
+            };
+        case types.APPEND_MESSAGE:
+            return {
+                ...state,
+                userMessages: [...state.userMessages, action.message]
             };
         default:
             return state;
     }
 }
 
-export const getFetchErrors = (state) => state.chat.fetchErrors;
-export const getLastMessages = (state) => state.chat.messages;
-export const getAllMessages = (state) => state.chat.all_messages;
+export const getChats = (state) => state.chats.chats;
+export const getUserMessages = (state) => state.chats.userMessages;
+export const getService = (state) => state.chats.service;
+export const getServiceOwner = (state) => state.chats.serviceOwner;

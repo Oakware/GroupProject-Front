@@ -4,51 +4,38 @@ import {Link} from 'react-router-dom';
 import {ChatItem} from 'react-chat-elements';
 
 import ServiceTile from './ServiceTile';
-import * as serviceSelectors from '../../store/service/reducer';
 import * as chatSelectors from '../../store/chats/reducer';
-import * as serviceActions from '../../store/service/actions';
 import * as chatActions from '../../store/chats/actions';
-import * as profileActions from '../../store/profile/actions';
 
-
-export class ServiceChats extends React.Component {
-
+class ServiceChats extends React.Component {
     constructor(props) {
         super(props);
     }
 
     componentDidMount() {
-        this.loadService();
-        this.loadMessages();
+        this.loadChats();
     }
 
     componentDidUpdate(prevProps) {
         let serviceId = this.props.match.params.serviceId;
         let prevServiceId = prevProps.match.params.serviceId;
         if (serviceId !== prevServiceId)
-            this.loadService();
+            this.loadChats();
     }
 
-    loadService() {
+    loadChats() {
         let {serviceId} = this.props.match.params;
-        this.props.dispatch(serviceActions.getService(serviceId));
-    }
-
-    loadMessages() {
-        let {serviceId} = this.props.match.params;
-        this.props.dispatch(chatActions.getLastMessages(serviceId));
+        this.props.dispatch(chatActions.getChats(serviceId));
     }
 
     renderChats() {
-        let {messages} = this.props;
-        console.log(messages);
+        let {chats} = this.props;
         let chatItems = [];
 
-        if (!messages)
+        if (!chats)
             return false;
 
-
-        messages.forEach((m) => {
+        chats.forEach((m) => {
             let unread = m.fromServiceProvider ? 0 : 1;
             let {customer = {}} = m;
             let chatItem = {
@@ -85,7 +72,6 @@ export class ServiceChats extends React.Component {
         if (!service)
             return false;
 
-
         return (
             <main className="ServiceChats">
                 <section className="section">
@@ -101,10 +87,8 @@ export class ServiceChats extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        serviceErrors: serviceSelectors.getFetchErrors(state),
-        service: serviceSelectors.getService(state),
-        messages: chatSelectors.getLastMessages(state),
-        messagesErrors: chatSelectors.getFetchErrors(state)
+        chats: chatSelectors.getChats(state),
+        service: chatSelectors.getService(state)
     };
 }
 
