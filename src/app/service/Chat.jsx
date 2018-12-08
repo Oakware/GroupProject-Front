@@ -69,16 +69,17 @@ export class Chat extends React.Component {
 
     getOwner() {
         return {
-            id: 1,
-            username: "iduchan0",
-            firstName: "Ivor",
-            secondName: "Duchan",
-            emailAddress: "iduchan0@dmoz.org",
-            description: "Hi! I am a cool guy, who is an expert Software Engineer." +
-            "\n I can help you with any of your projects for a low price.",
-            location: "Lviv",
-            rating: 3.6,
-            photo: "https://media.giphy.com/media/3M9zf3NSuNgBWM3RWC/giphy.gif"
+            id: "66477a69-4544-43d2-8318-3a3d657fb8f8",
+            username: "blair_waldorf",
+            firstName: "Blair",
+            secondName: "Waldorf",
+            fullName: "Blair Waldorf",
+            emailAddress: "blair@gmail.com",
+            rating: 0,
+            description: "",
+            walletAddress: "",
+            location: "",
+            profilePicturePath: "https://robohash.org/0.4317827818889788?set=set4"
         }
     }
 
@@ -92,7 +93,7 @@ export class Chat extends React.Component {
         all_messages.map((c) =>
             result.push(<MessageBox
                 key={c.id}
-                avatar={c.customer.profilePicturePath}
+                avatar={c.fromServiceProvider ? this.getOwner().profilePicturePath : c.customer.profilePicturePath }
                 position={c.fromServiceProvider ? 'right' : 'left'}
                 type={'text'}
                 text={c.messegeBody}
