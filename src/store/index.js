@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 
 import auth from './auth/reducer';
-import chat from './chat/reducer';
+import chat from './chats/reducer';
 import profile from './profile/reducer';
 import search from './search/reducer';
 import service from './service/reducer';

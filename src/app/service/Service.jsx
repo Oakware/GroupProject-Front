@@ -174,6 +174,8 @@ class Service extends React.Component {
         if (!service || !comments)
             return false;
 
+        console.log(comments);
+
         return (
             <section className="section">
                 <div className="container">

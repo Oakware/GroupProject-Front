@@ -1,0 +1,3 @@
+export const MESSAGES_FETCHED = 'chat.MESSAGES_FETCHED';
+export const ALL_MESSAGES_FETCHED = 'chat.ALL_MESSAGES_FETCHED';
+export const OWNER_FETCHED = 'chat.OWNER_FETCHED';

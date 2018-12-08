@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as gateway from './gateway';
+import * as auth from './auth'
 
 const comments = [
     {
@@ -22,13 +23,25 @@ const comments = [
 export async function getServiceComments(serviceId) {
     let res = await axios.get(gateway.paths.chat.serviceComments(serviceId));
     let comments = res.data || [];
-    return { comments };
+    return {comments};
 }
 
 export async function getLastMessages(serviceId) {
-    let res = await axios.get(gateway.paths.chat.lastMessagesForService(serviceId));
+    // axios.defaults.headers.common['Authorization'] = auth.getToken();
+    let res = await axios.get(gateway.paths.chat.lastMessagesForService(serviceId), {
+        headers: {Authorization: 'bearer '}
+    });
     let messages = res.data || [];
-    return { messages };
+    return {messages};
+}
+
+export async function getAllMessages(serviceId, customerId) {
+    // axios.defaults.headers.common['Authorization'] = auth.getToken();
+    let res = await axios.get(gateway.paths.chat.allMessages(serviceId, customerId), {
+        headers: {Authorization: 'bearer '}
+    });
+    let all_messages = res.data || [];
+    return {all_messages};
 }
 
 export async function addServiceComment(comment) {

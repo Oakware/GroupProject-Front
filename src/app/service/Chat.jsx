@@ -5,15 +5,41 @@ import {Button, MessageBox} from 'react-chat-elements';
 import {MessageList} from 'react-chat-elements';
 import {Input} from 'react-chat-elements';
 import ServiceTile from "./ServiceTile";
+import * as serviceActions from "../../store/service/actions";
+import {connect} from "react-redux";
+import {ServiceChats} from "./ServiceChats";
+import * as serviceSelectors from "../../store/service/reducer";
+import * as chatSelectors from "../../store/chats/reducer";
+import * as chatActions from "../../store/chats/actions";
 
 
-export default class Chat extends React.Component {
+export class Chat extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            'customerId': this.props.match.params
-        }
+    }
+
+    componentDidMount() {
+        this.loadService();
+        this.loadMessages();
+    }
+
+    componentDidUpdate(prevProps) {
+        let serviceId = this.props.match.params.serviceId;
+        let prevServiceId = prevProps.match.params.serviceId;
+        if (serviceId !== prevServiceId)
+            this.loadService();
+    }
+
+    loadService() {
+        let {serviceId} = this.props.match.params;
+        this.props.dispatch(serviceActions.getService(serviceId));
+    }
+
+    loadMessages() {
+        let {serviceId} = this.props.match.params;
+        let {customerId} = this.props.match.params;
+        this.props.dispatch(chatActions.getAllMessages(serviceId, customerId));
     }
 
     getCustomer() {
@@ -46,37 +72,22 @@ export default class Chat extends React.Component {
         }
     }
 
-    getChat(id) {
-        console.log(this.props.customerId);
-        var chat = [];
+    renderChat() {
+        let {all_messages = []} = this.props;
 
-        chat = [{
-            "id": 1,
-            "serviceId": 1,
-            "customerId": 3,
-            "time": new Date("2018-11-17T21:27:25"),
-            "fromServiceProvider": false,
-            "messageBody": "Hello, I would like to clean my shoes, mister. Do you still provide this service?",
-        }, {
-            "id": 3,
-            "serviceId": 1,
-            "customerId": 3,
-            "time": new Date("2018-11-17T21:35:56"),
-            "fromServiceProvider": true,
-            "messageBody": "Lol, it works",
-        }];
-
-
-        chat.sort((a, b) => (a < b) ? 1 : ((b < a) ? -1 : 0));
+        all_messages.sort((a, b) => (a < b) ? 1 : ((b < a) ? -1 : 0));
 
         let result = [];
-        chat.map((c) =>
+        all_messages.map((c) =>
             result.push(<MessageBox
+                key={c.id}
+                avatar={c.customer.profilePicturePath}
                 position={c.fromServiceProvider ? 'right' : 'left'}
                 type={'text'}
-                text={c.messageBody}
+                text={c.messegeBody}
                 title={c.fromServiceProvider ? (this.getOwner().firstName + " " + this.getOwner().secondName) :
-                    (this.getCustomer().firstName + " " + this.getCustomer().secondName)}
+                    (c.customer.firstName + " " + c.customer.secondName)}
+                dateString={c.time[0] + "-" + c.time[1] + "-" + c.time[2] + " " + c.time[3] + ":" + c.time[4]}
             />)
         );
         return result;
@@ -96,18 +107,21 @@ export default class Chat extends React.Component {
 
 
     render() {
+        let {service} = this.props;
+        if (!service)
+            return false;
         return (
             <main className="Chat">
                 <section className="section">
                     <div className="container box">
-                        <ServiceTile service={this.getService()} small={true}/>
+                        <ServiceTile service={service} small={true}/>
                         <br/>
                         {/*<div className="columns">*/}
                         {/*<ProfileTile className="column" profile={this.getCustomer(3)} small={true}/>*/}
                         {/*<ProfileTile className="column" profile={this.getOwner()} small={true}/>*/}
                         {/*</div>*/}
                         <hr/>
-                        {this.getChat()}
+                        {this.renderChat()}
                         <br/>
                         <Input
                             placeholder="Type here..."
@@ -125,3 +139,14 @@ export default class Chat extends React.Component {
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        serviceErrors: serviceSelectors.getFetchErrors(state),
+        service: serviceSelectors.getService(state),
+        all_messages: chatSelectors.getAllMessages(state),
+        messagesErrors: chatSelectors.getFetchErrors(state)
+    };
+}
+
+export default connect(mapStateToProps)(Chat);

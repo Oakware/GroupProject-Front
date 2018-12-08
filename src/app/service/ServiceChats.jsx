@@ -5,9 +5,9 @@ import {ChatItem} from 'react-chat-elements';
 
 import ServiceTile from './ServiceTile';
 import * as serviceSelectors from '../../store/service/reducer';
-import * as chatSelectors from '../../store/chat/reducer';
+import * as chatSelectors from '../../store/chats/reducer';
 import * as serviceActions from '../../store/service/actions';
-import * as chatActions from '../../store/chat/actions';
+import * as chatActions from '../../store/chats/actions';
 import * as profileActions from '../../store/profile/actions';
 
 
@@ -35,7 +35,8 @@ export class ServiceChats extends React.Component {
     }
 
     loadMessages() {
-        this.props.dispatch(chatActions.getLastMessages(1998));
+        let {serviceId} = this.props.match.params;
+        this.props.dispatch(chatActions.getLastMessages(serviceId));
     }
 
     renderChats() {
@@ -45,17 +46,20 @@ export class ServiceChats extends React.Component {
         if (!messages)
             return false;
 
+        console.log(messages);
+
 
         messages.forEach((m) => {
-            let {profile} = this.props.dispatch(profileActions.getProfile(m.customerId));
+            let unread = m.fromServiceProvider ? 1 : 0;
+            let {customer = {}} = m;
             let chatItem = {
                 "id": m.id,
-                "avatar": profile.profilePicturePath,
-                "alt": profile.fullName,
-                "title": profile.fullName + " " + profile.username,
-                "subtitle": m.messageBody,
+                "avatar": customer.profilePicturePath,
+                "alt": customer.fullName,
+                "title": customer.fullName,
+                "subtitle": m.messegeBody,
                 "date": m.time,
-                "unread": m.fromServiceProvider ? 1 : 0,
+                "unread": unread,
                 "customer": m.customerId
             };
 
