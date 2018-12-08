@@ -27,7 +27,6 @@ export async function getServiceComments(serviceId) {
 }
 
 export async function getLastMessages(serviceId) {
-    // axios.defaults.headers.common['Authorization'] = auth.getToken();
     let res = await axios.get(gateway.paths.chat.lastMessagesForService(serviceId), {
         headers: {Authorization: 'bearer '}
     });

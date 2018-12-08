@@ -17,6 +17,12 @@ export class Chat extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            message: ""
+        };
+
+        this.postMessage = this.postMessage.bind(this);
     }
 
     componentDidMount() {
@@ -40,6 +46,10 @@ export class Chat extends React.Component {
         let {serviceId} = this.props.match.params;
         let {customerId} = this.props.match.params;
         this.props.dispatch(chatActions.getAllMessages(serviceId, customerId));
+    }
+
+    postMessage() {
+        // request to post message
     }
 
     getCustomer() {
@@ -75,7 +85,8 @@ export class Chat extends React.Component {
     renderChat() {
         let {all_messages = []} = this.props;
 
-        all_messages.sort((a, b) => (a < b) ? 1 : ((b < a) ? -1 : 0));
+        // all_messages.sort((a, b) => (a < b) ? 1 : ((b < a) ? -1 : 0));
+        all_messages.reverse();
 
         let result = [];
         all_messages.map((c) =>
@@ -121,18 +132,21 @@ export class Chat extends React.Component {
                         {/*<ProfileTile className="column" profile={this.getOwner()} small={true}/>*/}
                         {/*</div>*/}
                         <hr/>
-                        {this.renderChat()}
-                        <br/>
-                        <Input
-                            placeholder="Type here..."
-                            multiline={true}
-                            rightButtons={
-                                //TODO: send message buttonRef
-                                <Button
-                                    color='white'
-                                    backgroundColor='green'
-                                    text='Send'/>
-                            }/>
+                        <div className="box" id="chat">
+                            {this.renderChat()}
+                            <br/>
+                            <Input
+                                placeholder="Type here..."
+                                multiline={true}
+                                rightButtons={
+                                    //TODO: send message buttonRef
+                                    <Button className="button"
+                                        color='white'
+                                        text='Send'
+                                        value={this.state.message}
+                                        onClick={this.postMessage()}/>
+                                }/>
+                        </div>
                     </div>
                 </section>
             </main>
