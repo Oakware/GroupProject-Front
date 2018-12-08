@@ -9,16 +9,6 @@ import {ProfileSettings} from "./ProfileSettings";
 import * as profileActions from "../../store/profile/actions";
 
 export class Tabs extends React.Component {
-    componentDidMount() {
-        this.loadProfile();
-    }
-
-    loadProfile() {
-        let userId = this.props.curUserId;
-        if (userId)
-            this.props.dispatch(profileActions.getProfile(userId));
-    }
-
     openTab(evt, tabName, nowActive) {
         let i, x, tablinks, nowActiveTab;
         x = document.getElementsByClassName("content-tab");
@@ -45,7 +35,7 @@ export class Tabs extends React.Component {
     renderTabsNames() {
         //TODO: ID of actually logged in user
         let currentUserId = this.props.curUserId;
-        if (this.props.userId == currentUserId) {
+        if (this.props.userId === currentUserId) {
             let result = [];
             result.push(<li id="MyServ" className="tab is-active"
                             onClick={() => this.openTab(event, 'MyServContent', 'MyServ')} key={1}><a>My Services</a>

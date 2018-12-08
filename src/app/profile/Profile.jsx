@@ -80,17 +80,17 @@ class Profile extends React.Component {
                     <div className="columns">
                         <div className="column is-3">
                             <figure className="image is-480x480">
-                                <img src={this.props.profile.profilePicturePath}/>
+                                <img src={profile.profilePicturePath}/>
                             </figure>
                         </div>
                         <div className="column">
                             <p className="is-uppercase has-text-weight-bold">
-                                {this.props.profile.fullName}
+                                {profile.fullName}
                             </p>
-                            <p>@{this.props.profile.username}</p>
+                            <p>@{profile.username}</p>
 
                             <StarRatings
-                                rating={this.props.profile.rating}
+                                rating={profile.rating}
                                 starDimension="20px"
                                 starSpacing="2px"
                                 starEmptyColor='rgb(236, 236, 236)'
@@ -102,19 +102,19 @@ class Profile extends React.Component {
                                     <span className="icon">
                                         <ion-icon name="information-circle"/>
                                     </span>
-                                    <span> {this.props.profile.description} </span>
+                                    <span> {profile.description} </span>
                                 </p>
                                 <p className="text has-text-justified">
                                     <span className="icon">
                                         <ion-icon name="mail"/>
                                     </span>
-                                    <span> {this.props.profile.emailAddress} </span>
+                                    <span> {profile.emailAddress} </span>
                                 </p>
                                 <p className="text has-text-justified">
                                     <span className="icon">
                                         <ion-icon name="navigate"/>
                                     </span>
-                                    <span> {this.props.profile.location} </span>
+                                    <span> {profile.location} </span>
                                 </p>
 
                                 {this.renderNewServiceButton()}
@@ -126,7 +126,7 @@ class Profile extends React.Component {
                         </div>
                     </div>
                 </section>
-                <Tabs userId={this.props.curUserId} services={services}/>
+                <Tabs userId={profile.id} services={services}/>
             </div>
         );
     }
