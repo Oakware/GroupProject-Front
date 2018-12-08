@@ -18,7 +18,6 @@ export class ServiceChats extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(chatActions.deleteAllMessages());
         this.loadService();
         this.loadMessages();
     }
@@ -50,7 +49,7 @@ export class ServiceChats extends React.Component {
 
 
         messages.forEach((m) => {
-            let unread = m.fromServiceProvider ? 1 : 0;
+            let unread = m.fromServiceProvider ? 0 : 1;
             let {customer = {}} = m;
             let chatItem = {
                 "id": m.id,
