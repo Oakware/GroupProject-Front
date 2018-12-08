@@ -71,12 +71,11 @@ export function getUserMessages(serviceId, customerId) {
     };
 }
 
-export function sendMessage(message) {
+export function sendMessage(message, sender) {
     return async (dispatch, getState) => {
-        let state = getState();
-
         let res = await Chat.sendMessage(message);
-        // message.customer = message.from;
+        message.customer = sender;
+        message.time = [0, 0, 0, 0, 0];
 
         if (res.success) {
             dispatch({

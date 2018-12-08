@@ -34,38 +34,39 @@ class Chat extends React.Component {
         this.props.dispatch(chatActions.getUserMessages(serviceId, customerId));
     }
 
+    onMessageInput(e) {
+        this.setState({
+            message: e.target.value
+        });
+    }
+
     postMessage() {
         let {serviceId, customerId} = this.props.match.params;
+        let {serviceOwner, curUser} = this.props;
+
+        let fromOwner = customerId === curUser.id;
+        let sender = fromOwner ? serviceOwner : curUser;
 
         let message = {
             serviceId: serviceId,
             customerId: customerId,
             messegeBody: this.state.message,
-            fromServiceProvider : false
+            fromServiceProvider: fromOwner
         };
+
+        this.props.dispatch(chatActions.sendMessage(message, sender));
     }
 
     getOwner() {
-        return {
-            id: "66477a69-4544-43d2-8318-3a3d657fb8f8",
-            username: "blair_waldorf",
-            firstName: "Blair",
-            secondName: "Waldorf",
-            fullName: "Blair Waldorf",
-            emailAddress: "blair@gmail.com",
-            rating: 0,
-            description: "",
-            walletAddress: "",
-            location: "",
-            profilePicturePath: "https://robohash.org/0.4317827818889788?set=set4"
-        }
+        let {serviceOwner} = this.props;
+        return serviceOwner;
     }
 
     renderChat() {
         let {all_messages = []} = this.props;
 
         // all_messages.sort((a, b) => (a < b) ? 1 : ((b < a) ? -1 : 0));
-        all_messages.reverse();
+        all_messages = [...all_messages].reverse();
 
         let result = [];
         all_messages.map((c) =>
@@ -82,19 +83,6 @@ class Chat extends React.Component {
         );
         return result;
     }
-
-    getService() {
-        return {
-            key: 1,
-            id: 1,
-            name: "Walk Your Dog",
-            description: "Hamburger excepteur ex non. Picanha labore t-bone excepteur, shoulder jerky frankfurter jowl venison veniam andouille tail shank chicken prosciutto. Lorem et capicola pariatur frankfurter, fugiat turkey. Ex consequat dolore, eiusmod shank bacon tri-tip shoulder elit. Jowl rump tenderloin officia labore reprehenderit.",
-            owner: "@iduchan0",
-            mark: 3,
-            price: 3
-        }
-    }
-
 
     render() {
         let {service} = this.props;
@@ -117,13 +105,14 @@ class Chat extends React.Component {
                             <Input
                                 placeholder="Type here..."
                                 multiline={true}
+                                value={this.state.message}
+                                onChange={e => this.onMessageInput(e)}
                                 rightButtons={
                                     //TODO: send message buttonRef
                                     <Button className="button"
                                         color='white'
                                         text='Send'
-                                        value={this.state.message}
-                                        onClick={this.postMessage()}/>
+                                        onClick={this.postMessage}/>
                                 }/>
                         </div>
                     </div>
@@ -135,9 +124,10 @@ class Chat extends React.Component {
 
 function mapStateToProps(state) {
     return {
+        all_messages: chatSelectors.getUserMessages(state),
         curUser: authSelectors.getUserProfile(state),
         service: chatSelectors.getService(state),
-        all_messages: chatSelectors.getUserMessages(state)
+        serviceOwner: chatSelectors.getServiceOwner(state)
     };
 }
 

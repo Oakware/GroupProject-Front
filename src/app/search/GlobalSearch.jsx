@@ -144,7 +144,7 @@ class GlobalSearch extends React.Component {
 
         if (searchErrors && searchErrors.message) {
             return (
-                <h1 className="title has-text-centered is-uppercase">
+                <h1 className="title is-4 has-text-centered is-uppercase">
                     {searchErrors.message}
                 </h1>
             );

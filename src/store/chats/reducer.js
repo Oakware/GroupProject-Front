@@ -32,7 +32,7 @@ export default function reduce(state = initialState, action = {}) {
         case types.APPEND_MESSAGE:
             return {
                 ...state,
-                userMessages: [...state.userMessages, action.message]
+                userMessages: [action.message, ...state.userMessages]
             };
         default:
             return state;
