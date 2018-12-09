@@ -50,7 +50,11 @@ class ServiceCreator extends React.Component {
             user_id: this.props.curUserId
         };
 
-        this.props.dispatch(userActions.addService(service));
+        this.props.dispatch(userActions.addService(service)).then(() => {
+            this.props.history.push('/profile')
+        }).catch(() => {
+            this.props.history.push('/profile')
+        })
     }
 
     renderCategories() {
